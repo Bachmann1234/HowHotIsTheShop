@@ -12,7 +12,7 @@ ignore-comments = "yes"
 ignore-imports = "yes"
 
 [tool.pylint.'MESSAGES CONTROL']
-disable = "C0114, C0116"
+disable = "C0114, C0116, C0115"
 
 [tool.poetry.dependencies]
 python = "^3.9"
