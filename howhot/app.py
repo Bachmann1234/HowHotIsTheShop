@@ -13,3 +13,7 @@ def render_temperature() -> str:
     return render_template(
         "index.html", shop_temp=shop_temp.__dict__, wather=weather.__dict__
     )
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")
