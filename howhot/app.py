@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from flask_talisman import Talisman
 
 from howhot.shop_temp import get_shop_temp
 from howhot.weather import get_weather
@@ -17,3 +18,4 @@ def render_temperature() -> str:
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
+    Talisman(app)
