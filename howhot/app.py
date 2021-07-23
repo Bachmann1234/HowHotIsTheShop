@@ -17,5 +17,5 @@ def render_temperature() -> str:
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
     Talisman(app)
+    app.run(host="0.0.0.0")
