@@ -6,15 +6,23 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Baloo+2">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Lilita+One">
     <style>
         html {
             font-size: 1em;
-            font-family: 'Baloo 2', serif;
-            background: #2F4858;
-            color: #000000;
+            background: #0B0C10;
+            color: #66FCf1;
+            font-family: "Lilita One", sans-serif;
         }
 
         h1 {
+            font-size: 2.5em;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        h2 {
             font-size: 2em;
             margin: 0;
         }
@@ -28,21 +36,17 @@
         }
 
         .location {
+            font-family: 'Baloo 2', serif;
             display: grid;
             grid-template-columns: 1fr 1fr;
             justify-items: center;
-            background: #39A6A3;
-            margin: 10px 10px 50px;
+            background: #45A29E;
             border-radius: 25px;
-        }
-
-        @media (min-width: 1200px) {
-            .location {
-                width: 400px;
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: 50px
-            }
+            color: white;
+            width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px
         }
 
         .description {
@@ -62,9 +66,12 @@
 </head>
 <body>
 <div id="contentContainer">
+    <h1 class="title">
+        How Hot's The Shop?
+    </h1>
     <div class="location">
         <div class="headline">
-            <h1>Shop</h1>
+            <h2>Shop</h2>
             <span class="temperature">{{ shop_temp.temperature }}°</span>
         </div>
         <div class="description">
@@ -78,7 +85,7 @@
     </div>
     <div class="location">
         <div class="headline">
-            <h1>Outside</h1>
+            <h2>Outside</h2>
             <span class="temperature">{{ weather.temperature }}°</span>
         </div>
         <div class="description">
