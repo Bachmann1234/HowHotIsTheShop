@@ -3,9 +3,9 @@ from dataclasses import dataclass
 
 @dataclass
 class Weather:
-    feels_like: float
-    humidity: float
-    temperature: float
+    feels_like: int
+    humidity: int
+    temperature: int
     description: str
     icon_code: str
 
@@ -13,9 +13,9 @@ class Weather:
 def get_weather() -> Weather:
     cached_weather = _get_weather_from_cache()
     return Weather(
-        feels_like=cached_weather["current"]["feels_like"],
-        humidity=cached_weather["current"]["humidity"],
-        temperature=cached_weather["current"]["temp"],
+        feels_like=round(cached_weather["current"]["feels_like"]),
+        humidity=round(cached_weather["current"]["humidity"]),
+        temperature=round(cached_weather["current"]["temp"]),
         description=cached_weather["current"]["weather"][0]["description"],
         icon_code=cached_weather["current"]["weather"][0]["icon"],
     )
