@@ -8,39 +8,35 @@
   </head>
   <body>
     <div id="contentContainer">
+        <div>
+            {{ current_date }}
+        </div>
         <div id="shopContainer">
             <h1>Shop</h1>
-            <div>
-                <span>Temperature:</span> <span>{{ shop_temp.temperature }}</span>
-            </div>
-            <div>
-                <span>Feels Like:</span> <span>{{ weather.feels_like}}</span>
-            </div>
-            <div>
-                <span>Humidity:</span> <span>{{ shop_temp.humidity }}</span>
-            </div>
-            <div>
-                <span>Measured At:</span> <span>{{ shop_temp.formatted_eastern_time() }}</span>
-            </div>
+            <p>{{ shop_temp.temperature }}°</p>
+
+            <dl>
+                <dt>Feels Like</dt>
+                <dd>{{ shop_temp.feels_like}}°</dd>
+                <dt>Humidity</dt>
+                <dd>{{ shop_temp.humidity }}%</dd>
+                <dt>Measured At</dt>
+                <dd>{{ shop_temp.formatted_eastern_time() }}</dd>
+            </dl>
         </div>
         <div id="weatherContainer">
-            <div>
-                {{ current_date }}
-            </div>
             <h1>Outside</h1>
+            <p>{{ weather.temperature }}°</p>
             <div>
                 {{ weather.description.title() }}
             </div>
             <img alt="{{ weather.description.title() }}" src="https://openweathermap.org/img/wn/{{ weather.icon_code }}@2x.png">
-            <div>
-                <span>Temperature:</span> <span>{{ weather.temperature }}</span>
-            </div>
-            <div>
-                <span>Feels Like:</span> <span>{{ weather.feels_like }}</span>
-            </div>
-            <div>
-                <span>Humidity:</span> <span>{{ weather.humidity }}</span>
-            </div>
+            <dl>
+                <dt>Feels Like</dt>
+                <dd>{{ weather.feels_like }}°</dd>
+                <dt>Humidity</dt>
+                <dd>{{ weather.humidity }}%</dd>
+            </dl>
         </div>
     </div>
   </body>
