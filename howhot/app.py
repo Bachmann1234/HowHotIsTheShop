@@ -18,7 +18,9 @@ def render_temperature() -> str:
         "index.html",
         shop_temp=shop_temp,
         weather=weather,
-        current_date=datetime.now().astimezone(EASTERN_TIMEZONE).strftime("%m-%d-%Y"),
+        current_time=datetime.now()
+        .astimezone(EASTERN_TIMEZONE)
+        .strftime("%m-%d-%Y %H:%M:%S"),
     )
 
 

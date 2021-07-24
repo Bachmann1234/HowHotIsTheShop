@@ -1,37 +1,90 @@
 <!DOCTYPE html>
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <html lang="en-us">
-  <head>
+<head>
     <title>How Hot Is the Shop</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Baloo+2">
     <style>
-    </style>
-  </head>
-  <body>
-    <div id="contentContainer">
-        <div>
-            {{ current_date }}
-        </div>
-        <div id="shopContainer">
-            <h1>Shop</h1>
-            <p>{{ shop_temp.temperature }}°</p>
+        html {
+            font-size: 1em;
+            font-family: 'Baloo 2', serif;
+            background: #2F4858;
+            color: #000000;
+        }
 
+        h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        .temperature {
+            font-size: 5em;
+        }
+
+        #contentContainer {
+            padding: 10px;
+        }
+
+        .location {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            justify-items: center;
+            background: #39A6A3;
+            margin: 10px 10px 50px;
+            border-radius: 25px;
+        }
+
+        @media (min-width: 1200px) {
+            .location {
+                width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 50px
+            }
+        }
+
+        .description {
+            margin-top: 3%;
+            width: 100%;
+        }
+
+        dl {
+            width: 100%;
+        }
+
+        dt {
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+<div id="contentContainer">
+    <div class="location">
+        <div class="headline">
+            <h1>Shop</h1>
+            <span class="temperature">{{ shop_temp.temperature }}°</span>
+        </div>
+        <div class="description">
             <dl>
                 <dt>Feels Like</dt>
-                <dd>{{ shop_temp.feels_like}}°</dd>
+                <dd>{{ shop_temp.feels_like }}°</dd>
                 <dt>Humidity</dt>
                 <dd>{{ shop_temp.humidity }}%</dd>
-                <dt>Measured At</dt>
-                <dd>{{ shop_temp.formatted_eastern_time() }}</dd>
             </dl>
         </div>
-        <div id="weatherContainer">
+    </div>
+    <div class="location">
+        <div class="headline">
             <h1>Outside</h1>
-            <p>{{ weather.temperature }}°</p>
-            <div>
-                {{ weather.description.title() }}
-            </div>
-            <img alt="{{ weather.description.title() }}" src="https://openweathermap.org/img/wn/{{ weather.icon_code }}@2x.png">
+            <span class="temperature">{{ weather.temperature }}°</span>
+        </div>
+        <div class="description">
             <dl>
+                <dt>Weather</dt>
+                <dd>{{ weather.description.title() }}</dd>
                 <dt>Feels Like</dt>
                 <dd>{{ weather.feels_like }}°</dd>
                 <dt>Humidity</dt>
@@ -39,5 +92,14 @@
             </dl>
         </div>
     </div>
-  </body>
+</div>
+<footer>
+    <div>
+        Current Time: {{ current_time }}
+    </div>
+    <div>
+        Shop Temp Recorded: {{ shop_temp.formatted_eastern_time() }}
+    </div>
+</footer>
+</body>
 </html>
