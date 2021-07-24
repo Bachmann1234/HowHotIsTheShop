@@ -1,4 +1,10 @@
+import json
 from dataclasses import dataclass
+
+import requests
+from redis import Redis
+
+WEATHER_REDIS_KEY = "CURRENT_WEATHER"
 
 
 @dataclass
@@ -9,41 +15,32 @@ class Weather:
     description: str
     icon_code: str
 
+    @staticmethod
+    def from_api_dict(api_response: dict) -> "Weather":
+        return Weather(
+            feels_like=round(api_response["current"]["feels_like"]),
+            humidity=round(api_response["current"]["humidity"]),
+            temperature=round(api_response["current"]["temp"]),
+            description=api_response["current"]["weather"][0]["description"],
+            icon_code=api_response["current"]["weather"][0]["icon"],
+        )
 
-def get_weather() -> Weather:
-    cached_weather = _get_weather_from_cache()
-    return Weather(
-        feels_like=round(cached_weather["current"]["feels_like"]),
-        humidity=round(cached_weather["current"]["humidity"]),
-        temperature=round(cached_weather["current"]["temp"]),
-        description=cached_weather["current"]["weather"][0]["description"],
-        icon_code=cached_weather["current"]["weather"][0]["icon"],
+
+def get_weather(redis: Redis) -> Weather:
+    return Weather.from_api_dict(
+        json.loads(redis.get(WEATHER_REDIS_KEY).decode("utf-8"))
     )
 
 
-def _get_weather_from_cache() -> dict:
-    return {
-        "lat": 42.3826,
-        "lon": -71.0772,
-        "timezone": "America/New_York",
-        "timezone_offset": -14400,
-        "current": {
-            "dt": 1626924976,
-            "sunrise": 1626859566,
-            "sunset": 1626912899,
-            "temp": 66.27,
-            "feels_like": 66.13,
-            "pressure": 1012,
-            "humidity": 75,
-            "dew_point": 58.12,
-            "uvi": 0,
-            "clouds": 1,
-            "visibility": 10000,
-            "wind_speed": 8.99,
-            "wind_deg": 323,
-            "wind_gust": 11.99,
-            "weather": [
-                {"id": 800, "main": "Clear", "description": "clear sky", "icon": "01n"}
-            ],
-        },
-    }
+def update_weather_cache(
+    redis: Redis, lat: str, long: str, weather_api_key: str
+) -> Weather:
+    weather = requests.get(
+        f"https://api.openweathermap.org/data/2.5/onecall"
+        f"?lat={ lat }&lon={ long }"
+        f"&exclude=minutely,hourly,"
+        f"daily,alerts&appid={ weather_api_key }&units=imperial"
+    )
+    weather.raise_for_status()
+    redis.set(WEATHER_REDIS_KEY, weather.text.encode("utf-8"))
+    return get_weather(redis)

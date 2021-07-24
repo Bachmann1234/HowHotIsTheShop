@@ -131,3 +131,5 @@ dmypy.json
 
 # Environment vars
 .env.local
+
+.DS_Store
