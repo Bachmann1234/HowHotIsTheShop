@@ -1,4 +1,4 @@
-from howhot.app import app, get_redis
+from howhot.app import app
 
 
 def test_app() -> None:

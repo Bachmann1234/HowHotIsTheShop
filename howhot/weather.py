@@ -27,9 +27,9 @@ class Weather:
 
 
 def get_weather(redis: Redis) -> Weather:
-    return Weather.from_api_dict(
-        json.loads(redis.get(WEATHER_REDIS_KEY).decode("utf-8"))
-    )
+    cached_weather_response = redis.get(WEATHER_REDIS_KEY)
+    assert cached_weather_response
+    return Weather.from_api_dict(json.loads(cached_weather_response.decode("utf-8")))
 
 
 def update_weather_cache(

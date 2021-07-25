@@ -7,6 +7,8 @@ from fakeredis import FakeRedis
 from howhot import app
 from howhot.weather import WEATHER_REDIS_KEY
 
+# pylint: disable=redefined-outer-name
+
 
 @pytest.fixture(autouse=True)
 def setup_environment(
