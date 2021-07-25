@@ -1,9 +1,17 @@
 from datetime import datetime
 
 import pytest
+import responses
 from fakeredis import FakeRedis
 
-from howhot.shop_temp import ShopTemp, celsius_to_fahrenheit, get_shop_temp, heat_index
+from howhot.shop_temp import (
+    LAST_SHOP_MEASUREMENT_INDEX,
+    ShopTemp,
+    celsius_to_fahrenheit,
+    get_shop_temp,
+    heat_index,
+    update_shop_cache,
+)
 
 
 def test_get_shop_temp(fake_redis: FakeRedis) -> None:
@@ -27,3 +35,56 @@ def test_heat_index() -> None:
     assert heat_index(81, 12) == pytest.approx(78.795, 0.001)
     assert heat_index(81, 85) == pytest.approx(87.425, 0.001)
     assert heat_index(70, 85) == pytest.approx(70.695, 0.001)
+
+
+@responses.activate
+def test_update_shop_cache() -> None:
+    redis = FakeRedis()
+    responses.add(
+        responses.POST,
+        url="https://app2.govee.com/th/rest/devices/v1/data/load",
+        json={
+            "datas": [
+                {"tem": 2377, "hum": 7116, "time": 1625190770000},
+                {"tem": 2377, "hum": 7116, "time": 1625190780000},
+            ],
+            "index": 2954762,
+            "message": "",
+            "status": 200,
+        },
+        match=[
+            responses.json_params_matcher(
+                {  # type: ignore
+                    "limit": 2880,  # type: ignore
+                    "device": "fakedevice",  # type: ignore
+                    "sku": "fakesku",  # type: ignore
+                    "index": 0,  # type: ignore
+                }
+            )
+        ],
+    )
+    responses.add(
+        responses.POST,
+        url="https://app2.govee.com/th/rest/devices/v1/data/load",
+        json={"datas": [], "index": 3016603, "message": "", "status": 200},
+        match=[
+            responses.json_params_matcher(
+                {  # type: ignore
+                    "limit": 2880,  # type: ignore
+                    "device": "fakedevice",  # type: ignore
+                    "sku": "fakesku",  # type: ignore
+                    "index": 2954762,  # type: ignore
+                }
+            )
+        ],
+    )
+
+    result = update_shop_cache(redis, "fakeToken", "fakedevice", "fakesku")
+
+    assert redis.get(LAST_SHOP_MEASUREMENT_INDEX) == b"3016603"
+    assert result == ShopTemp(
+        temperature=75,
+        humidity=71,
+        feels_like=75,
+        time=datetime(2021, 7, 2, 1, 53),
+    )
