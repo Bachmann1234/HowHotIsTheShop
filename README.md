@@ -1,7 +1,7 @@
 # How Hot Is The Shop?
 Website to provide the internal temperature of my wife's woodshop
 
-The app itself is a simple flask app that renders a template with data deom redis store.
+The app itself is a simple flask app that renders a template with data stored in Redis
 
 A cronjob runs a script to update that redis store.
 
