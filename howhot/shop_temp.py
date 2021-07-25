@@ -82,7 +82,6 @@ def update_shop_cache(
     govee_device: str,
     govee_sku: str,
 ) -> ShopTemp:
-    most_recent_measurement = None
     last_index = redis.get(LAST_SHOP_MEASUREMENT_INDEX)
     last_index = int(last_index) if last_index else 0
 
@@ -98,8 +97,7 @@ def update_shop_cache(
             "Authorization": f"Bearer {govee_token}",
         }
 
-        response = requests.request(
-            "POST",
+        response = requests.post(
             "https://app2.govee.com/th/rest/devices/v1/data/load",
             json=payload,
             headers=headers,

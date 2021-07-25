@@ -5,6 +5,7 @@ from _pytest.monkeypatch import MonkeyPatch
 from fakeredis import FakeRedis
 
 from howhot import app
+from howhot.device_stats import DEVICE_KEY
 from howhot.shop_temp import SHOP_TEMP_KEY
 from howhot.weather import WEATHER_REDIS_KEY
 
@@ -24,6 +25,10 @@ def fake_redis(stub_weather_api_response: dict) -> FakeRedis:
     redis.set(
         SHOP_TEMP_KEY,
         json.dumps({"tem": 2672, "hum": 5368, "time": 1626919020000}).encode("utf-8"),
+    )
+    redis.set(
+        DEVICE_KEY,
+        b"72",
     )
     return redis
 
