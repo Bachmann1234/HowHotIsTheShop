@@ -120,5 +120,4 @@ def update_shop_cache(
                 SHOP_TEMP_KEY, json.dumps(most_recent_measurement).encode("utf-8")
             )
         else:
-            assert most_recent_measurement
             return get_shop_temp(redis)
