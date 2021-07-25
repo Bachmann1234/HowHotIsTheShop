@@ -1,8 +1,15 @@
+import json
 from dataclasses import dataclass
 from datetime import datetime
 from math import sqrt
 
+import requests
+from redis import Redis
+
 from howhot import EASTERN_TIMEZONE
+
+SHOP_TEMP_KEY = "SHOP_TEMP"
+LAST_SHOP_MEASUREMENT_INDEX = "LAST_SHOP_MEASUREMENT_INDEX"
 
 
 @dataclass
@@ -16,15 +23,17 @@ class ShopTemp:
         return self.time.astimezone(EASTERN_TIMEZONE).strftime("%m-%d-%Y %H:%M:%S")
 
 
-def get_shop_temp() -> ShopTemp:
-    cached_weather = _get_shop_weather_from_cache()
-    temp_in_fahrenheit = celsius_to_fahrenheit(cached_weather["tem"] / 100)
-    humidity = cached_weather["hum"] / 100
+def get_shop_temp(redis: Redis) -> ShopTemp:
+    cached_shop_response = redis.get(SHOP_TEMP_KEY)
+    assert cached_shop_response
+    cached_shop_response = json.loads(cached_shop_response.decode("utf-8"))
+    temp_in_fahrenheit = celsius_to_fahrenheit(cached_shop_response["tem"] / 100)
+    humidity = cached_shop_response["hum"] / 100
     return ShopTemp(
         temperature=round(temp_in_fahrenheit),
         humidity=round(humidity),
         feels_like=round(heat_index(temp_in_fahrenheit, humidity)),
-        time=datetime.utcfromtimestamp(cached_weather["time"] / 1000),
+        time=datetime.utcfromtimestamp(cached_shop_response["time"] / 1000),
     )
 
 
@@ -67,5 +76,49 @@ def heat_index(fahrenheit_temp: float, relative_humidity: float) -> float:
     return result
 
 
-def _get_shop_weather_from_cache() -> dict:
-    return {"tem": 2672, "hum": 5368, "time": 1626919020000}
+def update_shop_cache(
+    redis: Redis,
+    govee_token: str,
+    govee_device: str,
+    govee_sku: str,
+) -> ShopTemp:
+    most_recent_measurement = None
+    last_index = redis.get(LAST_SHOP_MEASUREMENT_INDEX)
+    last_index = int(last_index) if last_index else 0
+
+    def get_page(index):
+        payload = {
+            "limit": 2880,
+            "device": govee_device,
+            "sku": govee_sku,
+            "index": index,
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {govee_token}",
+        }
+
+        response = requests.request(
+            "POST",
+            "https://app2.govee.com/th/rest/devices/v1/data/load",
+            json=payload,
+            headers=headers,
+        )
+        response.raise_for_status()
+        return response.json()
+
+    while True:
+        print(f"Continuing from index {last_index}")
+        response_dict = get_page(last_index)
+        last_index = response_dict["index"]
+        redis.set(LAST_SHOP_MEASUREMENT_INDEX, str(last_index))
+        data = response_dict["datas"]
+        if len(data):
+            print(f"Found {len(data)} results!")
+            most_recent_measurement = data[-1]
+            redis.set(
+                SHOP_TEMP_KEY, json.dumps(most_recent_measurement).encode("utf-8")
+            )
+        else:
+            assert most_recent_measurement
+            return get_shop_temp(redis)

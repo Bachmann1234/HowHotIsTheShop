@@ -6,10 +6,11 @@ from fakeredis import FakeRedis
 from howhot.weather import WEATHER_REDIS_KEY, Weather, get_weather, update_weather_cache
 
 
-def test_get_weather(stub_weather_api_response: dict) -> None:
-    redis = FakeRedis()
-    redis.set(WEATHER_REDIS_KEY, json.dumps(stub_weather_api_response).encode("utf-8"))
-    assert get_weather(redis) == Weather(
+def test_get_weather(stub_weather_api_response: dict, fake_redis: FakeRedis) -> None:
+    fake_redis.set(
+        WEATHER_REDIS_KEY, json.dumps(stub_weather_api_response).encode("utf-8")
+    )
+    assert get_weather(fake_redis) == Weather(
         feels_like=66,
         humidity=75,
         temperature=66,

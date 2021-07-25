@@ -16,7 +16,7 @@ app = Flask(__name__)
 def render_index() -> str:
     redis = get_redis_from_url(os.environ["REDIS_URL"])
     weather = get_weather(redis)
-    shop_temp = get_shop_temp()
+    shop_temp = get_shop_temp(redis)
     return render_template(
         "index.html",
         shop_temp=shop_temp,
