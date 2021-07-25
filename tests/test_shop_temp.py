@@ -35,6 +35,7 @@ def test_heat_index() -> None:
     assert heat_index(81, 12) == pytest.approx(78.795, 0.001)
     assert heat_index(81, 85) == pytest.approx(87.425, 0.001)
     assert heat_index(70, 85) == pytest.approx(70.695, 0.001)
+    assert heat_index(84, 88) == pytest.approx(97.005, 0.001)
 
 
 @responses.activate
