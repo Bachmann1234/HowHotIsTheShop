@@ -53,6 +53,12 @@ def render_history() -> str:
     return render_template("history.html", labels=dates, data=temps)
 
 
+@app.route("/history_raw")
+def render_history_json() -> str:
+    redis = get_redis_from_url(os.environ["REDIS_URL"])
+    return get_shop_temperature_history(redis)
+
+
 if __name__ == "__main__":
     Talisman(app)
     app.run(host="0.0.0.0")
