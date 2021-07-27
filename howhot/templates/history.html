@@ -12,6 +12,9 @@
         #contentContainer {
             padding: 10vh 10vw;
         }
+        #shopChart {
+            max-height: 70vh;
+        }
     </style>
 {% endblock %}
 {% block content %}
@@ -30,7 +33,9 @@
                     data: {{ data | tojson }},
                     fill: false,
                     borderColor: 'rgb(75, 192, 192)',
-                    pointHitRadius:10
+                    pointHitRadius: 10,
+                    responsive: true,
+                    maintainAspectRatio: false
                 }]
             },
             options: {
@@ -56,4 +61,7 @@
         });
 
     </script>
+{% endblock %}
+{% block footer %}
+    Horizontal View suggested for mobile
 {% endblock %}
