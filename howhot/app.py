@@ -54,7 +54,7 @@ def render_history() -> str:
 
 
 @app.route("/history_raw")
-def render_history_json() -> str:
+def render_history_json() -> Dict[str, int]:
     redis = get_redis_from_url(os.environ["REDIS_URL"])
     return get_shop_temperature_history(redis)
 
