@@ -89,5 +89,5 @@ def test_update_shop_cache() -> None:
         temperature=75,
         humidity=71,
         feels_like=75,
-        time=datetime(2021, 7, 2, 1, 53),
+        time=datetime(2021, 7, 1, 23, 3, 50),
     )
