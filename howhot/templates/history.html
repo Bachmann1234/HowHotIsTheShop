@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js" integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+    #contentContainer {
+        padding: 10vh 10vw;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="contentContainer">
+        <a href="{{ url_for('render_index') }}">See Current Temperature</a>
+        <canvas id="shopChart"></canvas>
+    </div>
+    <script>
+        const ctx = document.getElementById('shopChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ labels | tojson }},
+                datasets: [{
+                    label: 'High Temperature',
+                    data: {{ data | tojson }},
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+        });
+
+    </script>
+{% endblock %}
