@@ -10,7 +10,7 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         #contentContainer {
-            padding: 10vh 10vw;
+            padding: 1vh 1vw;
         }
         #shopChart {
             max-height: 70vh;
@@ -18,8 +18,10 @@
     </style>
 {% endblock %}
 {% block content %}
-    <div id="contentContainer">
+    <div id="nav">
         <a href="{{ url_for('render_index') }}">See Current Temperature</a>
+    </div>
+    <div id="contentContainer">
         <canvas id="shopChart"></canvas>
     </div>
     <script>

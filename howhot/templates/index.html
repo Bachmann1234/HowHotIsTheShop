@@ -8,6 +8,10 @@
 
         #contentContainer {
             padding: 10px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
         }
 
         .location {
@@ -21,7 +25,7 @@
             width: 325px;
             margin-left: auto;
             margin-right: auto;
-            margin-top: 50px
+            margin-top: 50px;
         }
 
         .description {
@@ -36,14 +40,22 @@
         dt {
             font-weight: bold;
         }
+
+        footer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
     </style>
 {% endblock %}
 {% block content %}
-    <div id="contentContainer">
-        <h1 class="title">
-            How Hot Is The Shop?
-        </h1>
+    <h1 class="title">
+        How Hot Is The Shop?
+    </h1>
+    <div id="nav">
         <a href="{{ url_for('render_history') }}">See Historical Data</a>
+    </div>
+    <div id="contentContainer">
         <div class="location">
             <div class="headline">
                 <h2>Shop</h2>
@@ -80,9 +92,9 @@
 {% endblock %}
 {% block footer %}
     <div>
-        Current Time: {{ current_time }}
+        Shop Temp Recorded: {{ shop_temp.formatted_eastern_time }}
     </div>
     <div>
-        Shop Temp Recorded: {{ shop_temp.formatted_eastern_time }}
+        Current Time: {{ current_time }}
     </div>
 {% endblock %}
