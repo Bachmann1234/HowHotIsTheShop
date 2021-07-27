@@ -2,7 +2,7 @@ import json
 from dataclasses import dataclass
 from datetime import datetime
 from math import sqrt
-from typing import Dict
+from typing import Dict, cast
 
 import requests
 from redis import Redis
@@ -93,7 +93,7 @@ def heat_index(fahrenheit_temp: float, relative_humidity: float) -> float:
 
 def get_shop_temperature_history(redis: Redis) -> ShopHistory:
     shop_history = redis.get(SHOP_HIGH_HISTORY_KEY)
-    return json.loads(shop_history.decode("utf-8")) if shop_history else {}
+    return cast(Dict, json.loads(shop_history.decode("utf-8"))) if shop_history else {}
 
 
 def update_shop_cache(
@@ -139,8 +139,8 @@ def update_shop_cache(
             redis.set(
                 SHOP_TEMP_KEY, json.dumps(most_recent_measurement).encode("utf-8")
             )
-            for d in data:
-                shop_temp = ShopTemp.from_api_response(d)
+            for point in data:
+                shop_temp = ShopTemp.from_api_response(point)
                 current_max = history.get(shop_temp.formatted_eastern_date, -100)
                 if shop_temp.temperature > current_max:
                     history[shop_temp.formatted_eastern_date] = shop_temp.temperature
