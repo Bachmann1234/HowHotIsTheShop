@@ -2,14 +2,20 @@ import json
 from dataclasses import dataclass
 from datetime import datetime
 from math import sqrt
+from typing import Dict
 
 import requests
 from redis import Redis
 
 from howhot import EASTERN_TIMEZONE
 
+SHOP_HIGH_HISTORY_KEY = "SHOP_HIGH_HISTORY"
 SHOP_TEMP_KEY = "SHOP_TEMP"
 LAST_SHOP_MEASUREMENT_INDEX = "LAST_SHOP_MEASUREMENT_INDEX"
+
+# Shop history is a dict whose key is the date (EST timezone, cuse the shop aint movin)
+# to the maximum temperature observed that day
+ShopHistory = Dict[str, float]
 
 
 @dataclass
@@ -19,22 +25,31 @@ class ShopTemp:
     feels_like: int
     time: datetime  # Measurement Time
 
+    @property
     def formatted_eastern_time(self):
         return self.time.astimezone(EASTERN_TIMEZONE).strftime("%m-%d-%Y %H:%M:%S")
+
+    @property
+    def formatted_eastern_date(self):
+        return self.time.astimezone(EASTERN_TIMEZONE).strftime("%m-%d-%Y")
+
+    @staticmethod
+    def from_api_response(api_response: Dict) -> "ShopTemp":
+        temp_in_fahrenheit = celsius_to_fahrenheit(api_response["tem"] / 100)
+        humidity = api_response["hum"] / 100
+        return ShopTemp(
+            temperature=round(temp_in_fahrenheit),
+            humidity=round(humidity),
+            feels_like=round(heat_index(temp_in_fahrenheit, humidity)),
+            time=datetime.utcfromtimestamp(api_response["time"] / 1000),
+        )
 
 
 def get_shop_temp(redis: Redis) -> ShopTemp:
     cached_shop_response = redis.get(SHOP_TEMP_KEY)
     assert cached_shop_response
     cached_shop_response = json.loads(cached_shop_response.decode("utf-8"))
-    temp_in_fahrenheit = celsius_to_fahrenheit(cached_shop_response["tem"] / 100)
-    humidity = cached_shop_response["hum"] / 100
-    return ShopTemp(
-        temperature=round(temp_in_fahrenheit),
-        humidity=round(humidity),
-        feels_like=round(heat_index(temp_in_fahrenheit, humidity)),
-        time=datetime.utcfromtimestamp(cached_shop_response["time"] / 1000),
-    )
+    return ShopTemp.from_api_response(cached_shop_response)
 
 
 def celsius_to_fahrenheit(celsius: float) -> float:
@@ -76,6 +91,11 @@ def heat_index(fahrenheit_temp: float, relative_humidity: float) -> float:
     return result
 
 
+def get_shop_temperature_history(redis: Redis) -> ShopHistory:
+    shop_history = redis.get(SHOP_HIGH_HISTORY_KEY)
+    return json.loads(shop_history.decode("utf-8")) if shop_history else {}
+
+
 def update_shop_cache(
     redis: Redis,
     govee_token: str,
@@ -84,6 +104,8 @@ def update_shop_cache(
 ) -> ShopTemp:
     last_index = redis.get(LAST_SHOP_MEASUREMENT_INDEX)
     last_index = int(last_index) if last_index else 0
+
+    history = get_shop_temperature_history(redis)
 
     def get_page(index):
         payload = {
@@ -117,5 +139,11 @@ def update_shop_cache(
             redis.set(
                 SHOP_TEMP_KEY, json.dumps(most_recent_measurement).encode("utf-8")
             )
+            for d in data:
+                shop_temp = ShopTemp.from_api_response(d)
+                current_max = history.get(shop_temp.formatted_eastern_date, -100)
+                if shop_temp.temperature > current_max:
+                    history[shop_temp.formatted_eastern_date] = shop_temp.temperature
         else:
+            redis.set(SHOP_HIGH_HISTORY_KEY, json.dumps(history))
             return get_shop_temp(redis)

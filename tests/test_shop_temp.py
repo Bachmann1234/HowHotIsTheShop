@@ -46,8 +46,9 @@ def test_update_shop_cache() -> None:
         url="https://app2.govee.com/th/rest/devices/v1/data/load",
         json={
             "datas": [
+                {"tem": 2474, "hum": 7116, "time": 1625090780000},
                 {"tem": 2377, "hum": 7116, "time": 1625190770000},
-                {"tem": 2377, "hum": 7116, "time": 1625190780000},
+                {"tem": 2374, "hum": 7116, "time": 1625190780000},
             ],
             "index": 2954762,
             "message": "",
@@ -83,6 +84,7 @@ def test_update_shop_cache() -> None:
     result = update_shop_cache(redis, "fakeToken", "fakedevice", "fakesku")
 
     assert redis.get(LAST_SHOP_MEASUREMENT_INDEX) == b"3016603"
+    assert redis.get("SHOP_HIGH_HISTORY") == b'{"06-30-2021": 77, "07-02-2021": 75}'
     assert result == ShopTemp(
         temperature=75,
         humidity=71,
