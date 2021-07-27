@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block head %}
-    {{ super() }}
     <style>
         .temperature {
             font-size: 5em;
@@ -49,9 +48,6 @@
     </style>
 {% endblock %}
 {% block content %}
-    <h1 class="title">
-        How Hot Is The Shop?
-    </h1>
     <div id="nav">
         <a href="{{ url_for('render_history') }}">See Historical Data</a>
     </div>

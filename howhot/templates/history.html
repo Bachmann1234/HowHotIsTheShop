@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block head %}
-    {{ super() }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"
             integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -13,7 +12,12 @@
             padding: 1vh 1vw;
         }
         #shopChart {
-            max-height: 70vh;
+            max-height: 80vh;
+        }
+        @media screen and (orientation:landscape) {
+            footer, .title {
+                display: none;
+            }
         }
     </style>
 {% endblock %}
