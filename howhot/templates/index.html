@@ -1,32 +1,7 @@
-<!DOCTYPE html>
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-<html lang="en-us">
-<head>
-    <title>How Hot Is the Shop</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Baloo+2">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Lilita+One">
+{% extends "base.html" %}
+{% block head %}
     <style>
-        html {
-            font-size: 1em;
-            background: #0B0C10;
-            color: #66FCf1;
-            font-family: "Lilita One", sans-serif;
-        }
-
-        h1 {
-            font-size: 2.5em;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        h2 {
-            font-size: 2em;
-            margin: 0;
-        }
-
+        {{ super() }}
         .temperature {
             font-size: 5em;
         }
@@ -61,54 +36,52 @@
         dt {
             font-weight: bold;
         }
-
     </style>
-</head>
-<body>
-<div id="contentContainer">
-    <h1 class="title">
-        How Hot is The Shop?
-    </h1>
-    <div class="location">
-        <div class="headline">
-            <h2>Shop</h2>
-            <span class="temperature">{{ shop_temp.temperature }}°</span>
+{% endblock %}
+{% block content %}
+    <div id="contentContainer">
+        <h1 class="title">
+            How Hot is The Shop?
+        </h1>
+        <div class="location">
+            <div class="headline">
+                <h2>Shop</h2>
+                <span class="temperature">{{ shop_temp.temperature }}°</span>
+            </div>
+            <div class="description">
+                <dl>
+                    <dt>Feels Like</dt>
+                    <dd>{{ shop_temp.feels_like }}°</dd>
+                    <dt>Humidity</dt>
+                    <dd>{{ shop_temp.humidity }}%</dd>
+                    <dt>Thermometer Battery</dt>
+                    <dd>{{ battery_level }}%</dd>
+                </dl>
+            </div>
         </div>
-        <div class="description">
-            <dl>
-                <dt>Feels Like</dt>
-                <dd>{{ shop_temp.feels_like }}°</dd>
-                <dt>Humidity</dt>
-                <dd>{{ shop_temp.humidity }}%</dd>
-                <dt>Thermometer Battery</dt>
-                <dd>{{ battery_level }}%</dd>
-            </dl>
+        <div class="location">
+            <div class="headline">
+                <h2>Outside</h2>
+                <span class="temperature">{{ weather.temperature }}°</span>
+            </div>
+            <div class="description">
+                <dl>
+                    <dt>Feels Like</dt>
+                    <dd>{{ weather.feels_like }}°</dd>
+                    <dt>Humidity</dt>
+                    <dd>{{ weather.humidity }}%</dd>
+                    <dt>Weather</dt>
+                    <dd>{{ weather.description.title() }}</dd>
+                </dl>
+            </div>
         </div>
     </div>
-    <div class="location">
-        <div class="headline">
-            <h2>Outside</h2>
-            <span class="temperature">{{ weather.temperature }}°</span>
-        </div>
-        <div class="description">
-            <dl>
-                <dt>Feels Like</dt>
-                <dd>{{ weather.feels_like }}°</dd>
-                <dt>Humidity</dt>
-                <dd>{{ weather.humidity }}%</dd>
-                <dt>Weather</dt>
-                <dd>{{ weather.description.title() }}</dd>
-            </dl>
-        </div>
-    </div>
-</div>
-<footer>
+{% endblock %}
+{% block footer %}
     <div>
         Current Time: {{ current_time }}
     </div>
     <div>
         Shop Temp Recorded: {{ shop_temp.formatted_eastern_time }}
     </div>
-</footer>
-</body>
-</html>
+{% endblock %}
