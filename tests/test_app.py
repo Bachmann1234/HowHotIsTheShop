@@ -1,3 +1,5 @@
+import json
+
 from howhot.app import app, format_data_for_chart
 
 
@@ -17,10 +19,12 @@ def test_history_raw() -> None:
     with app.test_client() as client:
         response = client.get("/history_raw")
         assert response.status_code == 200
-        assert (
-            response.data
-            == b'{"07-23-2021":79,"07-24-2021":80,"07-25-2021":78,"07-26-2021":85}\n'
-        )
+        assert json.loads(response.data.decode("utf-8")) == {
+            "07-23-2021": 79,
+            "07-24-2021": 80,
+            "07-25-2021": 78,
+            "07-26-2021": 85,
+        }
 
 
 def test_format_data() -> None:

@@ -5,4 +5,4 @@ poetry run black --check howhot tests
 poetry run isort --check howhot tests
 poetry run pylint howhot tests
 poetry run mypy howhot tests
-poetry run pytest tests
+poetry run pytest tests -v
