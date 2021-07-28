@@ -45,8 +45,8 @@ def main() -> None:
     except Exception:
         trace = traceback.format_exc()
         message = Mail(
-            from_email=os.environ["ADMIN_EMAIL"],
-            to_emails=[os.environ["SENDER"]],
+            from_email=os.environ["SENDER"],
+            to_emails=[os.environ["ADMIN_EMAIL"]],
             subject="Hot Hot Is The Shop Error",
             plain_text_content=trace,
         )
