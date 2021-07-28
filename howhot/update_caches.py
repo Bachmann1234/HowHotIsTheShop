@@ -39,8 +39,6 @@ def do_update(redis: Redis) -> None:
 def main() -> None:
     redis = get_redis_from_url(os.environ["REDIS_URL"])
     try:
-        dog = [0]
-        print(dog[221])  # Intentional error for live test
         do_update(redis)
     except Exception:
         trace = traceback.format_exc()
