@@ -10,6 +10,34 @@ living in my wife's shop. This API is the one used by the Govee mobile app.
 
 Hosted https://www.howhotistheshop.com/ or http://howhotistheshop.herokuapp.com/ if I stop paying for the paid heroku plan
 
+## Config Vars
+
+`ADMIN_EMAIL` - Email to send errors to
+
+`SENDER` - Email who owns the sendgrid account and can send email
+
+`SENDGRID_API_KEY` - Api key for sendgrid...
+
+`GOVEE_DEVICE` - Device id measuring the temperature of the shop
+
+`GOVEE_SKU` - Device Stock code for the model of that device
+
+`GOVEE_TOKEN` - Auth token you get after logging in to the govee app. Best I can tell you don't need to refresh this... for now...
+
+`REDIS_URL` - URL to access the redis instance
+
+`WEATHER_API_KEY` - API key to get weather data
+
+`WEATHER_LAT` - Latitude of rough area of shop
+
+`WEATHER_LONG` - Longitude of rough area of shop
+
+
+
+## You dummy you should be using UTC
+
+Yeah, probably... but this is an app designed for one shop in the eastern timezone
+
 ## Note on data
 
 The current weather/shop data has no backup as it's not intended to persist
