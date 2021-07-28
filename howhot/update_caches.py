@@ -10,36 +10,37 @@ from howhot.shop_temp import update_shop_cache
 from howhot.weather import update_weather_cache
 
 
-def do_update(redis: Redis) -> None:
+def _do_update(redis: Redis) -> None:
     weather = update_weather_cache(
-        redis,
-        os.environ["WEATHER_LAT"],
-        os.environ["WEATHER_LONG"],
-        os.environ["WEATHER_API_KEY"],
+        redis=redis,
+        lat=os.environ["WEATHER_LAT"],
+        long=os.environ["WEATHER_LONG"],
+        weather_api_key=os.environ["WEATHER_API_KEY"],
     )
     print("Updated Weather Cache!")
     print(weather)
 
     shop_temp = update_shop_cache(
-        redis,
-        os.environ["GOVEE_TOKEN"],
-        os.environ["GOVEE_DEVICE"],
-        os.environ["GOVEE_SKU"],
+        redis=redis,
+        govee_token=os.environ["GOVEE_TOKEN"],
+        govee_device=os.environ["GOVEE_DEVICE"],
+        govee_sku=os.environ["GOVEE_SKU"],
     )
     print("Updated Shop Cache!")
     print(shop_temp)
 
     battery = update_battery_cache(
-        redis, os.environ["GOVEE_TOKEN"], os.environ["GOVEE_DEVICE"]
+        redis=redis,
+        govee_token=os.environ["GOVEE_TOKEN"],
+        device_token=os.environ["GOVEE_DEVICE"],
     )
     print("Updated Battery Cache!")
     print(f"Battery Level {battery}")
 
 
-def main() -> None:
-    redis = get_redis_from_url(os.environ["REDIS_URL"])
+def main(redis: Redis) -> None:
     try:
-        do_update(redis)
+        _do_update(redis)
     except Exception:
         trace = traceback.format_exc()
         message = Mail(
@@ -53,4 +54,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    main(get_redis_from_url(os.environ["REDIS_URL"]))
