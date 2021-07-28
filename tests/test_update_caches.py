@@ -1,4 +1,4 @@
-from unittest.mock import Mock, call, patch
+from unittest.mock import call, patch
 
 import pytest
 from _pytest.monkeypatch import MonkeyPatch
@@ -28,7 +28,9 @@ def test_update_fail(monkeypatch: MonkeyPatch):
         # And this is a likely weakness in the test.... but um...
         # I tested this live....
         assert (
-            send_call_mail_object.personalizations[0]._tos[0]["name"]
+            send_call_mail_object.personalizations[  # pylint: disable=protected-access
+                0
+            ]._tos[0]["name"]
             == "bachmann_personal"
         )
         assert send_call_mail_object.from_email.name == "bachmann_sendgrid"
