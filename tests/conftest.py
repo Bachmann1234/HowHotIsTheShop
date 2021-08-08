@@ -16,6 +16,9 @@ from howhot.weather import WEATHER_REDIS_KEY
 def setup_environment(monkeypatch: MonkeyPatch, fake_redis: FakeRedis) -> None:
     monkeypatch.setenv("REDIS_URL", "")
     monkeypatch.setattr(app, "get_redis_from_url", lambda _: fake_redis)
+    monkeypatch.setenv("SENDER", "bachmann_sendgrid")
+    monkeypatch.setenv("ADMIN_EMAIL", "bachmann_personal")
+    monkeypatch.setenv("SENDGRID_API_KEY", "sendgrid_key")
 
 
 @pytest.fixture

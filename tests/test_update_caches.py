@@ -1,20 +1,16 @@
 from unittest.mock import call, patch
 
 import pytest
-from _pytest.monkeypatch import MonkeyPatch
 from fakeredis import FakeRedis
 
 from howhot import update_caches
 
 
-def test_update_fail(monkeypatch: MonkeyPatch):
+def test_update_fail():
     # The happy path is uninteresting. Each function
     # is tested and the update path is called every
     # 10 minutes in production. But I do wanna at least
     # attempt to ensure failures call the email api properly
-    monkeypatch.setenv("SENDER", "bachmann_sendgrid")
-    monkeypatch.setenv("ADMIN_EMAIL", "bachmann_personal")
-    monkeypatch.setenv("SENDGRID_API_KEY", "sendgrid_key")
 
     # So I did not send any other apis so updating should fail real quick
     with patch("howhot.update_caches.SendGridAPIClient") as sendgrid_mock:
