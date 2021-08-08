@@ -30,7 +30,11 @@ def main() -> None:
     redis = get_redis_from_url(os.environ["REDIS_URL"])
     current_time = datetime.now()
     shop_temp = get_shop_temp(redis)
-    alert_if_shop_temp_old(shop_temp, current_time)
+    too_old = alert_if_shop_temp_old(shop_temp, current_time)
+    if too_old:
+        print("Thermometer has not updated in a while")
+    else:
+        print("Thermometer is updating just fine")
 
 
 if __name__ == "__main__":
