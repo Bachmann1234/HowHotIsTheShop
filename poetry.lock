@@ -48,10 +48,7 @@ pathspec = ">=0.9.0,<1"
 platformdirs = ">=2"
 regex = ">=2020.1.8"
 tomli = ">=0.2.6,<2.0.0"
-typing-extensions = [
-    {version = ">=3.10.0.0", markers = "python_version < \"3.10\""},
-    {version = "!=3.10.0.1", markers = "python_version >= \"3.10\""},
-]
+typing-extensions = ">=3.10.0.0"
 
 [package.extras]
 colorama = ["colorama (>=0.4.3)"]
@@ -555,8 +552,8 @@ python-versions = "*"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.9.7"
-content-hash = "54101116870185e183d39d21ecb5fd8af9c9d52bc0d4e1b51a557e27ee6bef03"
+python-versions = "3.9.7"
+content-hash = "d01a1d0b645e0039ab327407d23e347ba75bb998ed48b3b901fc4470f201dbef"
 
 [metadata.files]
 astroid = [
