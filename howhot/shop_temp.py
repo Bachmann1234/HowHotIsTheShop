@@ -2,7 +2,7 @@ import json
 from dataclasses import dataclass
 from datetime import datetime
 from math import sqrt
-from typing import Dict, cast
+from typing import Dict, Union, cast
 
 from redis import Redis
 
@@ -27,6 +27,14 @@ class ShopTemp:
     @property
     def formatted_eastern_date(self):
         return self.time.astimezone(EASTERN_TIMEZONE).strftime("%m-%d-%Y")
+
+    @staticmethod
+    def from_params(
+        temp: Union[int, str], humidity: Union[int, str], time: Union[int, str]
+    ):
+        return ShopTemp.from_api_response(
+            {"tem": int(temp), "hum": int(humidity), "lastTime": int(time)}
+        )
 
     @staticmethod
     def from_api_response(api_response: Dict) -> "ShopTemp":

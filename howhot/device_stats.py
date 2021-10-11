@@ -20,19 +20,17 @@ def get_battery_level(redis: Redis) -> int:
     return int(cached_devices_response)
 
 
-def _get_auth_token(
+def get_govee_auth_token(
     govee_email: str, govee_password: str, govee_client: str, redis: Redis
 ) -> str:
     auth_key = redis.get(AUTH_KEY)
     if auth_key:
         return str(auth_key.decode("utf-8"))
-    headers = {
-        "Content-Type": "application/json",
-    }
-
     response = requests.post(
         "https://app2.govee.com/account/rest/account/v1/login",
-        headers=headers,
+        headers={
+            "Content-Type": "application/json",
+        },
         json={
             "email": govee_email,
             "client": govee_client,
@@ -54,7 +52,7 @@ def update_device_cache(
     govee_password: str,
     govee_client: str,
 ) -> int:
-    govee_token = _get_auth_token(govee_email, govee_password, govee_client, redis)
+    govee_token = get_govee_auth_token(govee_email, govee_password, govee_client, redis)
 
     response = requests.post(
         "https://app2.govee.com/device/rest/devices/v1/list",
