@@ -15,7 +15,7 @@ ignore-imports = "yes"
 disable = "C0114, C0116, C0115, R0913"
 
 [tool.poetry.dependencies]
-python = "3.9.6"
+python = "^3.9.6"
 requests = "^2.26.0"
 jinja2 = "^3.0.1"
 flask = "^2.0.1"
