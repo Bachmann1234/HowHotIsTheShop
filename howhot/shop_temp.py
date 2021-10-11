@@ -94,8 +94,23 @@ def heat_index(fahrenheit_temp: float, relative_humidity: float) -> float:
     return result
 
 
-def get_shop_temperature_history(redis: Redis) -> Dict[str, int]:
+def get_shop_temperature_history(
+    redis: Redis,
+) -> Dict[str, Dict[str, int]]:
     # Shop history is a dict from date string to maximum temp seen at that date
     # Dates are EST
     shop_history = redis.get(SHOP_HIGH_HISTORY_KEY)
     return cast(Dict, json.loads(shop_history.decode("utf-8"))) if shop_history else {}
+
+
+def update_max_history_from_point(
+    history: Dict[str, Dict[str, int]], shop_temp: ShopTemp
+) -> None:
+    current_maxes = history.get(shop_temp.formatted_eastern_date)
+    if not current_maxes:
+        current_maxes = {"temp": -100, "humidity": -100}
+        history[shop_temp.formatted_eastern_date] = current_maxes
+    if shop_temp.temperature > current_maxes["temp"]:
+        history[shop_temp.formatted_eastern_date]["temp"] = shop_temp.temperature
+    if shop_temp.humidity > current_maxes["humidity"]:
+        history[shop_temp.formatted_eastern_date]["humidity"] = shop_temp.humidity

@@ -8,6 +8,7 @@ from howhot.shop_temp import (
     SHOP_TEMP_KEY,
     ShopTemp,
     get_shop_temperature_history,
+    update_max_history_from_point,
 )
 
 DEVICE_KEY = "DEVICE_INFO"
@@ -72,11 +73,8 @@ def update_device_cache(
             )
             redis.set(SHOP_TEMP_KEY, json.dumps(device_data, indent=4).encode("utf-8"))
             shop_temp = ShopTemp.from_api_response(device_data)
-            current_max = history.get(shop_temp.formatted_eastern_date, -100)
-            if shop_temp.temperature > current_max:
-                history[shop_temp.formatted_eastern_date] = shop_temp.temperature
-                redis.set(SHOP_HIGH_HISTORY_KEY, json.dumps(history))
-
+            update_max_history_from_point(history, shop_temp)
+            redis.set(SHOP_HIGH_HISTORY_KEY, json.dumps(history))
     battery_level = get_battery_level(redis)
     assert battery_level
     return battery_level

@@ -85,7 +85,7 @@ def test_update_battery_cache() -> None:
     assert get_shop_temp(redis).temperature == 78
     assert redis.get(AUTH_KEY) == b"fakeauthtoken"
     history = get_shop_temperature_history(redis)
-    assert history[api_date] == 78
+    assert history[api_date] == {"humidity": 54, "temp": 78}
 
     # Now read a colder temp and ensure that history does not update
     # Also clearing responses verifies we use the cached auth token
@@ -129,4 +129,4 @@ def test_update_battery_cache() -> None:
     )
     update_device_cache(redis, "fakedevice", "fakeEmail", "fakePass", "fakeClient")
     history = get_shop_temperature_history(redis)
-    assert history[api_date] == 78
+    assert history[api_date] == {"humidity": 54, "temp": 78}

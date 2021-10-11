@@ -8,7 +8,11 @@ from redis import Redis
 from redis import from_url as get_redis_from_url
 
 from howhot.device_stats import get_govee_auth_token
-from howhot.shop_temp import SHOP_HIGH_HISTORY_KEY, ShopTemp
+from howhot.shop_temp import (
+    SHOP_HIGH_HISTORY_KEY,
+    ShopTemp,
+    update_max_history_from_point,
+)
 
 
 def backfill_history(
@@ -22,7 +26,7 @@ def backfill_history(
     govee_token = get_govee_auth_token(govee_email, govee_password, govee_client, redis)
     task_ids = _request_backfill(govee_token, govee_sku, govee_device)
     data_links = []
-    history: Dict[str, int] = {}
+    history: Dict[str, Dict[str, int]] = {}
     for task_id in task_ids:
         data_links += _get_data_links(task_id, govee_token)
     for data_link in data_links:
@@ -84,9 +88,7 @@ def _process_datafile(data_link: str, history: dict) -> None:
         for point in section.split("|"):
             temp, humidity, last_time = point.split(",")
             shop_temp = ShopTemp.from_params(temp, humidity, last_time)
-            current_max = history.get(shop_temp.formatted_eastern_date, -100)
-            if shop_temp.temperature > current_max:
-                history[shop_temp.formatted_eastern_date] = shop_temp.temperature
+            update_max_history_from_point(history, shop_temp)
 
 
 if __name__ == "__main__":

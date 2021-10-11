@@ -35,10 +35,10 @@ def fake_redis(stub_weather_api_response: dict) -> FakeRedis:
         SHOP_HIGH_HISTORY_KEY,
         json.dumps(
             {
-                "07-23-2021": 79,
-                "07-24-2021": 80,
-                "07-25-2021": 78,
-                "07-26-2021": 85,
+                "07-23-2021": {"temp": 79, "humidity": 48},
+                "07-24-2021": {"temp": 80, "humidity": 44},
+                "07-25-2021": {"temp": 78, "humidity": 50},
+                "07-26-2021": {"temp": 85, "humidity": 84},
             }
         ).encode("utf-8"),
     )

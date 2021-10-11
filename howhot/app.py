@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from typing import Dict, Tuple, cast
+from typing import Dict, List, Tuple, cast
 
 from flask import Flask, render_template
 from flask_talisman import Talisman
@@ -32,8 +32,8 @@ def render_index() -> str:
 
 
 def format_data_for_chart(
-    temp_history: Dict[str, int]
-) -> Tuple[Tuple[str], Tuple[int]]:
+    temp_history: Dict[str, Dict[str, int]]
+) -> Tuple[Tuple[str], List[int], List[int]]:
     """
     Format the data for chart.js
     """
@@ -42,19 +42,21 @@ def format_data_for_chart(
         key=lambda k: datetime.strptime(k[0], "%m-%d-%Y"),
         reverse=False,
     )
-    dates, temps = zip(*results)
-    return cast(Tuple[str], dates), cast(Tuple[int], temps)
+    dates, maxes = zip(*results)
+    temps = [m["temp"] for m in maxes]
+    humids = [m["humidity"] for m in maxes]
+    return cast(Tuple[str], dates), cast(List[int], temps), cast(List[int], humids)
 
 
 @app.route("/history")
 def render_history() -> str:
     redis = get_redis_from_url(os.environ["REDIS_URL"])
-    dates, temps = format_data_for_chart(get_shop_temperature_history(redis))
-    return render_template("history.html", labels=dates, data=temps)
+    dates, temps, humids = format_data_for_chart(get_shop_temperature_history(redis))
+    return render_template("history.html", labels=dates, temps=temps, humids=humids)
 
 
 @app.route("/history_raw")
-def render_history_json() -> Dict[str, int]:
+def render_history_json() -> Dict[str, Dict[str, int]]:
     redis = get_redis_from_url(os.environ["REDIS_URL"])
     return get_shop_temperature_history(redis)
 
