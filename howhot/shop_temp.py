@@ -4,7 +4,6 @@ from datetime import datetime
 from math import sqrt
 from typing import Dict, cast
 
-import requests
 from redis import Redis
 
 from howhot import EASTERN_TIMEZONE
@@ -92,56 +91,3 @@ def get_shop_temperature_history(redis: Redis) -> Dict[str, int]:
     # Dates are EST
     shop_history = redis.get(SHOP_HIGH_HISTORY_KEY)
     return cast(Dict, json.loads(shop_history.decode("utf-8"))) if shop_history else {}
-
-
-def update_shop_cache(
-    redis: Redis,
-    govee_token: str,
-    govee_device: str,
-    govee_sku: str,
-) -> ShopTemp:
-    last_index = redis.get(LAST_SHOP_MEASUREMENT_INDEX)
-    last_index = int(last_index) if last_index else 0
-
-    history = get_shop_temperature_history(redis)
-
-    def get_page(index):
-        payload = {
-            "limit": 2880,
-            "device": govee_device,
-            "sku": govee_sku,
-            "index": index,
-        }
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {govee_token}",
-        }
-
-        response = requests.post(
-            "https://app2.govee.com/th/rest/devices/v1/data/load",
-            json=payload,
-            headers=headers,
-        )
-        response.raise_for_status()
-        return response.json()
-
-    while True:
-        print(f"Continuing from index {last_index}")
-        response_dict = get_page(last_index)
-        last_index = response_dict["index"]
-        redis.set(LAST_SHOP_MEASUREMENT_INDEX, str(last_index))
-        data = response_dict["datas"]
-        if len(data):
-            print(f"Found {len(data)} results!")
-            most_recent_measurement = data[-1]
-            redis.set(
-                SHOP_TEMP_KEY, json.dumps(most_recent_measurement).encode("utf-8")
-            )
-            for point in data:
-                shop_temp = ShopTemp.from_api_response(point)
-                current_max = history.get(shop_temp.formatted_eastern_date, -100)
-                if shop_temp.temperature > current_max:
-                    history[shop_temp.formatted_eastern_date] = shop_temp.temperature
-        else:
-            redis.set(SHOP_HIGH_HISTORY_KEY, json.dumps(history))
-            return get_shop_temp(redis)

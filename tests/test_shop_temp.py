@@ -1,17 +1,9 @@
 from datetime import datetime
 
 import pytest
-import responses
 from fakeredis import FakeRedis
 
-from howhot.shop_temp import (
-    LAST_SHOP_MEASUREMENT_INDEX,
-    ShopTemp,
-    celsius_to_fahrenheit,
-    get_shop_temp,
-    heat_index,
-    update_shop_cache,
-)
+from howhot.shop_temp import ShopTemp, celsius_to_fahrenheit, get_shop_temp, heat_index
 
 
 def test_get_shop_temp(fake_redis: FakeRedis) -> None:
@@ -36,58 +28,3 @@ def test_heat_index() -> None:
     assert heat_index(81, 85) == pytest.approx(87.425, 0.001)
     assert heat_index(70, 85) == pytest.approx(70.695, 0.001)
     assert heat_index(84, 88) == pytest.approx(97.005, 0.001)
-
-
-@responses.activate
-def test_update_shop_cache() -> None:
-    redis = FakeRedis()
-    responses.add(
-        responses.POST,
-        url="https://app2.govee.com/th/rest/devices/v1/data/load",
-        json={
-            "datas": [
-                {"tem": 2474, "hum": 7116, "lastTime": 1625090780000},
-                {"tem": 2377, "hum": 7116, "lastTime": 1625180530000},
-                {"tem": 2374, "hum": 7116, "lastTime": 1625180630000},
-            ],
-            "index": 2954762,
-            "message": "",
-            "status": 200,
-        },
-        match=[
-            responses.json_params_matcher(
-                {  # type: ignore
-                    "limit": 2880,  # type: ignore
-                    "device": "fakedevice",  # type: ignore
-                    "sku": "fakesku",  # type: ignore
-                    "index": 0,  # type: ignore
-                }
-            )
-        ],
-    )
-    responses.add(
-        responses.POST,
-        url="https://app2.govee.com/th/rest/devices/v1/data/load",
-        json={"datas": [], "index": 3016603, "message": "", "status": 200},
-        match=[
-            responses.json_params_matcher(
-                {  # type: ignore
-                    "limit": 2880,  # type: ignore
-                    "device": "fakedevice",  # type: ignore
-                    "sku": "fakesku",  # type: ignore
-                    "index": 2954762,  # type: ignore
-                }
-            )
-        ],
-    )
-
-    result = update_shop_cache(redis, "fakeToken", "fakedevice", "fakesku")
-
-    assert redis.get(LAST_SHOP_MEASUREMENT_INDEX) == b"3016603"
-    assert redis.get("SHOP_HIGH_HISTORY") == b'{"06-30-2021": 77, "07-01-2021": 75}'
-    assert result == ShopTemp(
-        temperature=75,
-        humidity=71,
-        feels_like=75,
-        time=datetime(2021, 7, 1, 23, 3, 50),
-    )
