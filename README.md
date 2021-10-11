@@ -22,8 +22,6 @@ Hosted https://www.howhotistheshop.com/ or http://howhotistheshop.herokuapp.com/
 
 `GOVEE_SKU` - Device Stock code for the model of that device
 
-`GOVEE_TOKEN` - Auth token you get after logging in to the govee app. Best I can tell you don't need to refresh this... for now...
-
 `REDIS_URL` - URL to access the redis instance
 
 `WEATHER_API_KEY` - API key to get weather data
@@ -31,6 +29,12 @@ Hosted https://www.howhotistheshop.com/ or http://howhotistheshop.herokuapp.com/
 `WEATHER_LAT` - Latitude of rough area of shop
 
 `WEATHER_LONG` - Longitude of rough area of shop
+
+`GOVEE_EMAIL` - Email address for govee account
+
+`GOVEE_PASSWORD` - Password for govee account
+
+`GOVEE_CLIENT` - Client idd for govee account, not sure if I need it. Is returned from the login call
 
 
 
@@ -59,3 +63,8 @@ function backupShopData() {
   
 }
 ```
+
+## Scripts
+
+`backfill_device_history` will update the history cache from scratch wiping the rest out
+`update_caches` will update any cached data about the present state of the device. Updating the relevant history value if needed 
