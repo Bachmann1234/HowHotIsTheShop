@@ -37,7 +37,7 @@ class ShopTemp:
             temperature=round(temp_in_fahrenheit),
             humidity=round(humidity),
             feels_like=round(heat_index(temp_in_fahrenheit, humidity)),
-            time=datetime.utcfromtimestamp(api_response["time"] / 1000),
+            time=datetime.utcfromtimestamp(api_response["lastTime"] / 1000),
         )
 
 

@@ -46,9 +46,9 @@ def test_update_shop_cache() -> None:
         url="https://app2.govee.com/th/rest/devices/v1/data/load",
         json={
             "datas": [
-                {"tem": 2474, "hum": 7116, "time": 1625090780000},
-                {"tem": 2377, "hum": 7116, "time": 1625180530000},
-                {"tem": 2374, "hum": 7116, "time": 1625180630000},
+                {"tem": 2474, "hum": 7116, "lastTime": 1625090780000},
+                {"tem": 2377, "hum": 7116, "lastTime": 1625180530000},
+                {"tem": 2374, "hum": 7116, "lastTime": 1625180630000},
             ],
             "index": 2954762,
             "message": "",

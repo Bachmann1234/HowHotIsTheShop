@@ -27,7 +27,9 @@ def fake_redis(stub_weather_api_response: dict) -> FakeRedis:
     redis.set(WEATHER_REDIS_KEY, json.dumps(stub_weather_api_response).encode("utf-8"))
     redis.set(
         SHOP_TEMP_KEY,
-        json.dumps({"tem": 2672, "hum": 5368, "time": 1626919020000}).encode("utf-8"),
+        json.dumps({"tem": 2672, "hum": 5368, "lastTime": 1626919020000}).encode(
+            "utf-8"
+        ),
     )
     redis.set(
         SHOP_HIGH_HISTORY_KEY,

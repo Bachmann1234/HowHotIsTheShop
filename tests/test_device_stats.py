@@ -1,12 +1,36 @@
 import responses
 from fakeredis import FakeRedis
 
-from howhot.device_stats import get_battery_level, update_battery_cache
+from howhot.device_stats import get_battery_level, update_device_cache
 
 
 @responses.activate
 def test_update_battery_cache() -> None:
     redis = FakeRedis()
+    responses.add(
+        responses.POST,
+        "https://app2.govee.com/account/rest/account/v1/login",
+        json={
+            "message": "Login successful",
+            "status": 200,
+            "client": {
+                "A": "testiot.cert",
+                "B": "testIot",
+                "topic": "fake",
+                "token": "fake",
+                "refreshToken": "",
+                "tokenExpireCycle": 57600,
+                "client": "FAKE",
+                "clientName": "Matt’s iPad",
+                "accountId": "fake",
+                "pushToken": "",
+                "versionCode": "24",
+                "versionName": "4.3.0",
+                "sysVersion": "14.6",
+                "isSavvyUser": False,
+            },
+        },
+    )
     responses.add(
         responses.POST,
         "https://app2.govee.com/device/rest/devices/v1/list",
@@ -44,5 +68,8 @@ def test_update_battery_cache() -> None:
         },
         status=200,
     )
-    assert update_battery_cache(redis, "fakeToken", "fakedevice") == 72
+    assert (
+        update_device_cache(redis, "fakedevice", "fakeEmail", "fakePass", "fakeClient")
+        == 72
+    )
     assert get_battery_level(redis) == 72

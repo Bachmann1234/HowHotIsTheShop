@@ -5,8 +5,7 @@ from redis import Redis
 from redis import from_url as get_redis_from_url
 from sendgrid import Mail, SendGridAPIClient
 
-from howhot.device_stats import update_battery_cache
-from howhot.shop_temp import update_shop_cache
+from howhot.device_stats import update_device_cache
 from howhot.weather import update_weather_cache
 
 
@@ -20,19 +19,12 @@ def _do_update(redis: Redis) -> None:
     print("Updated Weather Cache!")
     print(weather)
 
-    shop_temp = update_shop_cache(
+    battery = update_device_cache(
         redis=redis,
-        govee_token=os.environ["GOVEE_TOKEN"],
-        govee_device=os.environ["GOVEE_DEVICE"],
-        govee_sku=os.environ["GOVEE_SKU"],
-    )
-    print("Updated Shop Cache!")
-    print(shop_temp)
-
-    battery = update_battery_cache(
-        redis=redis,
-        govee_token=os.environ["GOVEE_TOKEN"],
         device_token=os.environ["GOVEE_DEVICE"],
+        govee_email=os.environ["GOVEE_EMAIL"],
+        govee_password=os.environ["GOVEE_PASSWORD"],
+        govee_client=os.environ["GOVEE_CLIENT"],
     )
     print("Updated Battery Cache!")
     print(f"Battery Level {battery}")
