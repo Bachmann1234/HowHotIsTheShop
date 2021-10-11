@@ -67,4 +67,5 @@ function backupShopData() {
 ## Scripts
 
 `backfill_device_history` will update the history cache from scratch wiping the rest out
+
 `update_caches` will update any cached data about the present state of the device. Updating the relevant history value if needed 
