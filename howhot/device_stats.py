@@ -4,10 +4,10 @@ import requests
 from redis import Redis
 
 from howhot.shop_temp import (
-    SHOP_TEMP_KEY,
-    get_shop_temperature_history,
-    ShopTemp,
     SHOP_HIGH_HISTORY_KEY,
+    SHOP_TEMP_KEY,
+    ShopTemp,
+    get_shop_temperature_history,
 )
 
 DEVICE_KEY = "DEVICE_INFO"
@@ -55,24 +55,23 @@ def update_device_cache(
     govee_client: str,
 ) -> int:
     govee_token = _get_auth_token(govee_email, govee_password, govee_client, redis)
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {govee_token}",
-    }
 
     response = requests.post(
-        "https://app2.govee.com/device/rest/devices/v1/list", headers=headers
+        "https://app2.govee.com/device/rest/devices/v1/list",
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {govee_token}",
+        },
     )
 
     response.raise_for_status()
     history = get_shop_temperature_history(redis)
-    devices = response.json()["devices"]
-    for device in devices:
+    for device in response.json()["devices"]:
         if device["device"] == device_token:
-            settings = json.loads(device["deviceExt"]["deviceSettings"])
             device_data = json.loads(device["deviceExt"]["lastDeviceData"])
-            battery = settings["battery"]
-            redis.set(DEVICE_KEY, battery)
+            redis.set(
+                DEVICE_KEY, json.loads(device["deviceExt"]["deviceSettings"])["battery"]
+            )
             redis.set(SHOP_TEMP_KEY, json.dumps(device_data, indent=4).encode("utf-8"))
             shop_temp = ShopTemp.from_api_response(device_data)
             current_max = history.get(shop_temp.formatted_eastern_date, -100)
