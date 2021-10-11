@@ -3,7 +3,12 @@ import json
 import requests
 from redis import Redis
 
-from howhot.shop_temp import SHOP_TEMP_KEY
+from howhot.shop_temp import (
+    SHOP_TEMP_KEY,
+    get_shop_temperature_history,
+    ShopTemp,
+    SHOP_HIGH_HISTORY_KEY,
+)
 
 DEVICE_KEY = "DEVICE_INFO"
 AUTH_KEY = "AUTH_KEY"
@@ -60,6 +65,7 @@ def update_device_cache(
     )
 
     response.raise_for_status()
+    history = get_shop_temperature_history(redis)
     devices = response.json()["devices"]
     for device in devices:
         if device["device"] == device_token:
@@ -68,6 +74,12 @@ def update_device_cache(
             battery = settings["battery"]
             redis.set(DEVICE_KEY, battery)
             redis.set(SHOP_TEMP_KEY, json.dumps(device_data, indent=4).encode("utf-8"))
+            shop_temp = ShopTemp.from_api_response(device_data)
+            current_max = history.get(shop_temp.formatted_eastern_date, -100)
+            if shop_temp.temperature > current_max:
+                history[shop_temp.formatted_eastern_date] = shop_temp.temperature
+                redis.set(SHOP_HIGH_HISTORY_KEY, json.dumps(history))
+
     battery_level = get_battery_level(redis)
     assert battery_level
     return battery_level
