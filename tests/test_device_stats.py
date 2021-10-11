@@ -1,6 +1,9 @@
+from datetime import datetime
+
 import responses
 from fakeredis import FakeRedis
 
+from howhot import EASTERN_TIMEZONE
 from howhot.device_stats import AUTH_KEY, get_battery_level, update_device_cache
 from howhot.shop_temp import get_shop_temp, get_shop_temperature_history
 
@@ -73,11 +76,16 @@ def test_update_battery_cache() -> None:
         update_device_cache(redis, "fakedevice", "fakeEmail", "fakePass", "fakeClient")
         == 72
     )
+    api_date = (
+        datetime.utcfromtimestamp(1627185420000 / 1000)
+        .astimezone(EASTERN_TIMEZONE)
+        .strftime("%m-%d-%Y")
+    )
     assert get_battery_level(redis) == 72
     assert get_shop_temp(redis).temperature == 78
     assert redis.get(AUTH_KEY) == b"fakeauthtoken"
     history = get_shop_temperature_history(redis)
-    assert history["07-25-2021"] == 78
+    assert history[api_date] == 78
 
     # Now read a colder temp and ensure that history does not update
     # Also clearing responses verifies we use the cached auth token
@@ -121,4 +129,4 @@ def test_update_battery_cache() -> None:
     )
     update_device_cache(redis, "fakedevice", "fakeEmail", "fakePass", "fakeClient")
     history = get_shop_temperature_history(redis)
-    assert history["07-25-2021"] == 78
+    assert history[api_date] == 78
