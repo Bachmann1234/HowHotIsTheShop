@@ -75,11 +75,11 @@ def heat_index(fahrenheit_temp: float, relative_humidity: float) -> float:
             + 2.04901523 * fahrenheit_temp
             + 10.14333127 * relative_humidity
             - 0.22475541 * fahrenheit_temp * relative_humidity
-            - 6.83783 * (10 ** -3) * (fahrenheit_temp ** 2)
-            - 5.481717 * (10 ** -2) * (relative_humidity ** 2)
-            + 1.22874 * (10 ** -3) * (fahrenheit_temp ** 2) * relative_humidity
-            + 8.5282 * (10 ** -4) * fahrenheit_temp * (relative_humidity ** 2)
-            - 1.99 * (10 ** -6) * (fahrenheit_temp ** 2) * (relative_humidity ** 2)
+            - 6.83783 * (10**-3) * (fahrenheit_temp**2)
+            - 5.481717 * (10**-2) * (relative_humidity**2)
+            + 1.22874 * (10**-3) * (fahrenheit_temp**2) * relative_humidity
+            + 8.5282 * (10**-4) * fahrenheit_temp * (relative_humidity**2)
+            - 1.99 * (10**-6) * (fahrenheit_temp**2) * (relative_humidity**2)
         )
 
         adjustment = 0.0
