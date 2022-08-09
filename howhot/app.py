@@ -32,12 +32,9 @@ def render_index() -> str:
     )
 
 
-def format_data_for_chart(
+def _get_years_and_dates(
     temp_history: Dict[str, Dict[str, int]]
-) -> Tuple[List[str], Dict[str, List[int]]]:
-    """
-    Format the data for chart.js
-    """
+) -> Tuple[List[str], List[str]]:
     years = set()
     dates = set()
     for key in temp_history.keys():
@@ -45,11 +42,19 @@ def format_data_for_chart(
         years.add(year)
         dates.add(f"{month}-{day}")
 
-    years = sorted(list(years))
-    dates = sorted(list(dates))
+    return sorted(list(years)), sorted(list(dates))
+
+
+def format_data_for_chart(
+    temp_history: Dict[str, Dict[str, int]]
+) -> Tuple[List[str], Dict[str, List[int | None]]]:
+    """
+    Format the data for chart.js
+    """
+    years, dates = _get_years_and_dates(temp_history)
     datasets = {}
     for year in years:
-        dataset = []
+        dataset: List[int | None] = []
         for date in dates:
             point = temp_history.get(f"{date}-{year}")
             if point:
