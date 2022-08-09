@@ -66,8 +66,8 @@ def render_history() -> str:
     dates, datasets = format_data_for_chart(get_shop_temperature_history(redis))
     colors = {}
     for key in datasets:
-        r, g, b = random.choices(range(256), k=3)
-        colors[key] = f"rgb({r}, {g}, {b})"
+        red, green, blue = random.choices(range(256), k=3)
+        colors[key] = f"rgb({red}, {green}, {blue})"
     return render_template(
         "history.html", labels=dates, datasets=datasets, colors=colors
     )
