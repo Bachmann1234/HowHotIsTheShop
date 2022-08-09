@@ -1,6 +1,7 @@
 import os
+import random
 from datetime import datetime
-from typing import Dict, List, Tuple, cast
+from typing import Dict, List, Tuple
 
 from flask import Flask, render_template
 from flask_talisman import Talisman
@@ -33,26 +34,43 @@ def render_index() -> str:
 
 def format_data_for_chart(
     temp_history: Dict[str, Dict[str, int]]
-) -> Tuple[Tuple[str], List[int], List[int]]:
+) -> Tuple[List[str], Dict[str, List[int]]]:
     """
     Format the data for chart.js
     """
-    results = sorted(
-        temp_history.items(),
-        key=lambda k: datetime.strptime(k[0], "%m-%d-%Y"),
-        reverse=False,
-    )
-    dates, maxes = zip(*results)
-    temps = [m["temp"] for m in maxes]
-    humids = [m["humidity"] for m in maxes]
-    return cast(Tuple[str], dates), cast(List[int], temps), cast(List[int], humids)
+    years = set()
+    dates = set()
+    for key in temp_history.keys():
+        month, day, year = key.split("-")
+        years.add(year)
+        dates.add(f"{month}-{day}")
+
+    years = sorted(list(years))
+    dates = sorted(list(dates))
+    datasets = {}
+    for year in years:
+        dataset = []
+        for date in dates:
+            point = temp_history.get(f"{date}-{year}")
+            if point:
+                dataset.append(point["temp"])
+            else:
+                dataset.append(None)
+        datasets[year] = dataset
+    return dates, datasets
 
 
 @app.route("/history")
 def render_history() -> str:
     redis = get_redis_from_url(os.environ["REDIS_URL"])
-    dates, temps, humids = format_data_for_chart(get_shop_temperature_history(redis))
-    return render_template("history.html", labels=dates, temps=temps, humids=humids)
+    dates, datasets = format_data_for_chart(get_shop_temperature_history(redis))
+    colors = {}
+    for key in datasets:
+        r, g, b = random.choices(range(256), k=3)
+        colors[key] = f"rgb({r}, {g}, {b})"
+    return render_template(
+        "history.html", labels=dates, datasets=datasets, colors=colors
+    )
 
 
 @app.route("/history_raw")

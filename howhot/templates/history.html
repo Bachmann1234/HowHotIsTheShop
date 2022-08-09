@@ -34,23 +34,19 @@
             type: 'line',
             data: {
                 labels: {{ labels | tojson }},
-                datasets: [{
-                    label: 'High Temperature',
-                    data: {{ temps | tojson }},
+                datasets: [
+                    {% for key, value in datasets.items() %}
+                        {
+                    label: "{{ key }}",
+                    data: {{ value | tojson }},
                     fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
+                    borderColor: "{{colors[key]}}",
                     pointHitRadius: 10,
                     responsive: true,
                     maintainAspectRatio: false
-                },{
-                    label: 'High Humidity',
-                    data: {{ humids | tojson }},
-                    fill: false,
-                    borderColor: 'rgb(130, 75, 192)',
-                    pointHitRadius: 10,
-                    responsive: true,
-                    maintainAspectRatio: false
-                }]
+                    },
+                    {% endfor %}
+                ]
             },
             options: {
 
