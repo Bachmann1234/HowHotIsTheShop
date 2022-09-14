@@ -9,7 +9,7 @@ from howhot.device_stats import update_device_cache
 from howhot.weather import update_weather_cache
 
 
-def _do_update(redis: Redis) -> None:
+def update_caches(redis: Redis) -> None:
     weather = update_weather_cache(
         redis=redis,
         lat=os.environ["WEATHER_LAT"],
@@ -32,7 +32,7 @@ def _do_update(redis: Redis) -> None:
 
 def main(redis: Redis) -> None:
     try:
-        _do_update(redis)
+        update_caches(redis)
     except Exception:
         trace = traceback.format_exc()
         message = Mail(
