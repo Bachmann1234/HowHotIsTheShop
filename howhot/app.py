@@ -88,8 +88,8 @@ def render_history_json() -> Dict[str, Dict[str, int]]:
 
 
 @app.route("/backfill", methods=["POST"])
-def backfill() -> None:
-    if request.headers.get("your-header-name") != os.environ["api_key"]:
+def backfill() -> str:
+    if request.headers.get("api_key") != os.environ["API_KEY"]:
         raise Forbidden()
     backfill_history(
         redis=get_redis_from_url(os.environ["REDIS_URL"]),
@@ -99,13 +99,15 @@ def backfill() -> None:
         govee_password=os.environ["GOVEE_PASSWORD"],
         govee_client=os.environ["GOVEE_CLIENT"],
     )
+    return "ok"
 
 
 @app.route("/update", methods=["POST"])
-def update() -> None:
-    if request.headers.get("your-header-name") != os.environ["api_key"]:
+def update() -> str:
+    if request.headers.get("api_key") != os.environ["API_KEY"]:
         raise Forbidden()
     update_caches(get_redis_from_url(os.environ["REDIS_URL"]))
+    return "ok"
 
 
 if __name__ == "__main__":
