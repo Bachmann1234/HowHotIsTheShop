@@ -37,6 +37,7 @@ def get_govee_auth_token(
             "client": govee_client,
             "password": govee_password,
         },
+        timeout=30,
     )
 
     response.raise_for_status()
@@ -61,6 +62,7 @@ def update_device_cache(
             "Content-Type": "application/json",
             "Authorization": f"Bearer {govee_token}",
         },
+        timeout=30,
     )
 
     response.raise_for_status()

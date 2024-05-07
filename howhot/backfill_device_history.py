@@ -47,6 +47,7 @@ def _request_backfill(govee_token: str, govee_sku: str, govee_device: str) -> Li
             "device": govee_device,
             "timeRange": {"start": -1, "end": int(time.time() * 1000)},
         },
+        timeout=30,
     )
 
     response.raise_for_status()
@@ -63,6 +64,7 @@ def _get_data_links(task_id: int, govee_token: str) -> List[str]:
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {govee_token}",
             },
+            timeout=10,
         )
 
         response.raise_for_status()
@@ -82,7 +84,7 @@ def _get_data_links(task_id: int, govee_token: str) -> List[str]:
 
 
 def _process_datafile(data_link: str, history: dict) -> None:
-    response = requests.get(data_link)
+    response = requests.get(data_link, timeout=10)
     response.raise_for_status()
     for section in response.text.split(";"):
         for point in section.split("|"):

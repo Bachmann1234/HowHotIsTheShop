@@ -39,7 +39,8 @@ def update_weather_cache(
         f"https://api.openweathermap.org/data/3.0/onecall"
         f"?lat={ lat }&lon={ long }"
         f"&exclude=minutely,hourly,"
-        f"daily,alerts&appid={ weather_api_key }&units=imperial"
+        f"daily,alerts&appid={ weather_api_key }&units=imperial",
+        timeout=10,
     )
     weather.raise_for_status()
     redis.set(WEATHER_REDIS_KEY, weather.text.encode("utf-8"))

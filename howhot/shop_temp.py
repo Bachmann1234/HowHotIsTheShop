@@ -1,6 +1,6 @@
 import json
 from dataclasses import dataclass
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 from math import sqrt
 from typing import Dict, Union, cast
 
