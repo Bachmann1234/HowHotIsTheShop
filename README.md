@@ -34,7 +34,7 @@ Hosted https://www.howhotistheshop.com/ or http://howhotistheshop.herokuapp.com/
 
 `GOVEE_PASSWORD` - Password for govee account
 
-`GOVEE_CLIENT` - Client idd for govee account, not sure if I need it. Is returned from the login call
+`GOVEE_CLIENT` - Client id for govee account, not sure if I need it. Is returned from the login call
 
 
 

@@ -24,7 +24,7 @@ def test_update_weather_cache(stub_weather_api_response: dict) -> None:
     redis = FakeRedis()
     responses.add(
         responses.GET,
-        "https://api.openweathermap.org/data/2.5/onecall"
+        "https://api.openweathermap.org/data/3.0/onecall"
         "?lat=-7.649245&lon=-113.5547542"
         "&exclude=minutely,hourly,"
         "daily,alerts&appid=fake_key&units=imperial",

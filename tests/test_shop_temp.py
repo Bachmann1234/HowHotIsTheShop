@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 import pytest
 from fakeredis import FakeRedis
@@ -11,7 +11,7 @@ def test_get_shop_temp(fake_redis: FakeRedis) -> None:
         temperature=80,
         humidity=54,
         feels_like=81,
-        time=datetime(2021, 7, 22, 1, 57),
+        time=datetime(2021, 7, 22, 1, 57, tzinfo=UTC),
     )
 
 

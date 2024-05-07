@@ -1,6 +1,6 @@
 import json
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, UTC
 from math import sqrt
 from typing import Dict, Union, cast
 
@@ -44,7 +44,7 @@ class ShopTemp:
             temperature=round(temp_in_fahrenheit),
             humidity=round(humidity),
             feels_like=round(heat_index(temp_in_fahrenheit, humidity)),
-            time=datetime.utcfromtimestamp(api_response["lastTime"] / 1000),
+            time=datetime.fromtimestamp(api_response["lastTime"] / 1000, UTC),
         )
 
 

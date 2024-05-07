@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 import responses
 from fakeredis import FakeRedis
@@ -77,7 +77,7 @@ def test_update_battery_cache() -> None:
         == 72
     )
     api_date = (
-        datetime.utcfromtimestamp(1627185420000 / 1000)
+        datetime.fromtimestamp(1627185420000 / 1000, UTC)
         .astimezone(EASTERN_TIMEZONE)
         .strftime("%m-%d-%Y")
     )
