@@ -89,7 +89,7 @@ def render_history_json() -> Dict[str, Dict[str, int]]:
 
 @app.route("/backfill", methods=["POST"])
 def backfill() -> str:
-    if request.headers.get("api_key") != os.environ["API_KEY"]:
+    if request.headers.get("api-key") != os.environ["API_KEY"]:
         print("forbidden backfill request")
         raise Forbidden()
     backfill_history(
@@ -105,7 +105,7 @@ def backfill() -> str:
 
 @app.route("/update", methods=["POST"])
 def update() -> str:
-    if request.headers.get("api_key") != os.environ["API_KEY"]:
+    if request.headers.get("api-key") != os.environ["API_KEY"]:
         print("forbidden update request")
         raise Forbidden()
     update_caches(get_redis_from_url(os.environ["REDIS_URL"]))
