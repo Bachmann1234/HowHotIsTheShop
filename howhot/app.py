@@ -106,6 +106,7 @@ def backfill() -> str:
 @app.route("/update", methods=["POST"])
 def update() -> str:
     if request.headers.get("api_key") != os.environ["API_KEY"]:
+        print("forbidden update request")
         raise Forbidden()
     update_caches(get_redis_from_url(os.environ["REDIS_URL"]))
     return "ok"
