@@ -16,6 +16,7 @@ from howhot.shop_temp import (
 
 
 def backfill_history(
+    *,
     redis: Redis,
     govee_sku: str,
     govee_device: str,
