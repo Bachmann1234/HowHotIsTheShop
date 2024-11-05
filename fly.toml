@@ -3,8 +3,10 @@
 app = "howhotistheshop"
 kill_signal = "SIGINT"
 kill_timeout = 5
-mounts = []
 processes = []
+[mounts]
+  source = "howhotdata"
+  destination = "/data"
 
 [[services]]
   internal_port = 8080
