@@ -1,17 +1,14 @@
 import os
 import traceback
 
-from redis import Redis
-from redis import from_url as get_redis_from_url
 from sendgrid import Mail, SendGridAPIClient
 
 from howhot.device_stats import update_device_cache
 from howhot.weather import update_weather_cache
 
 
-def update_caches(redis: Redis) -> None:
+def update_caches() -> None:
     weather = update_weather_cache(
-        redis=redis,
         lat=os.environ["WEATHER_LAT"],
         long=os.environ["WEATHER_LONG"],
         weather_api_key=os.environ["WEATHER_API_KEY"],
@@ -20,7 +17,6 @@ def update_caches(redis: Redis) -> None:
     print(weather)
 
     battery = update_device_cache(
-        redis=redis,
         device_token=os.environ["GOVEE_DEVICE"],
         govee_email=os.environ["GOVEE_EMAIL"],
         govee_password=os.environ["GOVEE_PASSWORD"],
@@ -30,9 +26,9 @@ def update_caches(redis: Redis) -> None:
     print(f"Battery Level {battery}")
 
 
-def main(redis: Redis) -> None:
+def main() -> None:
     try:
-        update_caches(redis)
+        update_caches()
     except Exception:
         trace = traceback.format_exc()
         message = Mail(
@@ -46,4 +42,4 @@ def main(redis: Redis) -> None:
 
 
 if __name__ == "__main__":
-    main(get_redis_from_url(os.environ["REDIS_URL"]))
+    main()

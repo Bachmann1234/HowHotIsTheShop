@@ -4,27 +4,25 @@ import time
 from typing import Dict, List, cast
 
 import requests
-from redis import Redis
-from redis import from_url as get_redis_from_url
 
+from howhot import memory_cache
 from howhot.device_stats import get_govee_auth_token
 from howhot.shop_temp import (
     SHOP_HIGH_HISTORY_KEY,
     ShopTemp,
+    persist_history,
     update_max_history_from_point,
 )
 
 
 def backfill_history(
-    *,
-    redis: Redis,
     govee_sku: str,
     govee_device: str,
     govee_email: str,
     govee_password: str,
     govee_client: str,
 ) -> None:
-    govee_token = get_govee_auth_token(govee_email, govee_password, govee_client, redis)
+    govee_token = get_govee_auth_token(govee_email, govee_password, govee_client)
     task_ids = _request_backfill(govee_token, govee_sku, govee_device)
     data_links = []
     history: Dict[str, Dict[str, int]] = {}
@@ -33,7 +31,8 @@ def backfill_history(
     for data_link in data_links:
         print(f"Processing: {data_link}")
         _process_datafile(data_link, history)
-    redis.set(SHOP_HIGH_HISTORY_KEY, json.dumps(history))
+    memory_cache.set_cache_value(SHOP_HIGH_HISTORY_KEY, json.dumps(history))
+    persist_history(history)
 
 
 def _request_backfill(govee_token: str, govee_sku: str, govee_device: str) -> List[int]:
@@ -96,7 +95,6 @@ def _process_datafile(data_link: str, history: dict) -> None:
 
 if __name__ == "__main__":
     backfill_history(
-        redis=get_redis_from_url(os.environ["REDIS_URL"]),
         govee_sku=os.environ["GOVEE_SKU"],
         govee_device=os.environ["GOVEE_DEVICE"],
         govee_email=os.environ["GOVEE_EMAIL"],

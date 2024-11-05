@@ -1,16 +1,19 @@
 from datetime import UTC, datetime
 
 import responses
-from fakeredis import FakeRedis
 
-from howhot import EASTERN_TIMEZONE
+from howhot import EASTERN_TIMEZONE, memory_cache
 from howhot.device_stats import AUTH_KEY, get_battery_level, update_device_cache
-from howhot.shop_temp import get_shop_temp, get_shop_temperature_history
+from howhot.shop_temp import (
+    SHOP_HIGH_HISTORY_KEY,
+    get_shop_temp,
+    get_shop_temperature_history,
+)
 
 
 @responses.activate
 def test_update_battery_cache() -> None:
-    redis = FakeRedis()
+    memory_cache.clear_cache_entry(SHOP_HIGH_HISTORY_KEY)
     responses.add(
         responses.POST,
         "https://app2.govee.com/account/rest/account/v1/login",
@@ -73,18 +76,17 @@ def test_update_battery_cache() -> None:
         status=200,
     )
     assert (
-        update_device_cache(redis, "fakedevice", "fakeEmail", "fakePass", "fakeClient")
-        == 72
+        update_device_cache("fakedevice", "fakeEmail", "fakePass", "fakeClient") == 72
     )
     api_date = (
         datetime.fromtimestamp(1627185420000 / 1000, UTC)
         .astimezone(EASTERN_TIMEZONE)
         .strftime("%m-%d-%Y")
     )
-    assert get_battery_level(redis) == 72
-    assert get_shop_temp(redis).temperature == 78
-    assert redis.get(AUTH_KEY) == b"fakeauthtoken"
-    history = get_shop_temperature_history(redis)
+    assert get_battery_level() == 72
+    assert get_shop_temp().temperature == 78
+    assert memory_cache.get_cache_value(AUTH_KEY) == "fakeauthtoken"
+    history = get_shop_temperature_history()
     assert history[api_date] == {"humidity": 54, "temp": 78}
 
     # Now read a colder temp and ensure that history does not update
@@ -127,6 +129,6 @@ def test_update_battery_cache() -> None:
         },
         status=200,
     )
-    update_device_cache(redis, "fakedevice", "fakeEmail", "fakePass", "fakeClient")
-    history = get_shop_temperature_history(redis)
+    update_device_cache("fakedevice", "fakeEmail", "fakePass", "fakeClient")
+    history = get_shop_temperature_history()
     assert history[api_date] == {"humidity": 54, "temp": 78}

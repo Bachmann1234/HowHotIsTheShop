@@ -1,10 +1,12 @@
 import json
+import os
 from dataclasses import dataclass
 
 import requests
-from redis import Redis
 
-WEATHER_REDIS_KEY = "CURRENT_WEATHER"
+from howhot import memory_cache
+
+WEATHER_CACHE_KEY = "CURRENT_WEATHER"
 
 
 @dataclass
@@ -26,15 +28,19 @@ class Weather:
         )
 
 
-def get_weather(redis: Redis) -> Weather:
-    cached_weather_response = redis.get(WEATHER_REDIS_KEY)
-    assert cached_weather_response
-    return Weather.from_api_dict(json.loads(cached_weather_response.decode("utf-8")))
+def get_weather() -> Weather:
+    cached_weather_response = memory_cache.get_cache_value(WEATHER_CACHE_KEY)
+    if not cached_weather_response:
+        update_weather_cache(
+            lat=os.environ["WEATHER_LAT"],
+            long=os.environ["WEATHER_LONG"],
+            weather_api_key=os.environ["WEATHER_API_KEY"],
+        )
+        cached_weather_response = memory_cache.get_cache_value(WEATHER_CACHE_KEY)
+    return Weather.from_api_dict(json.loads(str(cached_weather_response)))
 
 
-def update_weather_cache(
-    redis: Redis, lat: str, long: str, weather_api_key: str
-) -> Weather:
+def update_weather_cache(lat: str, long: str, weather_api_key: str) -> Weather:
     weather = requests.get(
         f"https://api.openweathermap.org/data/3.0/onecall"
         f"?lat={ lat }&lon={ long }"
@@ -43,5 +49,5 @@ def update_weather_cache(
         timeout=10,
     )
     weather.raise_for_status()
-    redis.set(WEATHER_REDIS_KEY, weather.text.encode("utf-8"))
-    return get_weather(redis)
+    memory_cache.set_cache_value(WEATHER_CACHE_KEY, weather.text)
+    return get_weather()

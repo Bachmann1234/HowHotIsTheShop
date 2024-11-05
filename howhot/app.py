@@ -5,7 +5,6 @@ from typing import Dict, List, Tuple
 
 from flask import Flask, render_template, request
 from flask_talisman import Talisman
-from redis import from_url as get_redis_from_url
 from werkzeug.exceptions import Forbidden
 
 from howhot import EASTERN_TIMEZONE
@@ -20,10 +19,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def render_index() -> str:
-    redis = get_redis_from_url(os.environ["REDIS_URL"])
-    weather = get_weather(redis)
-    shop_temp = get_shop_temp(redis)
-    battery_level = get_battery_level(redis)
+    weather = get_weather()
+    shop_temp = get_shop_temp()
+    battery_level = get_battery_level()
     return render_template(
         "index.html",
         shop_temp=shop_temp,
@@ -70,8 +68,7 @@ def format_data_for_chart(
 
 @app.route("/history")
 def render_history() -> str:
-    redis = get_redis_from_url(os.environ["REDIS_URL"])
-    dates, datasets = format_data_for_chart(get_shop_temperature_history(redis))
+    dates, datasets = format_data_for_chart(get_shop_temperature_history())
     colors = {}
     for key in datasets:
         red, green, blue = random.choices(range(256), k=3)
@@ -83,8 +80,7 @@ def render_history() -> str:
 
 @app.route("/history_raw")
 def render_history_json() -> Dict[str, Dict[str, int]]:
-    redis = get_redis_from_url(os.environ["REDIS_URL"])
-    return get_shop_temperature_history(redis)
+    return get_shop_temperature_history()
 
 
 @app.route("/backfill", methods=["POST"])
@@ -93,7 +89,6 @@ def backfill() -> str:
         print("forbidden backfill request")
         raise Forbidden()
     backfill_history(
-        redis=get_redis_from_url(os.environ["REDIS_URL"]),
         govee_sku=os.environ["GOVEE_SKU"],
         govee_device=os.environ["GOVEE_DEVICE"],
         govee_email=os.environ["GOVEE_EMAIL"],
@@ -108,7 +103,7 @@ def update() -> str:
     if request.headers.get("api-key") != os.environ["API_KEY"]:
         print("forbidden update request")
         raise Forbidden()
-    update_caches(get_redis_from_url(os.environ["REDIS_URL"]))
+    update_caches()
     return "ok"
 
 

@@ -1,13 +1,12 @@
 from datetime import UTC, datetime
 
 import pytest
-from fakeredis import FakeRedis
 
 from howhot.shop_temp import ShopTemp, celsius_to_fahrenheit, get_shop_temp, heat_index
 
 
-def test_get_shop_temp(fake_redis: FakeRedis) -> None:
-    assert get_shop_temp(fake_redis) == ShopTemp(
+def test_get_shop_temp() -> None:
+    assert get_shop_temp() == ShopTemp(
         temperature=80,
         humidity=54,
         feels_like=81,

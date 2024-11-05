@@ -28,7 +28,6 @@ def test_history_raw() -> None:
 
 
 def test_format_data() -> None:
-
     assert format_data_for_chart(
         {
             "07-23-2022": {"temp": 79, "humidity": 48},

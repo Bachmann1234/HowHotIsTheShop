@@ -1,7 +1,6 @@
 import os
 from datetime import datetime
 
-from redis import from_url as get_redis_from_url
 from sendgrid import Mail, SendGridAPIClient
 
 from howhot.shop_temp import ShopTemp, get_shop_temp
@@ -27,9 +26,8 @@ def alert_if_shop_temp_old(shop_temp: ShopTemp, current_time: datetime) -> bool:
 
 
 def main() -> None:
-    redis = get_redis_from_url(os.environ["REDIS_URL"])
     current_time = datetime.now()
-    shop_temp = get_shop_temp(redis)
+    shop_temp = get_shop_temp()
     too_old = alert_if_shop_temp_old(shop_temp, current_time)
     if too_old:
         print("Thermometer has not updated in a while")

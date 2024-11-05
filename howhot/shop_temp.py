@@ -1,12 +1,12 @@
 import json
+import os
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from math import sqrt
+from pathlib import Path
 from typing import Dict, Union, cast
 
-from redis import Redis
-
-from howhot import EASTERN_TIMEZONE
+from howhot import EASTERN_TIMEZONE, memory_cache
 
 SHOP_HIGH_HISTORY_KEY = "SHOP_HIGH_HISTORY"
 SHOP_TEMP_KEY = "SHOP_TEMP"
@@ -48,11 +48,10 @@ class ShopTemp:
         )
 
 
-def get_shop_temp(redis: Redis) -> ShopTemp:
-    cached_shop_response = redis.get(SHOP_TEMP_KEY)
+def get_shop_temp() -> ShopTemp:
+    cached_shop_response = memory_cache.get_cache_value(SHOP_TEMP_KEY)
     assert cached_shop_response
-    cached_shop_response = json.loads(cached_shop_response.decode("utf-8"))
-    return ShopTemp.from_api_response(cached_shop_response)
+    return ShopTemp.from_api_response(json.loads(cached_shop_response))
 
 
 def celsius_to_fahrenheit(celsius: float) -> float:
@@ -94,23 +93,42 @@ def heat_index(fahrenheit_temp: float, relative_humidity: float) -> float:
     return result
 
 
-def get_shop_temperature_history(
-    redis: Redis,
-) -> Dict[str, Dict[str, int]]:
-    # Shop history is a dict from date string to maximum temp seen at that date
-    # Dates are EST
-    shop_history = redis.get(SHOP_HIGH_HISTORY_KEY)
-    return cast(Dict, json.loads(shop_history.decode("utf-8"))) if shop_history else {}
+def get_shop_temperature_history() -> Dict[str, Dict[str, int]]:
+    shop_history = memory_cache.get_cache_value(SHOP_HIGH_HISTORY_KEY)
+    if not shop_history:
+        file_path = Path(os.environ["HISTORY_PATH"], "history.json")
+        file_path.touch(exist_ok=True)
+        with open(file_path, encoding="utf-8") as infile:
+            shop_history = infile.read()
+            if not shop_history:
+                shop_history = "{}"
+            memory_cache.set_cache_value(SHOP_HIGH_HISTORY_KEY, shop_history)
+    return cast(Dict, json.loads(shop_history)) if shop_history else {}
 
 
 def update_max_history_from_point(
     history: Dict[str, Dict[str, int]], shop_temp: ShopTemp
 ) -> None:
+    write = False
     current_maxes = history.get(shop_temp.formatted_eastern_date)
     if not current_maxes:
         current_maxes = {"temp": -100, "humidity": -100}
         history[shop_temp.formatted_eastern_date] = current_maxes
+        write = True
     if shop_temp.temperature > current_maxes["temp"]:
         history[shop_temp.formatted_eastern_date]["temp"] = shop_temp.temperature
+        write = True
     if shop_temp.humidity > current_maxes["humidity"]:
         history[shop_temp.formatted_eastern_date]["humidity"] = shop_temp.humidity
+        write = True
+    if write:
+        persist_history(history)
+
+
+def persist_history(history: Dict[str, Dict[str, int]]):
+    with open(
+        os.path.join(os.environ["HISTORY_PATH"], "history.json"),
+        mode="w",
+        encoding="utf-8",
+    ) as infile:
+        infile.write(json.dumps(history))

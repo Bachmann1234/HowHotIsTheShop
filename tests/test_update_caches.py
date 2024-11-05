@@ -1,7 +1,6 @@
 from unittest.mock import call, patch
 
 import pytest
-from fakeredis import FakeRedis
 
 from howhot import update_caches
 
@@ -15,7 +14,7 @@ def test_update_fail():
     # So I did not send any other apis so updating should fail real quick
     with patch("howhot.update_caches.SendGridAPIClient") as sendgrid_mock:
         with pytest.raises(KeyError):
-            update_caches.main(FakeRedis())
+            update_caches.main()
         assert sendgrid_mock.call_args_list == [call("sendgrid_key")]
 
         assert len(sendgrid_mock.mock_calls) == 2
