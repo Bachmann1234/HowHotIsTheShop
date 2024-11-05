@@ -111,7 +111,7 @@ def update() -> str:
     return "ok"
 
 
-@app.route("/update", methods=["POST"])
+@app.route("/backfill", methods=["POST"])
 def backfill_file() -> str:
     # pylint: disable=too-many-lines
     if request.headers.get("api-key") != os.environ["API_KEY"]:
