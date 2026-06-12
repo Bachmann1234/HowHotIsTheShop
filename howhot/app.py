@@ -72,8 +72,16 @@ def render_history() -> str:
     for key in datasets:
         red, green, blue = random.choices(range(256), k=3)
         colors[key] = f"rgb({red}, {green}, {blue})"
+    current_year = datetime.now().astimezone(EASTERN_TIMEZONE).year
+    default_years = {str(current_year), str(current_year - 1)} & datasets.keys()
+    if not default_years and datasets:
+        default_years = {max(datasets)}
     return render_template(
-        "history.html", labels=dates, datasets=datasets, colors=colors
+        "history.html",
+        labels=dates,
+        datasets=datasets,
+        colors=colors,
+        default_years=default_years,
     )
 
 

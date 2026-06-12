@@ -13,6 +13,11 @@ def test_history() -> None:
     with app.test_client() as client:
         response = client.get("/history")
         assert response.status_code == 200
+        # Fixture data is all from 2021. Neither the current nor previous
+        # year is present, so the latest year falls back to visible
+        body = response.data.decode("utf-8")
+        assert body.count("hidden: false") == 1
+        assert body.count("hidden: true") == 0
 
 
 def test_history_raw() -> None:

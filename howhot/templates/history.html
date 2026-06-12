@@ -40,6 +40,7 @@
                     label: "{{ key }}",
                     data: {{ value | tojson }},
                     fill: false,
+                    hidden: {{ "false" if key in default_years else "true" }},
                     borderColor: "{{colors[key]}}",
                     pointHitRadius: 10,
                     responsive: true,
