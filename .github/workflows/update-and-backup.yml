@@ -3,7 +3,7 @@ on:
   schedule:
     # Off the top of the hour: GitHub's cron queue is most congested at :00,
     # when runs are most likely to be delayed or dropped.
-    - cron: "17,47 * * * *"
+    - cron: "3,13,23,33,43,53 * * * *"
   workflow_dispatch:
 
 # Serialize runs so two updates never race on /update or the backup push
