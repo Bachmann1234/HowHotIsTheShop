@@ -17,10 +17,13 @@
         .pk .k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:600}
         .pk .v{font-family:"Space Grotesk",sans-serif;font-size:21px;font-weight:500;margin-top:5px}
 
-        /* year selector */
+        /* view + year selector */
         .sel{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
         .sel .lab{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600}
         .sel .acts{display:flex;gap:4px}
+        .seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+        .seg button{min-height:30px;padding:0 12px;font-size:11px;font-weight:600;border:none;background:none;color:var(--muted);border-radius:999px;cursor:pointer;font-family:inherit}
+        .seg button[aria-pressed="true"]{background:rgba(63,194,180,.14);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(63,194,180,.55)}
         .act{min-height:30px;padding:0 10px;font-size:11px;font-weight:600;color:var(--muted);background:none;border:1px solid var(--line);border-radius:999px;cursor:pointer;font-family:inherit}
         .act:active{background:rgba(63,194,180,.1)}
         .chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;margin:0 -2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
@@ -33,6 +36,19 @@
         .panel{background:linear-gradient(180deg,var(--card),var(--bg-2));border:1px solid var(--line);border-radius:18px;padding:14px 12px 10px}
         .chartbox{position:relative;height:clamp(300px,52vh,440px)}
         .empty{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;color:var(--faint);font-size:13px;padding:0 30px}
+        .cap{color:var(--faint);font-size:11px;text-align:center;padding:8px 6px 2px}
+        .cap i{display:inline-block;width:18px;height:9px;border-radius:3px;background:rgba(63,194,180,.28);vertical-align:-1px;font-style:normal}
+        .cap b{display:inline-block;width:18px;border-top:2px dashed var(--faint);vertical-align:3px}
+
+        /* by-year records */
+        .yrs{margin-top:18px}
+        .yrs table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;margin-top:6px}
+        .yrs th{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:600;text-align:right;padding:6px 0}
+        .yrs th:first-child,.yrs td:first-child{text-align:left}
+        .yrs td{padding:9px 0 9px 8px;font-size:14px;border-top:1px solid var(--line);text-align:right}
+        .yrs td:first-child{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:15px;padding-left:0}
+        .yrs td small{color:var(--faint);font-size:11px;margin-left:5px}
+        .yrs .foot{color:var(--faint);font-size:11px;margin-top:8px;line-height:1.5}
 
         /* a season of daily points needs width more than height */
         @media (min-width: 700px) {
@@ -63,8 +79,15 @@
     </div>
 
     <div class="sel">
-        <span class="lab">Compare years</span>
-        <div class="acts">
+        {% if has_band %}
+            <div class="seg" id="seg">
+                <button id="v-normal" aria-pressed="true">Vs normal</button>
+                <button id="v-compare" aria-pressed="false">Compare years</button>
+            </div>
+        {% else %}
+            <span class="lab">Compare years</span>
+        {% endif %}
+        <div class="acts" id="acts">
             <button class="act" id="all">All</button>
             <button class="act" id="recent">Recent</button>
         </div>
@@ -76,9 +99,47 @@
             <canvas id="shopChart"></canvas>
             <div class="empty" id="empty">Pick a year above to see its daily highs.</div>
         </div>
+        <div class="cap" id="cap" hidden>
+            <span style="color:var(--ink)">{{ highlight_year }}</span> ·
+            <i></i> range across past years · <b></b> typical
+        </div>
     </div>
+
+    {% if year_stats %}
+        <div class="yrs">
+            <span class="lab">By year</span>
+            <table>
+                <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>&ge;{{ hot_day }}&deg;</th>
+                    <th>&ge;{{ scorcher }}&deg;</th>
+                    <th>Peak</th>
+                    <th>Streak</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in year_stats %}
+                    <tr>
+                        <td>{{ row.year }}<small>{{ row.logged }}d logged</small></td>
+                        <td>{{ row.hot_days }}</td>
+                        <td>{{ row.scorchers }}</td>
+                        <td>{{ row.peak }}&deg;<small>{{ row.peak_date }}</small></td>
+                        <td>{{ row.streak }}d</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="foot">Streak is the longest run of consecutive logged days at or above {{ hot_day }}&deg;.
+                Years with fewer days logged undercount.</div>
+        </div>
+    {% endif %}
     <script>
         const defaultYears = new Set({{ default_years | list | tojson }});
+        const band = {{ band | tojson }};
+        const highlightYear = {{ highlight_year | tojson }};
+        const hasBand = {{ has_band | tojson }};
+        let mode = 'compare';
         const ctx = document.getElementById('shopChart').getContext('2d');
         const chart = new Chart(ctx, {
             type: 'line',
@@ -118,7 +179,14 @@
                         padding: 11, titleColor: '#e9f3f4', bodyColor: '#92a8ad',
                         cornerRadius: 12, usePointStyle: true,
                         itemSort: (a, b) => b.parsed.y - a.parsed.y,
-                        callbacks: {label: c => ` ${c.dataset.label}: ${c.parsed.y}°`}
+                        filter: c => mode === 'compare' || c.dataset.label !== '__lo',
+                        callbacks: {
+                            label: c => {
+                                if (c.dataset.label === '__range') return ` Range: ${band.lo[c.dataIndex]}–${band.hi[c.dataIndex]}°`;
+                                if (c.dataset.label === '__mid') return ` Typical: ${c.parsed.y}°`;
+                                return ` ${c.dataset.label}: ${c.parsed.y}°`;
+                            }
+                        }
                     },
                     zoom: {
                         limits: {
@@ -148,21 +216,37 @@
             }
         });
 
+        // ---- the per-year datasets, kept aside so views can swap freely ----
+        const compareDatasets = chart.data.datasets;
+        const highlightSet = compareDatasets.find(d => d.label === highlightYear);
+        const normalDatasets = !hasBand ? [] : [
+            {label: '__lo', data: band.lo, borderWidth: 0, pointRadius: 0, pointHoverRadius: 0, fill: false, tension: .4, spanGaps: true},
+            {label: '__range', data: band.hi, borderWidth: 0, pointRadius: 0, pointHoverRadius: 0, fill: '-1', backgroundColor: 'rgba(63,194,180,.18)', tension: .4, spanGaps: true},
+            {label: '__mid', data: band.mid, borderColor: '#5e747a', borderDash: [5, 5], borderWidth: 1.5, pointRadius: 0, pointHoverRadius: 0, fill: false, tension: .4, spanGaps: true},
+            {
+                label: highlightYear, data: highlightSet ? highlightSet.data : [],
+                borderColor: '#e7ede9', backgroundColor: '#e7ede9', fill: false, tension: .4,
+                borderWidth: 2.5, spanGaps: true, pointRadius: 0, pointHoverRadius: 5,
+                pointHoverBackgroundColor: '#e7ede9', pointHoverBorderColor: '#0e1417',
+                pointHoverBorderWidth: 2, pointHitRadius: 16
+            },
+        ];
+
         // ---- peak stats across all data ----
-        const flat = chart.data.datasets.flatMap(d => d.data).filter(v => v != null);
+        const flat = compareDatasets.flatMap(d => d.data).filter(v => v != null);
         if (flat.length) {
             document.getElementById('pk-hot').textContent = Math.max(...flat) + '°';
             document.getElementById('pk-avg').textContent = Math.round(flat.reduce((a, b) => a + b, 0) / flat.length) + '°';
         }
-        document.getElementById('pk-yrs').textContent = chart.data.datasets.length;
+        document.getElementById('pk-yrs').textContent = compareDatasets.length;
 
         // ---- year toggle chips (newest first) ----
         const chipWrap = document.getElementById('chips');
         const emptyEl = document.getElementById('empty');
         const chipEls = {};
         const colorFor = {};
-        chart.data.datasets.forEach(d => colorFor[d.label] = d.borderColor);
-        const byRecency = chart.data.datasets.map(d => d.label).sort().reverse();
+        compareDatasets.forEach(d => colorFor[d.label] = d.borderColor);
+        const byRecency = compareDatasets.map(d => d.label).sort().reverse();
 
         function rgba(hex, a) {
             const n = parseInt(hex.slice(1), 16);
@@ -178,16 +262,16 @@
             dot.style.background = on ? c : 'var(--faint)';
         }
         function refreshEmpty() {
-            const anyOn = chart.data.datasets.some(d => !d.hidden);
+            const anyOn = mode === 'normal' || compareDatasets.some(d => !d.hidden);
             emptyEl.style.display = anyOn ? 'none' : 'flex';
         }
         byRecency.forEach(y => {
-            const idx = chart.data.datasets.findIndex(d => d.label === y);
+            const idx = compareDatasets.findIndex(d => d.label === y);
             const chip = document.createElement('button');
             chip.className = 'chip';
             chip.innerHTML = `<span class="cdot"></span>${y}`;
             chip.addEventListener('click', () => {
-                const ds = chart.data.datasets[idx];
+                const ds = compareDatasets[idx];
                 ds.hidden = !ds.hidden;
                 paintChip(y, !ds.hidden);
                 chart.update();
@@ -195,16 +279,36 @@
             });
             chipWrap.appendChild(chip);
             chipEls[y] = chip;
-            paintChip(y, !chart.data.datasets[idx].hidden);
+            paintChip(y, !compareDatasets[idx].hidden);
         });
         function applyState(test) {
-            chart.data.datasets.forEach(d => { d.hidden = !test(d.label); });
+            compareDatasets.forEach(d => { d.hidden = !test(d.label); });
             byRecency.forEach(y => paintChip(y, test(y)));
             chart.update();
             refreshEmpty();
         }
         document.getElementById('all').addEventListener('click', () => applyState(() => true));
         document.getElementById('recent').addEventListener('click', () => applyState(y => defaultYears.has(y)));
+
+        // ---- view switching ----
+        function setMode(m) {
+            mode = m;
+            chart.data.datasets = m === 'normal' ? normalDatasets : compareDatasets;
+            document.getElementById('acts').style.display = m === 'normal' ? 'none' : 'flex';
+            chipWrap.style.display = m === 'normal' ? 'none' : 'flex';
+            document.getElementById('cap').hidden = m !== 'normal';
+            if (hasBand) {
+                document.getElementById('v-normal').setAttribute('aria-pressed', String(m === 'normal'));
+                document.getElementById('v-compare').setAttribute('aria-pressed', String(m === 'compare'));
+            }
+            chart.update();
+            refreshEmpty();
+        }
+        if (hasBand) {
+            document.getElementById('v-normal').addEventListener('click', () => setMode('normal'));
+            document.getElementById('v-compare').addEventListener('click', () => setMode('compare'));
+            setMode('normal');
+        }
         refreshEmpty();
     </script>
 {% endblock %}
