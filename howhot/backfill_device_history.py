@@ -6,7 +6,7 @@ from typing import Dict, List, cast
 import requests
 
 from howhot import memory_cache
-from howhot.device_stats import get_govee_auth_token
+from howhot.device_stats import GOVEE_APP_VERSION, get_govee_auth_token
 from howhot.shop_temp import (
     SHOP_HIGH_HISTORY_KEY,
     ShopTemp,
@@ -41,6 +41,7 @@ def _request_backfill(govee_token: str, govee_sku: str, govee_device: str) -> Li
         headers={
             "Content-Type": "application/json",
             "Authorization": f"Bearer {govee_token}",
+            "appVersion": GOVEE_APP_VERSION,
         },
         json={
             "sku": govee_sku,
@@ -63,6 +64,7 @@ def _get_data_links(task_id: int, govee_token: str) -> List[str]:
             headers={
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {govee_token}",
+                "appVersion": GOVEE_APP_VERSION,
             },
             timeout=10,
         )

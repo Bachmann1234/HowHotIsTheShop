@@ -66,4 +66,10 @@ function backupShopData() {
 
 `backfill_device_history` will update the history cache from scratch wiping the rest out
 
+**WARNING**: Govee's data export only retains about 2 years of history. Running the backfill
+against production wipes any older days from history.json. To recover a gap without losing
+old data, run the backfill locally with HISTORY_PATH pointed at a temp dir, merge the result
+into a copy of the current history (per-day, per-field max), and upload the merged file to
+the volume.
+
 `update_caches` will update any cached data about the present state of the device. Updating the relevant history value if needed 
