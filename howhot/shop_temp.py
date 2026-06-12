@@ -78,7 +78,7 @@ def heat_index(fahrenheit_temp: float, relative_humidity: float) -> float:
         + (61 + ((fahrenheit_temp - 68.0) * 1.2) + (relative_humidity * 0.094))
     )
 
-    if (result + fahrenheit_temp) / 2 >= 80:
+    if result >= 80:
         result = (
             -42.379
             + 2.04901523 * fahrenheit_temp
@@ -91,14 +91,13 @@ def heat_index(fahrenheit_temp: float, relative_humidity: float) -> float:
             - 1.99 * (10**-6) * (fahrenheit_temp**2) * (relative_humidity**2)
         )
 
-        adjustment = 0.0
-        if relative_humidity < 13 and 80 < fahrenheit_temp < 112:
-            adjustment = ((13 - relative_humidity) / 4) * sqrt(
+        if relative_humidity < 13 and 80 <= fahrenheit_temp <= 112:
+            result -= ((13 - relative_humidity) / 4) * sqrt(
                 (17 - abs(fahrenheit_temp - 95)) / 17
             )
-        elif relative_humidity > 85 and 80 < fahrenheit_temp < 87:
-            adjustment = ((relative_humidity - 85) / 10) * ((87 - fahrenheit_temp) / 5)
-        result -= adjustment
+        elif relative_humidity > 85 and 80 <= fahrenheit_temp <= 87:
+            # NWS adds this one: muggy conditions feel hotter, not cooler
+            result += ((relative_humidity - 85) / 10) * ((87 - fahrenheit_temp) / 5)
 
     return result
 
