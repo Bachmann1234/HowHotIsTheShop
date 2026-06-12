@@ -1,6 +1,5 @@
 import hmac
 import os
-import random
 from datetime import datetime
 
 from flask import Flask, render_template, request
@@ -13,6 +12,19 @@ from howhot.update_caches import update_caches_with_alerts
 from howhot.weather import get_weather
 
 app = Flask(__name__)
+
+# Year-line palette, assigned by recency: the newest year always gets the
+# clearest color on the dark theme, and it cycles if years outgrow it.
+CHART_PALETTE = [
+    "#e7ede9",
+    "#3fc2b4",
+    "#5a9fd6",
+    "#a98fd6",
+    "#e0a36b",
+    "#7fcf9c",
+    "#d68fb0",
+    "#6fc7d6",
+]
 
 
 @app.route("/")
@@ -67,10 +79,10 @@ def format_data_for_chart(
 @app.route("/history")
 def render_history() -> str:
     dates, datasets = format_data_for_chart(get_shop_temperature_history())
-    colors = {}
-    for key in datasets:
-        red, green, blue = random.choices(range(256), k=3)
-        colors[key] = f"rgb({red}, {green}, {blue})"
+    colors = {
+        year: CHART_PALETTE[index % len(CHART_PALETTE)]
+        for index, year in enumerate(sorted(datasets, reverse=True))
+    }
     current_year = datetime.now().astimezone(EASTERN_TIMEZONE).year
     default_years = {str(current_year), str(current_year - 1)} & datasets.keys()
     if not default_years and datasets:

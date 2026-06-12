@@ -10,29 +10,77 @@
             integrity="sha512-FRGbE3pigbYamZnw4+uT4t63+QJOfg4MXSgzPn2t8AWg9ofmFvZ/0Z37ZpCawjfXLBSVX2p2CncsmUH2hzsgJg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
-        #contentContainer {
-            padding: 1vh 1vw;
+        h1{font-family:"Space Grotesk",sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.02em;margin-top:14px}
+        .sub{color:var(--muted);font-size:13px;margin-top:4px}
+        .peak{display:flex;gap:10px;margin:14px 0 12px}
+        .pk{flex:1;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 13px}
+        .pk .k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:600}
+        .pk .v{font-family:"Space Grotesk",sans-serif;font-size:21px;font-weight:500;margin-top:5px}
+
+        /* year selector */
+        .sel{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+        .sel .lab{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600}
+        .sel .acts{display:flex;gap:4px}
+        .act{min-height:30px;padding:0 10px;font-size:11px;font-weight:600;color:var(--muted);background:none;border:1px solid var(--line);border-radius:999px;cursor:pointer;font-family:inherit}
+        .act:active{background:rgba(63,194,180,.1)}
+        .chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;margin:0 -2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+        .chips::-webkit-scrollbar{display:none}
+        .chip{flex:none;min-height:38px;display:flex;align-items:center;gap:8px;padding:0 14px 0 12px;
+            background:var(--card);border:1px solid var(--line);border-radius:999px;cursor:pointer;
+            font-family:"Space Grotesk",sans-serif;font-size:15px;font-weight:500;color:var(--faint)}
+        .chip .cdot{width:11px;height:11px;border-radius:50%;background:var(--faint);flex:none}
+
+        .panel{background:linear-gradient(180deg,var(--card),var(--bg-2));border:1px solid var(--line);border-radius:18px;padding:14px 12px 10px}
+        .chartbox{position:relative;height:clamp(300px,52vh,440px)}
+        .empty{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;color:var(--faint);font-size:13px;padding:0 30px}
+
+        /* a season of daily points needs width more than height */
+        @media (min-width: 700px) {
+            .wrap {
+                max-width: 860px;
+            }
         }
-        #shopChart {
-            max-height: 75vh;
-        }
-        @media screen and (orientation:landscape) {
-            footer, .title {
+        @media screen and (orientation:landscape) and (max-height: 500px) {
+            .top, h1, .sub, .peak, footer {
                 display: none;
+            }
+            .chartbox {
+                height: 76vh;
             }
         }
     </style>
 {% endblock %}
+{% block nav %}
+    <a class="ghost" href="{{ url_for('render_index') }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Now</a>
+{% endblock %}
 {% block content %}
-    <div id="nav">
-        <a href="{{ url_for('render_index') }}">See Current Temperature</a>
+    <h1>Daily highs</h1>
+    <div class="sub">Hottest reading recorded in the shop each day, by year.</div>
+    <div class="peak">
+        <div class="pk"><span class="k">Hottest</span><span class="v" id="pk-hot">—</span></div>
+        <div class="pk"><span class="k">Avg high</span><span class="v" id="pk-avg">—</span></div>
+        <div class="pk"><span class="k">Years</span><span class="v" id="pk-yrs">—</span></div>
     </div>
-    <div id="contentContainer">
-        <canvas id="shopChart"></canvas>
+
+    <div class="sel">
+        <span class="lab">Compare years</span>
+        <div class="acts">
+            <button class="act" id="all">All</button>
+            <button class="act" id="recent">Recent</button>
+        </div>
+    </div>
+    <div class="chips" id="chips"></div>
+
+    <div class="panel">
+        <div class="chartbox">
+            <canvas id="shopChart"></canvas>
+            <div class="empty" id="empty">Pick a year above to see its daily highs.</div>
+        </div>
     </div>
     <script>
+        const defaultYears = new Set({{ default_years | list | tojson }});
         const ctx = document.getElementById('shopChart').getContext('2d');
-        const myChart = new Chart(ctx, {
+        const chart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: {{ labels | tojson }},
@@ -43,15 +91,35 @@
                     data: {{ value | tojson }},
                     fill: false,
                     hidden: {{ "false" if key in default_years else "true" }},
-                    borderColor: "{{colors[key]}}",
-                    pointHitRadius: 10
+                    borderColor: "{{ colors[key] }}",
+                    backgroundColor: "{{ colors[key] }}",
+                    tension: .4,
+                    borderWidth: 2.5,
+                    spanGaps: true,
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "{{ colors[key] }}",
+                    pointHoverBorderColor: '#0e1417',
+                    pointHoverBorderWidth: 2,
+                    pointHitRadius: 16
                     },
                     {% endfor %}
                 ]
             },
             options: {
-
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: false,
+                interaction: {mode: 'index', intersect: false},
                 plugins: {
+                    legend: {display: false},
+                    tooltip: {
+                        backgroundColor: '#172228', borderColor: '#243138', borderWidth: 1,
+                        padding: 11, titleColor: '#e9f3f4', bodyColor: '#92a8ad',
+                        cornerRadius: 12, usePointStyle: true,
+                        itemSort: (a, b) => b.parsed.y - a.parsed.y,
+                        callbacks: {label: c => ` ${c.dataset.label}: ${c.parsed.y}°`}
+                    },
                     zoom: {
                         limits: {
                             x: {
@@ -72,12 +140,74 @@
                             mode: 'x'
                         }
                     }
+                },
+                scales: {
+                    x: {grid: {color: '#1c272c', drawTicks: false}, border: {display: false}, ticks: {padding: 7, maxRotation: 0, autoSkipPadding: 18, font: {size: 10}}},
+                    y: {grid: {color: '#1c272c', drawTicks: false}, border: {display: false}, ticks: {padding: 8, stepSize: 10, font: {size: 10}, callback: v => v + '°'}}
                 }
             }
         });
 
+        // ---- peak stats across all data ----
+        const flat = chart.data.datasets.flatMap(d => d.data).filter(v => v != null);
+        if (flat.length) {
+            document.getElementById('pk-hot').textContent = Math.max(...flat) + '°';
+            document.getElementById('pk-avg').textContent = Math.round(flat.reduce((a, b) => a + b, 0) / flat.length) + '°';
+        }
+        document.getElementById('pk-yrs').textContent = chart.data.datasets.length;
+
+        // ---- year toggle chips (newest first) ----
+        const chipWrap = document.getElementById('chips');
+        const emptyEl = document.getElementById('empty');
+        const chipEls = {};
+        const colorFor = {};
+        chart.data.datasets.forEach(d => colorFor[d.label] = d.borderColor);
+        const byRecency = chart.data.datasets.map(d => d.label).sort().reverse();
+
+        function rgba(hex, a) {
+            const n = parseInt(hex.slice(1), 16);
+            return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`;
+        }
+        function paintChip(y, on) {
+            const chip = chipEls[y], c = colorFor[y], dot = chip.querySelector('.cdot');
+            chip.setAttribute('aria-pressed', String(on));
+            chip.style.background = on ? rgba(c, .14) : 'var(--card)';
+            chip.style.borderColor = on ? 'transparent' : 'var(--line)';
+            chip.style.boxShadow = on ? `inset 0 0 0 1px ${rgba(c, .55)}` : 'none';
+            chip.style.color = on ? 'var(--ink)' : 'var(--faint)';
+            dot.style.background = on ? c : 'var(--faint)';
+        }
+        function refreshEmpty() {
+            const anyOn = chart.data.datasets.some(d => !d.hidden);
+            emptyEl.style.display = anyOn ? 'none' : 'flex';
+        }
+        byRecency.forEach(y => {
+            const idx = chart.data.datasets.findIndex(d => d.label === y);
+            const chip = document.createElement('button');
+            chip.className = 'chip';
+            chip.innerHTML = `<span class="cdot"></span>${y}`;
+            chip.addEventListener('click', () => {
+                const ds = chart.data.datasets[idx];
+                ds.hidden = !ds.hidden;
+                paintChip(y, !ds.hidden);
+                chart.update();
+                refreshEmpty();
+            });
+            chipWrap.appendChild(chip);
+            chipEls[y] = chip;
+            paintChip(y, !chart.data.datasets[idx].hidden);
+        });
+        function applyState(test) {
+            chart.data.datasets.forEach(d => { d.hidden = !test(d.label); });
+            byRecency.forEach(y => paintChip(y, test(y)));
+            chart.update();
+            refreshEmpty();
+        }
+        document.getElementById('all').addEventListener('click', () => applyState(() => true));
+        document.getElementById('recent').addEventListener('click', () => applyState(y => defaultYears.has(y)));
+        refreshEmpty();
     </script>
 {% endblock %}
 {% block footer %}
-    Horizontal View suggested for mobile
+    Tap a year to compare · pinch or scroll to zoom · rotate for detail
 {% endblock %}

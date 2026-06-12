@@ -1,52 +1,52 @@
 <!DOCTYPE html>
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <html lang="en-us">
 <head>
     <title>How Hot Is the Shop</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Baloo+2">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Lilita+One">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        html {
-            font-size: 1em;
-            background: #0B0C10;
-            color: #66FCf1;
-            font-family: "Lilita One", sans-serif;
+        :root{
+            --bg:#0e1417;--bg-2:#121a1e;--card:#172228;--line:#243138;
+            --ink:#e9f3f4;--muted:#92a8ad;--faint:#5e747a;
+            --teal:#3fc2b4;--teal-deep:#2a9d92;--blue:#5a9fd6;
         }
-
-        h1 {
-            font-size: 2em;
-            text-align: center;
-            font-weight: bold;
+        *{box-sizing:border-box;margin:0;padding:0}
+        html,body{height:100%}
+        body{
+            background:radial-gradient(120% 60% at 50% -8%, #16282b 0%, var(--bg) 58%) fixed,var(--bg);
+            color:var(--ink);font-family:"Hanken Grotesk",sans-serif;-webkit-font-smoothing:antialiased;
+            display:flex;flex-direction:column;min-height:100%;
         }
-
-        h2 {
-            font-size: 2em;
-            margin: 0;
-        }
-        a, a:visited {
-          color: #66FCf1;
-        }
-        #nav {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
+        .wrap{flex:1;display:flex;flex-direction:column;width:100%;max-width:480px;margin:0 auto;padding:18px 18px 22px}
+        .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+        .brand{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:-0.01em;font-size:15px;line-height:1.15}
+        .dot{width:10px;height:10px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(63,194,180,.16);flex:none}
+        .brand small{display:block;color:var(--faint);font-weight:500;font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-top:2px}
+        .ghost{min-height:44px;display:flex;align-items:center;gap:7px;color:var(--muted);text-decoration:none;font-weight:500;font-size:13px;padding:0 14px;border:1px solid var(--line);border-radius:999px;flex:none}
+        .ghost:active{background:rgba(63,194,180,.08)}
+        .ghost svg{width:15px;height:15px}
+        footer{display:flex;flex-direction:column;gap:3px;align-items:center;color:var(--faint);font-size:11px;margin-top:16px;text-align:center;font-variant-numeric:tabular-nums}
     </style>
     {% block head %}
     {% endblock %}
 </head>
 <body>
-<h1 class="title">
-    How Hot Is The Shop?
-</h1>
-{% block content %}
-{% endblock %}
-<footer>
-    {% block footer %}
+<div class="wrap">
+    <div class="top">
+        <div class="brand"><span class="dot"></span><div>How Hot Is The Shop?<small>Workshop monitor</small></div></div>
+        {% block nav %}
+        {% endblock %}
+    </div>
+    {% block content %}
     {% endblock %}
-</footer>
+    <footer>
+        {% block footer %}
+        {% endblock %}
+    </footer>
+</div>
 </body>
 </html>

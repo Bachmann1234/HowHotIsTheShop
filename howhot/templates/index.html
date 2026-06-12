@@ -1,95 +1,66 @@
 {% extends "base.html" %}
 {% block head %}
     <style>
-        .temperature {
-            font-size: 5em;
-        }
+        .hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:26px 0 26px;position:relative}
+        .glow{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;pointer-events:none}
+        .glow b{width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,#e9e3d9 0%,transparent 62%);opacity:.06;filter:blur(6px);margin-top:-20px}
+        .eyebrow{position:relative;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600}
+        .bignum{position:relative;font-family:"Space Grotesk",sans-serif;font-weight:600;line-height:.82;letter-spacing:-0.04em;font-size:150px;margin:10px 0 0;
+            background:linear-gradient(180deg,#f2eee7,#bcb4a8);-webkit-background-clip:text;background-clip:text;color:transparent}
+        .bignum .deg{-webkit-text-fill-color:var(--faint);color:var(--faint);font-size:.4em;vertical-align:super}
 
-        #contentContainer {
-            padding: 1vh;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-        }
+        .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+        .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 14px}
+        .stat .k{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:600}
+        .stat .v{font-family:"Space Grotesk",sans-serif;font-size:26px;font-weight:500;margin-top:6px;letter-spacing:-0.02em}
+        .stat .bar{height:5px;border-radius:99px;background:#202b30;overflow:hidden;margin-top:10px}
+        .stat .bar i{display:block;height:100%;background:var(--muted);border-radius:99px}
 
-        .location {
-            font-family: 'Baloo 2', serif;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            justify-items: center;
-            background: #45A29E;
-            border-radius: 25px;
-            color: white;
-            width: 325px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 1vh;
-        }
-
-        .description {
-            margin-top: 1vh;
-            width: 100%;
-        }
-
-        dl {
-            width: 100%;
-        }
-
-        dt {
-            font-weight: bold;
-        }
-
-        footer {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
+        .outside{display:flex;align-items:center;gap:14px;background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:10px}
+        .o-ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#6fb6d6,#3f7fa6);flex:none}
+        .o-ico svg{width:26px;height:26px;color:#eaf5fb}
+        .o-main{min-width:0;display:flex;flex-direction:column}
+        .o-main .ol{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600;white-space:nowrap}
+        .o-main .ot{font-family:"Space Grotesk",sans-serif;font-size:26px;font-weight:500;letter-spacing:-0.02em}
+        .o-meta{margin-left:auto;display:flex;gap:18px;text-align:right;flex:none}
+        .o-meta div{display:flex;flex-direction:column}
+        .o-meta .k{font-size:10px;color:var(--faint);font-weight:600;letter-spacing:.04em}
+        .o-meta .v{font-family:"Space Grotesk",sans-serif;font-size:16px;font-weight:500;margin-top:3px}
     </style>
 {% endblock %}
+{% block nav %}
+    <a class="ghost" href="{{ url_for('render_history') }}">History
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
+    </a>
+{% endblock %}
 {% block content %}
-    <div id="nav">
-        <a href="{{ url_for('render_history') }}">See Historical Data</a>
+    <div class="hero">
+        <div class="glow"><b></b></div>
+        <span class="eyebrow">In the shop</span>
+        <div class="bignum">{{ shop_temp.temperature }}<span class="deg">°</span></div>
     </div>
-    <div id="contentContainer">
-        <div class="location">
-            <div class="headline">
-                <h2>Shop</h2>
-                <span class="temperature">{{ shop_temp.temperature }}°</span>
-            </div>
-            <div class="description">
-                <dl>
-                    <dt>Feels Like</dt>
-                    <dd>{{ shop_temp.feels_like }}°</dd>
-                    <dt>Humidity</dt>
-                    <dd>{{ shop_temp.humidity }}%</dd>
-                    <dt>Thermometer Battery</dt>
-                    <dd>{{ battery_level }}%</dd>
-                </dl>
-            </div>
+
+    <div class="stats">
+        <div class="stat"><div class="k">Feels like</div><div class="v">{{ shop_temp.feels_like }}°</div></div>
+        <div class="stat"><div class="k">Humidity</div><div class="v">{{ shop_temp.humidity }}%</div></div>
+        <div class="stat"><div class="k">Battery</div><div class="v">{{ battery_level }}%</div><div class="bar"><i style="width:{{ battery_level }}%"></i></div></div>
+    </div>
+
+    <div class="outside">
+        <div class="o-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.6-1.6A4 4 0 0 0 6 19z"/></svg>
         </div>
-        <div class="location">
-            <div class="headline">
-                <h2>Outside</h2>
-                <span class="temperature">{{ weather.temperature }}°</span>
-            </div>
-            <div class="description">
-                <dl>
-                    <dt>Feels Like</dt>
-                    <dd>{{ weather.feels_like }}°</dd>
-                    <dt>Humidity</dt>
-                    <dd>{{ weather.humidity }}%</dd>
-                    <dt>Weather</dt>
-                    <dd>{{ weather.description.title() }}</dd>
-                </dl>
-            </div>
+        <div class="o-main">
+            <span class="ol">Outside · {{ weather.description.title() }}</span>
+            <span class="ot">{{ weather.temperature }}°</span>
+        </div>
+        <div class="o-meta">
+            <div><span class="k">Feels</span><span class="v">{{ weather.feels_like }}°</span></div>
+            <div><span class="k">Humidity</span><span class="v">{{ weather.humidity }}%</span></div>
         </div>
     </div>
 {% endblock %}
 {% block footer %}
-    <div>
-        Shop Temp Recorded: {{ shop_temp.formatted_eastern_time }}
-    </div>
-    <div>
-        Current Time: {{ current_time }}
-    </div>
+    <span>Recorded {{ shop_temp.formatted_eastern_time }} ET</span>
+    <span>Updated {{ current_time }}</span>
 {% endblock %}
