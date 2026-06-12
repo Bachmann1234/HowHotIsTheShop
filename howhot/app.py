@@ -8,7 +8,6 @@ from flask_talisman import Talisman
 from werkzeug.exceptions import Forbidden
 
 from howhot import EASTERN_TIMEZONE
-from howhot.backfill_device_history import backfill_history
 from howhot.device_stats import get_battery_level
 from howhot.shop_temp import get_shop_temp, get_shop_temperature_history
 from howhot.update_caches import update_caches_with_alerts
@@ -81,21 +80,6 @@ def render_history() -> str:
 @app.route("/history_raw")
 def render_history_json() -> Dict[str, Dict[str, int]]:
     return get_shop_temperature_history()
-
-
-@app.route("/backfill", methods=["POST"])
-def backfill() -> str:
-    if request.headers.get("api-key") != os.environ["API_KEY"]:
-        print("forbidden backfill request")
-        raise Forbidden()
-    backfill_history(
-        govee_sku=os.environ["GOVEE_SKU"],
-        govee_device=os.environ["GOVEE_DEVICE"],
-        govee_email=os.environ["GOVEE_EMAIL"],
-        govee_password=os.environ["GOVEE_PASSWORD"],
-        govee_client=os.environ["GOVEE_CLIENT"],
-    )
-    return "ok"
 
 
 @app.route("/update", methods=["POST"])
