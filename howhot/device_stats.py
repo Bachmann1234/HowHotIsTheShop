@@ -16,6 +16,14 @@ from howhot.shop_temp import (
 DEVICE_KEY = "DEVICE_INFO"
 AUTH_KEY = "AUTH_KEY"
 
+# Govee rejects requests that don't claim a recent app version
+# ("The app version is too low") on both endpoints below
+GOVEE_APP_VERSION = "6.8.30"
+
+
+class GoveeApiError(Exception):
+    pass
+
 
 def update_device_cache(
     device_token: str,
@@ -30,13 +38,19 @@ def update_device_cache(
         headers={
             "Content-Type": "application/json",
             "Authorization": f"Bearer {govee_token}",
+            "appVersion": GOVEE_APP_VERSION,
         },
         timeout=30,
     )
 
     response.raise_for_status()
+    device_response = response.json()
+    if "devices" not in device_response:
+        raise GoveeApiError(
+            f"Govee device list failed: {device_response.get('message')}"
+        )
     history = get_shop_temperature_history()
-    for device in response.json()["devices"]:
+    for device in device_response["devices"]:
         if device["device"] == device_token:
             memory_cache.set_cache_value(
                 DEVICE_KEY, json.loads(device["deviceExt"]["deviceSettings"])["battery"]
@@ -74,6 +88,7 @@ def get_govee_auth_token(
         "https://app2.govee.com/account/rest/account/v1/login",
         headers={
             "Content-Type": "application/json",
+            "appVersion": GOVEE_APP_VERSION,
         },
         json={
             "email": govee_email,
@@ -84,7 +99,11 @@ def get_govee_auth_token(
     )
 
     response.raise_for_status()
-    client_data = response.json()["client"]
+    # Govee reports login failures as HTTP 200 with the error in the body
+    login_response = response.json()
+    if "client" not in login_response:
+        raise GoveeApiError(f"Govee login failed: {login_response.get('message')}")
+    client_data = login_response["client"]
     auth_key = client_data["token"]
     memory_cache.set_cache_value(
         AUTH_KEY, auth_key, time.time() + (client_data["tokenExpireCycle"] - 120)

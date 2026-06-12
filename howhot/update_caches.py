@@ -26,7 +26,7 @@ def update_caches() -> None:
     print(f"Battery Level {battery}")
 
 
-def main() -> None:
+def update_caches_with_alerts() -> None:
     try:
         update_caches()
     except Exception:
@@ -39,6 +39,10 @@ def main() -> None:
         )
         SendGridAPIClient(os.environ["SENDGRID_API_KEY"]).send(message)
         raise
+
+
+def main() -> None:
+    update_caches_with_alerts()
 
 
 if __name__ == "__main__":

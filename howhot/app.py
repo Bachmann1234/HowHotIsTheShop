@@ -11,7 +11,7 @@ from howhot import EASTERN_TIMEZONE
 from howhot.backfill_device_history import backfill_history
 from howhot.device_stats import get_battery_level
 from howhot.shop_temp import get_shop_temp, get_shop_temperature_history
-from howhot.update_caches import update_caches
+from howhot.update_caches import update_caches_with_alerts
 from howhot.weather import get_weather
 
 app = Flask(__name__)
@@ -103,7 +103,7 @@ def update() -> str:
     if request.headers.get("api-key") != os.environ["API_KEY"]:
         print("forbidden update request")
         raise Forbidden()
-    update_caches()
+    update_caches_with_alerts()
     return "ok"
 
 

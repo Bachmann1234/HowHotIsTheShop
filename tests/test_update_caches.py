@@ -31,5 +31,5 @@ def test_update_fail():
         assert send_call_mail_object.from_email.name == "bachmann_sendgrid"
         assert "KeyError" in send_call_mail_object.contents[0].content
         assert "update_caches.py" in send_call_mail_object.contents[0].content
-        assert "main" in send_call_mail_object.contents[0].content
+        assert "update_caches_with_alerts" in send_call_mail_object.contents[0].content
         assert "os.environ" in send_call_mail_object.contents[0].content

@@ -3,7 +3,12 @@ from datetime import UTC, datetime
 import responses
 
 from howhot import EASTERN_TIMEZONE, memory_cache
-from howhot.device_stats import AUTH_KEY, get_battery_level, update_device_cache
+from howhot.device_stats import (
+    AUTH_KEY,
+    GOVEE_APP_VERSION,
+    get_battery_level,
+    update_device_cache,
+)
 from howhot.shop_temp import (
     SHOP_HIGH_HISTORY_KEY,
     get_shop_temp,
@@ -86,6 +91,9 @@ def test_update_battery_cache() -> None:
     assert get_battery_level() == 72
     assert get_shop_temp().temperature == 78
     assert memory_cache.get_cache_value(AUTH_KEY) == "fakeauthtoken"
+    # Govee rejects requests without a recent appVersion header
+    for request_call in responses.calls:
+        assert request_call.request.headers["appVersion"] == GOVEE_APP_VERSION
     history = get_shop_temperature_history()
     assert history[api_date] == {"humidity": 54, "temp": 78}
 
