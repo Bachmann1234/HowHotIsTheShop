@@ -1,10 +1,9 @@
+import hmac
 import os
 import random
 from datetime import datetime
-from typing import Dict, List, Tuple
 
 from flask import Flask, render_template, request
-from flask_talisman import Talisman
 from werkzeug.exceptions import Forbidden
 
 from howhot import EASTERN_TIMEZONE
@@ -33,11 +32,11 @@ def render_index() -> str:
 
 
 def _get_years_and_dates(
-    temp_history: Dict[str, Dict[str, int]]
-) -> Tuple[List[str], List[str]]:
+    temp_history: dict[str, dict[str, int]],
+) -> tuple[list[str], list[str]]:
     years = set()
     dates = set()
-    for key in temp_history.keys():
+    for key in temp_history:
         month, day, year = key.split("-")
         years.add(year)
         dates.add(f"{month}-{day}")
@@ -46,15 +45,15 @@ def _get_years_and_dates(
 
 
 def format_data_for_chart(
-    temp_history: Dict[str, Dict[str, int]]
-) -> Tuple[List[str], Dict[str, List[int | None]]]:
+    temp_history: dict[str, dict[str, int]],
+) -> tuple[list[str], dict[str, list[int | None]]]:
     """
     Format the data for chart.js
     """
     years, dates = _get_years_and_dates(temp_history)
     datasets = {}
     for year in years:
-        dataset: List[int | None] = []
+        dataset: list[int | None] = []
         for date in dates:
             point = temp_history.get(f"{date}-{year}")
             if point:
@@ -86,19 +85,20 @@ def render_history() -> str:
 
 
 @app.route("/history_raw")
-def render_history_json() -> Dict[str, Dict[str, int]]:
+def render_history_json() -> dict[str, dict[str, int]]:
     return get_shop_temperature_history()
 
 
 @app.route("/update", methods=["POST"])
 def update() -> str:
-    if request.headers.get("api-key") != os.environ["API_KEY"]:
-        print("forbidden update request")
+    if not hmac.compare_digest(
+        request.headers.get("api-key", ""), os.environ["API_KEY"]
+    ):
+        app.logger.warning("forbidden update request")
         raise Forbidden()
     update_caches_with_alerts()
     return "ok"
 
 
 if __name__ == "__main__":
-    Talisman(app)
     app.run(host="0.0.0.0")

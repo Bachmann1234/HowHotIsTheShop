@@ -20,9 +20,7 @@ def test_temp_too_old():
         assert len(sendgrid_mock.mock_calls) == 2
         send_call_mail_object = sendgrid_mock.mock_calls[1].args[0]
         assert (
-            send_call_mail_object.personalizations[  # pylint: disable=protected-access
-                0
-            ]._tos[0]["name"]
+            send_call_mail_object.personalizations[0]._tos[0]["name"]
             == "bachmann_personal"
         )
         assert send_call_mail_object.from_email.name == "bachmann_sendgrid"

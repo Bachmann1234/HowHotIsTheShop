@@ -1,7 +1,8 @@
 import json
+import logging
 import os
 import time
-from typing import Dict, List, cast
+from typing import cast
 
 import requests
 
@@ -14,6 +15,8 @@ from howhot.shop_temp import (
     update_max_history_from_point,
 )
 
+logger = logging.getLogger(__name__)
+
 
 def backfill_history(
     govee_sku: str,
@@ -25,17 +28,17 @@ def backfill_history(
     govee_token = get_govee_auth_token(govee_email, govee_password, govee_client)
     task_ids = _request_backfill(govee_token, govee_sku, govee_device)
     data_links = []
-    history: Dict[str, Dict[str, int]] = {}
+    history: dict[str, dict[str, int]] = {}
     for task_id in task_ids:
         data_links += _get_data_links(task_id, govee_token)
     for data_link in data_links:
-        print(f"Processing: {data_link}")
+        logger.info("Processing: %s", data_link)
         _process_datafile(data_link, history)
     memory_cache.set_cache_value(SHOP_HIGH_HISTORY_KEY, json.dumps(history))
     persist_history(history)
 
 
-def _request_backfill(govee_token: str, govee_sku: str, govee_device: str) -> List[int]:
+def _request_backfill(govee_token: str, govee_sku: str, govee_device: str) -> list[int]:
     response = requests.post(
         "https://app2.govee.com/th/v2/data-tasks",
         headers={
@@ -54,10 +57,10 @@ def _request_backfill(govee_token: str, govee_sku: str, govee_device: str) -> Li
     response.raise_for_status()
     if response.json()["status"] != 200:
         raise ValueError("Failed to trigger task")
-    return cast(List[int], response.json()["data"]["taskIds"])
+    return cast(list[int], response.json()["data"]["taskIds"])
 
 
-def _get_data_links(task_id: int, govee_token: str) -> List[str]:
+def _get_data_links(task_id: int, govee_token: str) -> list[str]:
     while True:
         response = requests.get(
             f"https://app2.govee.com/th/v2/data-links?taskIds={task_id}",
@@ -75,13 +78,13 @@ def _get_data_links(task_id: int, govee_token: str) -> List[str]:
         if response_json["status"] != 200:
             raise ValueError("Failed to get task status")
         if state == 0:
-            print(f"{task_id} is not done yet. Sleeping")
+            logger.info("%s is not done yet. Sleeping", task_id)
             time.sleep(5)
         elif state == 1:
-            print(f"{task_id} complete. Sleeping")
-            return cast(List[str], response.json()["data"][0]["links"])
+            logger.info("%s complete. Sleeping", task_id)
+            return cast(list[str], response.json()["data"][0]["links"])
         else:
-            print(response.text)
+            logger.error(response.text)
             raise ValueError(f"Unknown task state {state}")
 
 

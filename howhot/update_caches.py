@@ -1,3 +1,4 @@
+import logging
 import os
 import traceback
 
@@ -6,6 +7,8 @@ from sendgrid import Mail, SendGridAPIClient
 from howhot.device_stats import update_device_cache
 from howhot.weather import update_weather_cache
 
+logger = logging.getLogger(__name__)
+
 
 def update_caches() -> None:
     weather = update_weather_cache(
@@ -13,8 +16,8 @@ def update_caches() -> None:
         long=os.environ["WEATHER_LONG"],
         weather_api_key=os.environ["WEATHER_API_KEY"],
     )
-    print("Updated Weather Cache!")
-    print(weather)
+    logger.info("Updated Weather Cache!")
+    logger.info(weather)
 
     battery = update_device_cache(
         device_token=os.environ["GOVEE_DEVICE"],
@@ -22,8 +25,8 @@ def update_caches() -> None:
         govee_password=os.environ["GOVEE_PASSWORD"],
         govee_client=os.environ["GOVEE_CLIENT"],
     )
-    print("Updated Battery Cache!")
-    print(f"Battery Level {battery}")
+    logger.info("Updated Battery Cache!")
+    logger.info("Battery Level %s", battery)
 
 
 def update_caches_with_alerts() -> None:

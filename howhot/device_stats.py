@@ -74,7 +74,8 @@ def get_battery_level() -> int:
             govee_client=os.environ["GOVEE_CLIENT"],
         )
         cached_devices_response = memory_cache.get_cache_value(DEVICE_KEY)
-    assert cached_devices_response
+    if not cached_devices_response:
+        raise RuntimeError("Device cache is empty after update")
     return int(cached_devices_response)
 
 

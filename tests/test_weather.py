@@ -10,7 +10,6 @@ def test_get_weather() -> None:
         humidity=75,
         temperature=66,
         description="clear sky",
-        icon_code="01n",
     )
 
 
@@ -31,5 +30,4 @@ def test_update_weather_cache() -> None:
         humidity=75,
         temperature=66,
         description="clear sky",
-        icon_code="01n",
     )

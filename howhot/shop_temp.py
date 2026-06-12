@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from math import sqrt
 from pathlib import Path
-from typing import Dict, Union, cast
+from typing import cast
 
 from howhot import EASTERN_TIMEZONE, memory_cache
 
@@ -29,15 +29,13 @@ class ShopTemp:
         return self.time.astimezone(EASTERN_TIMEZONE).strftime("%m-%d-%Y")
 
     @staticmethod
-    def from_params(
-        temp: Union[int, str], humidity: Union[int, str], time: Union[int, str]
-    ):
+    def from_params(temp: int | str, humidity: int | str, time: int | str):
         return ShopTemp.from_api_response(
             {"tem": int(temp), "hum": int(humidity), "lastTime": int(time)}
         )
 
     @staticmethod
-    def from_api_response(api_response: Dict) -> "ShopTemp":
+    def from_api_response(api_response: dict) -> "ShopTemp":
         temp_in_fahrenheit = celsius_to_fahrenheit(api_response["tem"] / 100)
         humidity = api_response["hum"] / 100
         return ShopTemp(
@@ -50,7 +48,8 @@ class ShopTemp:
 
 def get_shop_temp() -> ShopTemp:
     cached_shop_response = memory_cache.get_cache_value(SHOP_TEMP_KEY)
-    assert cached_shop_response
+    if not cached_shop_response:
+        raise RuntimeError("Shop temperature cache is empty")
     return ShopTemp.from_api_response(json.loads(cached_shop_response))
 
 
@@ -93,7 +92,7 @@ def heat_index(fahrenheit_temp: float, relative_humidity: float) -> float:
     return result
 
 
-def get_shop_temperature_history() -> Dict[str, Dict[str, int]]:
+def get_shop_temperature_history() -> dict[str, dict[str, int]]:
     shop_history = memory_cache.get_cache_value(SHOP_HIGH_HISTORY_KEY)
     if not shop_history:
         file_path = Path(os.environ["HISTORY_PATH"], "history.json")
@@ -103,11 +102,11 @@ def get_shop_temperature_history() -> Dict[str, Dict[str, int]]:
             if not shop_history:
                 shop_history = "{}"
             memory_cache.set_cache_value(SHOP_HIGH_HISTORY_KEY, shop_history)
-    return cast(Dict, json.loads(shop_history)) if shop_history else {}
+    return cast(dict, json.loads(shop_history)) if shop_history else {}
 
 
 def update_max_history_from_point(
-    history: Dict[str, Dict[str, int]], shop_temp: ShopTemp
+    history: dict[str, dict[str, int]], shop_temp: ShopTemp
 ) -> None:
     write = False
     current_maxes = history.get(shop_temp.formatted_eastern_date)
@@ -125,7 +124,7 @@ def update_max_history_from_point(
         persist_history(history)
 
 
-def persist_history(history: Dict[str, Dict[str, int]]):
+def persist_history(history: dict[str, dict[str, int]]):
     with open(
         os.path.join(os.environ["HISTORY_PATH"], "history.json"),
         mode="w",

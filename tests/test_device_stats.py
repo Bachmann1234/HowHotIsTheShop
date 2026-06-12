@@ -56,7 +56,8 @@ def test_update_battery_cache() -> None:
                     "versionSoft": "1.06.02",
                     "deviceName": "Wifi thermometer",
                     "deviceExt": {
-                        "deviceSettings": '{"temMin":-2000,"temMax":6000,"temWarning":false,'
+                        "deviceSettings": '{"temMin":-2000,"temMax":6000,'
+                        '"temWarning":false,'
                         '"fahOpen":false,"temCali":0,"humMin":0,"humMax":10000,'
                         '"humWarning":false,"humCali":0,"netWaring":true,'
                         '"uploadRate":30,"battery":72,"wifiLevel":0,"bleName":'
@@ -113,7 +114,8 @@ def test_update_battery_cache() -> None:
                     "versionSoft": "1.06.02",
                     "deviceName": "Wifi thermometer",
                     "deviceExt": {
-                        "deviceSettings": '{"temMin":-2000,"temMax":6000,"temWarning":false,'
+                        "deviceSettings": '{"temMin":-2000,"temMax":6000,'
+                        '"temWarning":false,'
                         '"fahOpen":false,"temCali":0,"humMin":0,"humMax":10000,'
                         '"humWarning":false,"humCali":0,"netWaring":true,'
                         '"uploadRate":30,"battery":72,"wifiLevel":0,"bleName":'

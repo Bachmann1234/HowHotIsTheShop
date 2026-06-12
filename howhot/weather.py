@@ -15,7 +15,6 @@ class Weather:
     humidity: int
     temperature: int
     description: str
-    icon_code: str
 
     @staticmethod
     def from_api_dict(api_response: dict) -> "Weather":
@@ -24,7 +23,6 @@ class Weather:
             humidity=round(api_response["current"]["humidity"]),
             temperature=round(api_response["current"]["temp"]),
             description=api_response["current"]["weather"][0]["description"],
-            icon_code=api_response["current"]["weather"][0]["icon"],
         )
 
 
@@ -43,9 +41,9 @@ def get_weather() -> Weather:
 def update_weather_cache(lat: str, long: str, weather_api_key: str) -> Weather:
     weather = requests.get(
         f"https://api.openweathermap.org/data/3.0/onecall"
-        f"?lat={ lat }&lon={ long }"
+        f"?lat={lat}&lon={long}"
         f"&exclude=minutely,hourly,"
-        f"daily,alerts&appid={ weather_api_key }&units=imperial",
+        f"daily,alerts&appid={weather_api_key}&units=imperial",
         timeout=10,
     )
     weather.raise_for_status()

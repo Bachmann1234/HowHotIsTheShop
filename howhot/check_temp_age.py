@@ -1,9 +1,12 @@
+import logging
 import os
-from datetime import datetime
+from datetime import UTC, datetime
 
 from sendgrid import Mail, SendGridAPIClient
 
 from howhot.shop_temp import ShopTemp, get_shop_temp
+
+logger = logging.getLogger(__name__)
 
 SECONDS_IN_MINUTE = 60
 SECONDS_IN_HOUR = 60 * SECONDS_IN_MINUTE
@@ -19,20 +22,22 @@ def alert_if_shop_temp_old(shop_temp: ShopTemp, current_time: datetime) -> bool:
             to_emails=[os.environ["ADMIN_EMAIL"]],
             subject="Hot Hot Is The Shop Thermometer Disconnected",
             plain_text_content=f"Thermometer has not updated in"
-            f" {time_diff.total_seconds()/60/60:.2f} hours",
+            f" {time_diff.total_seconds() / 60 / 60:.2f} hours",
         )
         SendGridAPIClient(os.environ["SENDGRID_API_KEY"]).send(message)
     return temp_too_old
 
 
 def main() -> None:
-    current_time = datetime.now()
+    # Shop temp times are timezone-aware; a naive datetime.now() here
+    # raises TypeError on subtraction
+    current_time = datetime.now(UTC)
     shop_temp = get_shop_temp()
     too_old = alert_if_shop_temp_old(shop_temp, current_time)
     if too_old:
-        print("Thermometer has not updated in a while")
+        logger.warning("Thermometer has not updated in a while")
     else:
-        print("Thermometer is updating just fine")
+        logger.info("Thermometer is updating just fine")
 
 
 if __name__ == "__main__":

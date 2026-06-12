@@ -11,21 +11,13 @@ jobs:
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.12.0'
-      - name: Install poetry
-        uses: snok/install-poetry@v1
+          python-version: '3.14'
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8
         with:
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v5
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+          enable-cache: true
       - name: Install dependencies
-        run: poetry install --no-root
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: uv sync --locked
       - name: Run The lints and tests
         run: |
           bash ${{ github.workspace }}/check.sh

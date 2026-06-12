@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 IFS=$'\n\t'
-poetry run black --check howhot tests
-poetry run isort --check howhot tests
-poetry run pylint howhot tests
-poetry run mypy howhot tests
-poetry run pytest tests -v
+uv run ruff format --check howhot tests
+uv run ruff check howhot tests
+uv run mypy howhot tests
+uv run pytest tests -v
