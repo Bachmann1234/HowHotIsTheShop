@@ -5,6 +5,11 @@ on:
     # when runs are most likely to be delayed or dropped.
     - cron: "3,13,23,33,43,53 * * * *"
   workflow_dispatch:
+    inputs:
+      simulate_stale:
+        description: "Force the stale path to test alerting (skips the dedup save)"
+        type: boolean
+        default: false
 
 # Serialize runs so two updates never race on /update or the backup push
 concurrency:
@@ -14,6 +19,7 @@ concurrency:
 permissions:
   contents: write
   actions: write
+  issues: write
 
 jobs:
   update-and-backup:
@@ -59,3 +65,74 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow enable update-and-backup.yml
+
+  # Opens a GitHub issue (assigned, so it emails) when no reading has arrived
+  # in over a day. A separate job, not extra steps above, so it still runs
+  # when /update or the site is down — exactly when an alert matters.
+  # The Actions cache, keyed on the last-data date, dedups to one issue per
+  # outage: recovery produces a new last-data date, which re-arms the alert.
+  stale-alert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check data freshness
+        id: check
+        env:
+          SIMULATE: ${{ inputs.simulate_stale }}
+        # History keys are day-grained Eastern dates: a key from yesterday
+        # could be a reading minutes ago, but a key from two days ago
+        # guarantees a 24h+ gap. Reading the committed backup rather than the
+        # live site means a dead app also goes stale, not just a dead sensor.
+        run: |
+          latest=$(jq -r 'keys[]' backup/history.json | awk -F- '{print $3$1$2}' | sort -r | head -n 1)
+          cutoff=$(TZ=America/New_York date -d '2 days ago' +%Y%m%d)
+          echo "latest=$latest" >> "$GITHUB_OUTPUT"
+          if [ "$SIMULATE" = "true" ] || [ "$latest" -le "$cutoff" ]; then
+            echo "Stale: newest history entry is $latest (cutoff $cutoff)"
+            echo "stale=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Fresh: newest history entry is $latest"
+            echo "stale=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check if this outage was already alerted
+        if: steps.check.outputs.stale == 'true'
+        id: dedup
+        uses: actions/cache/restore@v4
+        with:
+          path: stale-alert-marker
+          key: stale-alert-${{ steps.check.outputs.latest }}
+          lookup-only: true
+
+      - name: Open alert issue
+        if: steps.check.outputs.stale == 'true' && steps.dedup.outputs.cache-hit != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SIMULATE: ${{ inputs.simulate_stale }}
+        run: |
+          last_seen=$(date -d '${{ steps.check.outputs.latest }}' '+%B %d, %Y')
+          title="Shop thermometer has not reported since $last_seen"
+          if [ "$SIMULATE" = "true" ]; then
+            title="[TEST] $title"
+          fi
+          gh issue create \
+            --title "$title" \
+            --assignee "${{ github.repository_owner }}" \
+            --body "No new temperature readings have been recorded since $last_seen.
+
+          Things to check:
+          - Is the Govee thermometer powered on and connected to WiFi?
+          - Is https://www.howhotistheshop.com up and showing current data?
+          - Are the Update and Backup workflow runs succeeding?
+
+          This alert fires once per outage and re-arms when new data arrives."
+          echo alerted > stale-alert-marker
+
+      - name: Remember this outage was alerted
+        # Simulated runs skip the save so a test never suppresses a real alert
+        if: steps.check.outputs.stale == 'true' && steps.dedup.outputs.cache-hit != 'true' && inputs.simulate_stale != true
+        uses: actions/cache/save@v4
+        with:
+          path: stale-alert-marker
+          key: stale-alert-${{ steps.check.outputs.latest }}
