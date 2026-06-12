@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 
 from flask import Flask, render_template, request
+from flask_compress import Compress
 from werkzeug.exceptions import Forbidden
 
 from howhot import EASTERN_TIMEZONE
@@ -12,6 +13,7 @@ from howhot.update_caches import update_caches_with_alerts
 from howhot.weather import get_weather
 
 app = Flask(__name__)
+Compress(app)
 
 # Year-line palette, assigned by recency: the newest year always gets the
 # clearest color on the dark theme, and it cycles if years outgrow it.
