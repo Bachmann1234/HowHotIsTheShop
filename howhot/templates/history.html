@@ -112,6 +112,7 @@
                 <thead>
                 <tr>
                     <th>Year</th>
+                    <th>&ge;{{ warm_day }}&deg;</th>
                     <th>&ge;{{ hot_day }}&deg;</th>
                     <th>&ge;{{ scorcher }}&deg;</th>
                     <th>Peak</th>
@@ -122,6 +123,7 @@
                 {% for row in year_stats %}
                     <tr>
                         <td>{{ row.year }}<small>{{ row.logged }}d logged</small></td>
+                        <td>{{ row.warm_days }}</td>
                         <td>{{ row.hot_days }}</td>
                         <td>{{ row.scorchers }}</td>
                         <td>{{ row.peak }}&deg;<small>{{ row.peak_date }}</small></td>

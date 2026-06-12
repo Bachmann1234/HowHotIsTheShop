@@ -76,6 +76,7 @@ def test_compute_year_stats() -> None:
         {
             "year": "2022",
             "logged": 4,
+            "warm_days": 3,
             "hot_days": 3,
             "scorchers": 1,
             "peak": 91,
@@ -85,6 +86,7 @@ def test_compute_year_stats() -> None:
         {
             "year": "2021",
             "logged": 1,
+            "warm_days": 1,
             "hot_days": 0,
             "scorchers": 0,
             "peak": 84,

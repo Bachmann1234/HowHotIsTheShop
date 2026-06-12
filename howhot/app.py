@@ -78,6 +78,7 @@ def format_data_for_chart(
     return dates, datasets
 
 
+WARM_DAY_F = 80
 HOT_DAY_F = 85
 SCORCHER_F = 90
 
@@ -152,6 +153,7 @@ def compute_year_stats(
             {
                 "year": year,
                 "logged": len(days),
+                "warm_days": sum(1 for _, temp in days if temp >= WARM_DAY_F),
                 "hot_days": sum(1 for _, temp in days if temp >= HOT_DAY_F),
                 "scorchers": sum(1 for _, temp in days if temp >= SCORCHER_F),
                 "peak": peak_temp,
@@ -194,6 +196,7 @@ def render_history() -> str:
         band=band,
         has_band=any(value is not None for value in band["hi"]),
         year_stats=compute_year_stats(temp_history),
+        warm_day=WARM_DAY_F,
         hot_day=HOT_DAY_F,
         scorcher=SCORCHER_F,
     )
