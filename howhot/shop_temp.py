@@ -49,7 +49,18 @@ class ShopTemp:
 def get_shop_temp() -> ShopTemp:
     cached_shop_response = memory_cache.get_cache_value(SHOP_TEMP_KEY)
     if not cached_shop_response:
-        raise RuntimeError("Shop temperature cache is empty")
+        # Imported here because device_stats imports from this module
+        from howhot.device_stats import update_device_cache
+
+        update_device_cache(
+            device_token=os.environ["GOVEE_DEVICE"],
+            govee_email=os.environ["GOVEE_EMAIL"],
+            govee_password=os.environ["GOVEE_PASSWORD"],
+            govee_client=os.environ["GOVEE_CLIENT"],
+        )
+        cached_shop_response = memory_cache.get_cache_value(SHOP_TEMP_KEY)
+    if not cached_shop_response:
+        raise RuntimeError("Shop temperature cache is empty after update")
     return ShopTemp.from_api_response(json.loads(cached_shop_response))
 
 

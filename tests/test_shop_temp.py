@@ -1,8 +1,18 @@
 from datetime import UTC, datetime
 
 import pytest
+import responses
+from _pytest.monkeypatch import MonkeyPatch
 
-from howhot.shop_temp import ShopTemp, celsius_to_fahrenheit, get_shop_temp, heat_index
+from howhot import memory_cache
+from howhot.device_stats import AUTH_KEY
+from howhot.shop_temp import (
+    SHOP_TEMP_KEY,
+    ShopTemp,
+    celsius_to_fahrenheit,
+    get_shop_temp,
+    heat_index,
+)
 
 
 def test_get_shop_temp() -> None:
@@ -11,6 +21,43 @@ def test_get_shop_temp() -> None:
         humidity=54,
         feels_like=81,
         time=datetime(2021, 7, 22, 1, 57, tzinfo=UTC),
+    )
+
+
+@responses.activate
+def test_get_shop_temp_cold_cache(monkeypatch: MonkeyPatch) -> None:
+    # An empty cache (e.g. right after a deploy) should trigger a device
+    # update rather than erroring
+    monkeypatch.setenv("GOVEE_DEVICE", "fakedevice")
+    monkeypatch.setenv("GOVEE_EMAIL", "fakeEmail")
+    monkeypatch.setenv("GOVEE_PASSWORD", "fakePass")
+    monkeypatch.setenv("GOVEE_CLIENT", "fakeClient")
+    memory_cache.clear_cache_entry(SHOP_TEMP_KEY)
+    memory_cache.set_cache_value(AUTH_KEY, "fakeauthtoken")
+    responses.add(
+        responses.POST,
+        "https://app2.govee.com/device/rest/devices/v1/list",
+        json={
+            "devices": [
+                {
+                    "device": "fakedevice",
+                    "deviceExt": {
+                        "deviceSettings": '{"battery":72}',
+                        "lastDeviceData": '{"online":true,"tem":2559,"hum":5390,'
+                        '"lastTime":1627185420000}',
+                    },
+                }
+            ],
+            "message": "",
+            "status": 200,
+        },
+        status=200,
+    )
+    assert get_shop_temp() == ShopTemp(
+        temperature=78,
+        humidity=54,
+        feels_like=78,
+        time=datetime(2021, 7, 25, 3, 57, tzinfo=UTC),
     )
 
 
