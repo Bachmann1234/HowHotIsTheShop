@@ -29,12 +29,20 @@ def test_history_raw() -> None:
     with app.test_client() as client:
         response = client.get("/history_raw")
         assert response.status_code == 200
-        assert json.loads(response.data.decode("utf-8")) == {
+        payload = json.loads(response.data.decode("utf-8"))
+        assert payload == {
             "07-23-2021": {"humidity": 48, "temp": 79},
             "07-24-2021": {"humidity": 44, "temp": 80},
             "07-25-2021": {"humidity": 50, "temp": 78},
             "07-26-2021": {"humidity": 84, "temp": 85},
         }
+        # Newest reading first, so the latest date is easy to find.
+        assert list(payload) == [
+            "07-26-2021",
+            "07-25-2021",
+            "07-24-2021",
+            "07-23-2021",
+        ]
 
 
 def test_compute_normal_band() -> None:

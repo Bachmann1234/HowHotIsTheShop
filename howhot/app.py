@@ -3,6 +3,7 @@ import os
 from datetime import date, datetime
 
 from flask import Flask, render_template, request
+from flask.json.provider import DefaultJSONProvider
 from flask_compress import Compress
 from werkzeug.exceptions import Forbidden
 
@@ -14,6 +15,11 @@ from howhot.weather import get_weather
 
 app = Flask(__name__)
 Compress(app)
+# Otherwise Flask sorts JSON keys lexically, which scrambles our MM-DD-YYYY
+# date keys (every June across all years lands together). /history_raw is the
+# only JSON endpoint, so disabling this lets it control its own ordering.
+assert isinstance(app.json, DefaultJSONProvider)
+app.json.sort_keys = False
 
 # Year-line palette, assigned by recency: the newest year always gets the
 # clearest color on the dark theme, and it cycles if years outgrow it.
@@ -204,7 +210,14 @@ def render_history() -> str:
 
 @app.route("/history_raw")
 def render_history_json() -> dict[str, dict[str, int]]:
-    return get_shop_temperature_history()
+    history = get_shop_temperature_history()
+    return dict(
+        sorted(
+            history.items(),
+            key=lambda item: datetime.strptime(item[0], "%m-%d-%Y"),
+            reverse=True,
+        )
+    )
 
 
 @app.route("/update", methods=["POST"])
