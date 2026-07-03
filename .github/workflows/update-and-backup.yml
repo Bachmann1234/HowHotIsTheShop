@@ -1,9 +1,12 @@
 name: Update and Backup
 on:
   schedule:
-    # Off the top of the hour: GitHub's cron queue is most congested at :00,
-    # when runs are most likely to be delayed or dropped.
-    - cron: "3,13,23,33,43,53 * * * *"
+    # The in-app scheduler (RUN_SCHEDULER on Fly) now owns the /update cadence.
+    # This workflow only backs up history.json and runs the stale-alert, both
+    # of which tolerate GitHub's throttled, roughly-hourly scheduling: the
+    # backup commits at most once a day and stale-alert has a two-day cutoff.
+    # Off the top of the hour, where GitHub's cron queue is most congested.
+    - cron: "17 * * * *"
   workflow_dispatch:
     inputs:
       simulate_stale:
@@ -26,14 +29,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-
-      - name: Trigger temperature update
-        run: |
-          curl --fail-with-body --silent --show-error \
-            --retry 3 --retry-all-errors --max-time 120 \
-            -X POST \
-            -H "api-key: ${{ secrets.API_KEY }}" \
-            https://www.howhotistheshop.com/update
 
       - name: Fetch history backup
         # jq both pretty-prints for readable diffs and fails on malformed

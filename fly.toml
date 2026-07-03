@@ -4,6 +4,13 @@ app = "howhotistheshop"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
+
+[env]
+  # Run the in-process update scheduler. Safe only because this app runs as a
+  # single always-on machine/worker; do not enable with multiple workers or the
+  # update would fire once per worker.
+  RUN_SCHEDULER = "1"
+
 [mounts]
   source = "howhotdata"
   destination = "/data"

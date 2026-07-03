@@ -1,7 +1,9 @@
+import atexit
 import hmac
 import os
 from datetime import date, datetime
 
+from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, render_template, request
 from flask.json.provider import DefaultJSONProvider
 from flask_compress import Compress
@@ -237,6 +239,35 @@ def update() -> str:
         raise Forbidden()
     update_caches_with_alerts()
     return "ok"
+
+
+def _start_update_scheduler() -> BackgroundScheduler:
+    # Refresh the weather/device caches and backfill a few finalized days in
+    # process, on a reliable interval. The app is a single always-on gunicorn
+    # worker (see Dockerfile), so exactly one scheduler runs and it shares this
+    # process's in-memory cache with the request handlers. This replaces the
+    # GitHub Actions cron that used to POST /update, whose scheduled runs GitHub
+    # throttled to roughly hourly instead of the requested every-10-minutes.
+    scheduler = BackgroundScheduler(daemon=True)
+    scheduler.add_job(
+        update_caches_with_alerts,
+        trigger="interval",
+        minutes=10,
+        id="update_caches",
+        max_instances=1,
+        coalesce=True,
+        misfire_grace_time=300,
+    )
+    scheduler.start()
+    atexit.register(scheduler.shutdown)
+    return scheduler
+
+
+# Gated so that importing the app (tests, tooling, the /history backfill script)
+# never starts the scheduler or fires real update calls. fly.toml sets this for
+# the deployed app only.
+if os.environ.get("RUN_SCHEDULER") == "1":
+    update_scheduler = _start_update_scheduler()
 
 
 if __name__ == "__main__":
