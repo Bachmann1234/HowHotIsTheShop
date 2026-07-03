@@ -9,10 +9,12 @@
   },
   "01-01-2025": {
     "humidity": 40,
+    "outside_temp": 46,
     "temp": 65
   },
   "01-01-2026": {
     "humidity": 28,
+    "outside_temp": 30,
     "temp": 64
   },
   "01-02-2023": {
@@ -25,10 +27,12 @@
   },
   "01-02-2025": {
     "humidity": 37,
+    "outside_temp": 43,
     "temp": 66
   },
   "01-02-2026": {
     "humidity": 25,
+    "outside_temp": 27,
     "temp": 64
   },
   "01-03-2023": {
@@ -41,10 +45,12 @@
   },
   "01-03-2025": {
     "humidity": 30,
+    "outside_temp": 37,
     "temp": 65
   },
   "01-03-2026": {
     "humidity": 25,
+    "outside_temp": 31,
     "temp": 64
   },
   "01-04-2023": {
@@ -57,10 +63,12 @@
   },
   "01-04-2025": {
     "humidity": 28,
+    "outside_temp": 30,
     "temp": 65
   },
   "01-04-2026": {
     "humidity": 26,
+    "outside_temp": 30,
     "temp": 64
   },
   "01-05-2023": {
@@ -73,10 +81,12 @@
   },
   "01-05-2025": {
     "humidity": 26,
+    "outside_temp": 33,
     "temp": 65
   },
   "01-05-2026": {
     "humidity": 25,
+    "outside_temp": 26,
     "temp": 64
   },
   "01-06-2023": {
@@ -89,10 +99,12 @@
   },
   "01-06-2025": {
     "humidity": 27,
+    "outside_temp": 25,
     "temp": 65
   },
   "01-06-2026": {
     "humidity": 28,
+    "outside_temp": 31,
     "temp": 64
   },
   "01-07-2023": {
@@ -105,10 +117,12 @@
   },
   "01-07-2025": {
     "humidity": 23,
+    "outside_temp": 26,
     "temp": 65
   },
   "01-07-2026": {
     "humidity": 32,
+    "outside_temp": 34,
     "temp": 64
   },
   "01-08-2023": {
@@ -121,10 +135,12 @@
   },
   "01-08-2025": {
     "humidity": 22,
+    "outside_temp": 29,
     "temp": 65
   },
   "01-08-2026": {
     "humidity": 31,
+    "outside_temp": 45,
     "temp": 65
   },
   "01-09-2023": {
@@ -137,10 +153,12 @@
   },
   "01-09-2025": {
     "humidity": 22,
+    "outside_temp": 26,
     "temp": 65
   },
   "01-09-2026": {
     "humidity": 36,
+    "outside_temp": 51,
     "temp": 64
   },
   "01-10-2023": {
@@ -153,10 +171,12 @@
   },
   "01-10-2025": {
     "humidity": 24,
+    "outside_temp": 41,
     "temp": 67
   },
   "01-10-2026": {
     "humidity": 36,
+    "outside_temp": 51,
     "temp": 64
   },
   "01-11-2023": {
@@ -169,10 +189,12 @@
   },
   "01-11-2025": {
     "humidity": 26,
+    "outside_temp": 30,
     "temp": 65
   },
   "01-11-2026": {
     "humidity": 35,
+    "outside_temp": 43,
     "temp": 64
   },
   "01-12-2023": {
@@ -185,10 +207,12 @@
   },
   "01-12-2025": {
     "humidity": 26,
+    "outside_temp": 36,
     "temp": 66
   },
   "01-12-2026": {
     "humidity": 32,
+    "outside_temp": 38,
     "temp": 64
   },
   "01-13-2023": {
@@ -201,10 +225,12 @@
   },
   "01-13-2025": {
     "humidity": 28,
+    "outside_temp": 39,
     "temp": 65
   },
   "01-13-2026": {
     "humidity": 31,
+    "outside_temp": 46,
     "temp": 64
   },
   "01-14-2023": {
@@ -217,10 +243,12 @@
   },
   "01-14-2025": {
     "humidity": 27,
+    "outside_temp": 33,
     "temp": 66
   },
   "01-14-2026": {
     "humidity": 35,
+    "outside_temp": 50,
     "temp": 65
   },
   "01-15-2023": {
@@ -233,10 +261,12 @@
   },
   "01-15-2025": {
     "humidity": 24,
+    "outside_temp": 29,
     "temp": 66
   },
   "01-15-2026": {
     "humidity": 36,
+    "outside_temp": 51,
     "temp": 66
   },
   "01-16-2023": {
@@ -249,10 +279,12 @@
   },
   "01-16-2025": {
     "humidity": 24,
+    "outside_temp": 30,
     "temp": 65
   },
   "01-16-2026": {
     "humidity": 32,
+    "outside_temp": 31,
     "temp": 64
   },
   "01-17-2023": {
@@ -265,10 +297,12 @@
   },
   "01-17-2025": {
     "humidity": 25,
+    "outside_temp": 36,
     "temp": 66
   },
   "01-17-2026": {
     "humidity": 28,
+    "outside_temp": 36,
     "temp": 64
   },
   "01-18-2023": {
@@ -281,6 +315,7 @@
   },
   "01-18-2025": {
     "humidity": 30,
+    "outside_temp": 42,
     "temp": 65
   },
   "01-19-2023": {
@@ -293,6 +328,7 @@
   },
   "01-19-2025": {
     "humidity": 31,
+    "outside_temp": 44,
     "temp": 66
   },
   "01-20-2023": {
@@ -305,6 +341,7 @@
   },
   "01-20-2025": {
     "humidity": 30,
+    "outside_temp": 28,
     "temp": 65
   },
   "01-21-2023": {
@@ -317,6 +354,7 @@
   },
   "01-21-2025": {
     "humidity": 24,
+    "outside_temp": 19,
     "temp": 65
   },
   "01-22-2023": {
@@ -329,6 +367,7 @@
   },
   "01-22-2025": {
     "humidity": 23,
+    "outside_temp": 21,
     "temp": 66
   },
   "01-23-2023": {
@@ -341,6 +380,7 @@
   },
   "01-23-2025": {
     "humidity": 23,
+    "outside_temp": 30,
     "temp": 65
   },
   "01-24-2023": {
@@ -353,6 +393,7 @@
   },
   "01-24-2025": {
     "humidity": 23,
+    "outside_temp": 32,
     "temp": 66
   },
   "01-25-2023": {
@@ -365,6 +406,7 @@
   },
   "01-25-2025": {
     "humidity": 22,
+    "outside_temp": 30,
     "temp": 65
   },
   "01-26-2023": {
@@ -377,6 +419,7 @@
   },
   "01-26-2025": {
     "humidity": 24,
+    "outside_temp": 40,
     "temp": 65
   },
   "01-27-2023": {
@@ -389,10 +432,12 @@
   },
   "01-27-2025": {
     "humidity": 23,
+    "outside_temp": 39,
     "temp": 66
   },
   "01-27-2026": {
     "humidity": 24,
+    "outside_temp": 22,
     "temp": 66
   },
   "01-28-2023": {
@@ -405,10 +450,12 @@
   },
   "01-28-2025": {
     "humidity": 23,
+    "outside_temp": 38,
     "temp": 66
   },
   "01-28-2026": {
     "humidity": 23,
+    "outside_temp": 23,
     "temp": 66
   },
   "01-29-2023": {
@@ -421,10 +468,12 @@
   },
   "01-29-2025": {
     "humidity": 26,
+    "outside_temp": 45,
     "temp": 65
   },
   "01-29-2026": {
     "humidity": 23,
+    "outside_temp": 25,
     "temp": 67
   },
   "01-30-2023": {
@@ -437,10 +486,12 @@
   },
   "01-30-2025": {
     "humidity": 22,
+    "outside_temp": 28,
     "temp": 66
   },
   "01-30-2026": {
     "humidity": 22,
+    "outside_temp": 17,
     "temp": 65
   },
   "01-31-2023": {
@@ -453,10 +504,12 @@
   },
   "01-31-2025": {
     "humidity": 27,
+    "outside_temp": 41,
     "temp": 65
   },
   "01-31-2026": {
     "humidity": 22,
+    "outside_temp": 22,
     "temp": 65
   },
   "02-01-2023": {
@@ -469,10 +522,12 @@
   },
   "02-01-2025": {
     "humidity": 27,
+    "outside_temp": 34,
     "temp": 65
   },
   "02-01-2026": {
     "humidity": 22,
+    "outside_temp": 24,
     "temp": 65
   },
   "02-02-2023": {
@@ -485,10 +540,12 @@
   },
   "02-02-2025": {
     "humidity": 24,
+    "outside_temp": 28,
     "temp": 65
   },
   "02-02-2026": {
     "humidity": 23,
+    "outside_temp": 34,
     "temp": 66
   },
   "02-03-2023": {
@@ -501,10 +558,12 @@
   },
   "02-03-2025": {
     "humidity": 29,
+    "outside_temp": 43,
     "temp": 66
   },
   "02-03-2026": {
     "humidity": 24,
+    "outside_temp": 36,
     "temp": 66
   },
   "02-04-2023": {
@@ -517,10 +576,12 @@
   },
   "02-04-2025": {
     "humidity": 29,
+    "outside_temp": 42,
     "temp": 67
   },
   "02-04-2026": {
     "humidity": 24,
+    "outside_temp": 31,
     "temp": 66
   },
   "02-05-2023": {
@@ -533,10 +594,12 @@
   },
   "02-05-2025": {
     "humidity": 23,
+    "outside_temp": 28,
     "temp": 65
   },
   "02-05-2026": {
     "humidity": 24,
+    "outside_temp": 34,
     "temp": 67
   },
   "02-06-2023": {
@@ -549,10 +612,12 @@
   },
   "02-06-2025": {
     "humidity": 26,
+    "outside_temp": 33,
     "temp": 65
   },
   "02-06-2026": {
     "humidity": 25,
+    "outside_temp": 30,
     "temp": 65
   },
   "02-07-2023": {
@@ -565,10 +630,12 @@
   },
   "02-07-2025": {
     "humidity": 27,
+    "outside_temp": 38,
     "temp": 66
   },
   "02-07-2026": {
     "humidity": 25,
+    "outside_temp": 25,
     "temp": 65
   },
   "02-08-2023": {
@@ -581,10 +648,12 @@
   },
   "02-08-2025": {
     "humidity": 25,
+    "outside_temp": 35,
     "temp": 66
   },
   "02-08-2026": {
     "humidity": 22,
+    "outside_temp": 18,
     "temp": 65
   },
   "02-09-2023": {
@@ -597,10 +666,12 @@
   },
   "02-09-2025": {
     "humidity": 27,
+    "outside_temp": 32,
     "temp": 65
   },
   "02-09-2026": {
     "humidity": 21,
+    "outside_temp": 31,
     "temp": 65
   },
   "02-10-2023": {
@@ -613,10 +684,12 @@
   },
   "02-10-2025": {
     "humidity": 26,
+    "outside_temp": 34,
     "temp": 65
   },
   "02-10-2026": {
     "humidity": 25,
+    "outside_temp": 36,
     "temp": 66
   },
   "02-11-2023": {
@@ -629,10 +702,12 @@
   },
   "02-11-2025": {
     "humidity": 25,
+    "outside_temp": 32,
     "temp": 65
   },
   "02-11-2026": {
     "humidity": 26,
+    "outside_temp": 40,
     "temp": 66
   },
   "02-12-2023": {
@@ -645,10 +720,12 @@
   },
   "02-12-2025": {
     "humidity": 26,
+    "outside_temp": 33,
     "temp": 65
   },
   "02-12-2026": {
     "humidity": 25,
+    "outside_temp": 36,
     "temp": 66
   },
   "02-13-2023": {
@@ -661,10 +738,12 @@
   },
   "02-13-2025": {
     "humidity": 30,
+    "outside_temp": 39,
     "temp": 66
   },
   "02-13-2026": {
     "humidity": 23,
+    "outside_temp": 39,
     "temp": 65
   },
   "02-14-2023": {
@@ -677,10 +756,12 @@
   },
   "02-14-2025": {
     "humidity": 28,
+    "outside_temp": 33,
     "temp": 66
   },
   "02-14-2026": {
     "humidity": 25,
+    "outside_temp": 36,
     "temp": 64
   },
   "02-15-2023": {
@@ -693,10 +774,12 @@
   },
   "02-15-2025": {
     "humidity": 24,
+    "outside_temp": 30,
     "temp": 65
   },
   "02-15-2026": {
     "humidity": 25,
+    "outside_temp": 35,
     "temp": 65
   },
   "02-16-2023": {
@@ -709,10 +792,12 @@
   },
   "02-16-2025": {
     "humidity": 29,
+    "outside_temp": 36,
     "temp": 65
   },
   "02-16-2026": {
     "humidity": 27,
+    "outside_temp": 38,
     "temp": 65
   },
   "02-17-2023": {
@@ -725,10 +810,12 @@
   },
   "02-17-2025": {
     "humidity": 28,
+    "outside_temp": 30,
     "temp": 65
   },
   "02-17-2026": {
     "humidity": 31,
+    "outside_temp": 38,
     "temp": 65
   },
   "02-18-2023": {
@@ -741,10 +828,12 @@
   },
   "02-18-2025": {
     "humidity": 21,
+    "outside_temp": 25,
     "temp": 66
   },
   "02-18-2026": {
     "humidity": 30,
+    "outside_temp": 40,
     "temp": 66
   },
   "02-19-2023": {
@@ -757,10 +846,12 @@
   },
   "02-19-2025": {
     "humidity": 21,
+    "outside_temp": 31,
     "temp": 65
   },
   "02-19-2026": {
     "humidity": 29,
+    "outside_temp": 41,
     "temp": 66
   },
   "02-20-2023": {
@@ -773,10 +864,12 @@
   },
   "02-20-2025": {
     "humidity": 22,
+    "outside_temp": 31,
     "temp": 65
   },
   "02-20-2026": {
     "humidity": 30,
+    "outside_temp": 38,
     "temp": 64
   },
   "02-21-2023": {
@@ -789,10 +882,12 @@
   },
   "02-21-2025": {
     "humidity": 21,
+    "outside_temp": 33,
     "temp": 66
   },
   "02-21-2026": {
     "humidity": 30,
+    "outside_temp": 33,
     "temp": 65
   },
   "02-22-2023": {
@@ -805,10 +900,12 @@
   },
   "02-22-2025": {
     "humidity": 22,
+    "outside_temp": 36,
     "temp": 66
   },
   "02-22-2026": {
     "humidity": 31,
+    "outside_temp": 34,
     "temp": 64
   },
   "02-23-2023": {
@@ -821,10 +918,12 @@
   },
   "02-23-2025": {
     "humidity": 24,
+    "outside_temp": 41,
     "temp": 66
   },
   "02-23-2026": {
     "humidity": 30,
+    "outside_temp": 33,
     "temp": 64
   },
   "02-24-2023": {
@@ -837,10 +936,12 @@
   },
   "02-24-2025": {
     "humidity": 27,
+    "outside_temp": 44,
     "temp": 67
   },
   "02-24-2026": {
     "humidity": 28,
+    "outside_temp": 33,
     "temp": 65
   },
   "02-25-2023": {
@@ -853,10 +954,12 @@
   },
   "02-25-2025": {
     "humidity": 30,
+    "outside_temp": 52,
     "temp": 67
   },
   "02-25-2026": {
     "humidity": 30,
+    "outside_temp": 39,
     "temp": 64
   },
   "02-26-2023": {
@@ -869,10 +972,12 @@
   },
   "02-26-2025": {
     "humidity": 30,
+    "outside_temp": 51,
     "temp": 69
   },
   "02-26-2026": {
     "humidity": 30,
+    "outside_temp": 42,
     "temp": 66
   },
   "02-27-2023": {
@@ -885,10 +990,12 @@
   },
   "02-27-2025": {
     "humidity": 33,
+    "outside_temp": 49,
     "temp": 66
   },
   "02-27-2026": {
     "humidity": 29,
+    "outside_temp": 38,
     "temp": 67
   },
   "02-28-2023": {
@@ -901,10 +1008,12 @@
   },
   "02-28-2025": {
     "humidity": 32,
+    "outside_temp": 45,
     "temp": 68
   },
   "02-28-2026": {
     "humidity": 30,
+    "outside_temp": 50,
     "temp": 66
   },
   "02-29-2024": {
@@ -921,10 +1030,12 @@
   },
   "03-01-2025": {
     "humidity": 32,
+    "outside_temp": 52,
     "temp": 65
   },
   "03-01-2026": {
     "humidity": 30,
+    "outside_temp": 37,
     "temp": 64
   },
   "03-02-2023": {
@@ -937,10 +1048,12 @@
   },
   "03-02-2025": {
     "humidity": 25,
+    "outside_temp": 29,
     "temp": 66
   },
   "03-02-2026": {
     "humidity": 26,
+    "outside_temp": 30,
     "temp": 65
   },
   "03-03-2023": {
@@ -953,10 +1066,12 @@
   },
   "03-03-2025": {
     "humidity": 22,
+    "outside_temp": 32,
     "temp": 66
   },
   "03-03-2026": {
     "humidity": 27,
+    "outside_temp": 33,
     "temp": 66
   },
   "03-04-2023": {
@@ -969,10 +1084,12 @@
   },
   "03-04-2025": {
     "humidity": 27,
+    "outside_temp": 49,
     "temp": 66
   },
   "03-04-2026": {
     "humidity": 32,
+    "outside_temp": 50,
     "temp": 69
   },
   "03-05-2023": {
@@ -985,10 +1102,12 @@
   },
   "03-05-2025": {
     "humidity": 35,
+    "outside_temp": 57,
     "temp": 66
   },
   "03-05-2026": {
     "humidity": 33,
+    "outside_temp": 41,
     "temp": 66
   },
   "03-06-2023": {
@@ -1001,10 +1120,12 @@
   },
   "03-06-2025": {
     "humidity": 45,
+    "outside_temp": 56,
     "temp": 69
   },
   "03-06-2026": {
     "humidity": 33,
+    "outside_temp": 35,
     "temp": 66
   },
   "03-07-2023": {
@@ -1017,10 +1138,12 @@
   },
   "03-07-2025": {
     "humidity": 35,
+    "outside_temp": 42,
     "temp": 67
   },
   "03-07-2026": {
     "humidity": 41,
+    "outside_temp": 47,
     "temp": 66
   },
   "03-08-2023": {
@@ -1033,10 +1156,12 @@
   },
   "03-08-2025": {
     "humidity": 25,
+    "outside_temp": 40,
     "temp": 65
   },
   "03-08-2026": {
     "humidity": 46,
+    "outside_temp": 56,
     "temp": 67
   },
   "03-09-2023": {
@@ -1049,10 +1174,12 @@
   },
   "03-09-2025": {
     "humidity": 25,
+    "outside_temp": 44,
     "temp": 66
   },
   "03-09-2026": {
     "humidity": 42,
+    "outside_temp": 67,
     "temp": 71
   },
   "03-10-2023": {
@@ -1065,10 +1192,12 @@
   },
   "03-10-2025": {
     "humidity": 26,
+    "outside_temp": 60,
     "temp": 68
   },
   "03-10-2026": {
     "humidity": 38,
+    "outside_temp": 75,
     "temp": 73
   },
   "03-11-2023": {
@@ -1081,10 +1210,12 @@
   },
   "03-11-2025": {
     "humidity": 32,
+    "outside_temp": 63,
     "temp": 69
   },
   "03-11-2026": {
     "humidity": 37,
+    "outside_temp": 56,
     "temp": 74
   },
   "03-12-2023": {
@@ -1097,10 +1228,12 @@
   },
   "03-12-2025": {
     "humidity": 31,
+    "outside_temp": 50,
     "temp": 70
   },
   "03-12-2026": {
     "humidity": 41,
+    "outside_temp": 58,
     "temp": 71
   },
   "03-13-2023": {
@@ -1113,10 +1246,12 @@
   },
   "03-13-2025": {
     "humidity": 28,
+    "outside_temp": 44,
     "temp": 69
   },
   "03-13-2026": {
     "humidity": 34,
+    "outside_temp": 42,
     "temp": 68
   },
   "03-14-2023": {
@@ -1129,10 +1264,12 @@
   },
   "03-14-2025": {
     "humidity": 31,
+    "outside_temp": 52,
     "temp": 69
   },
   "03-14-2026": {
     "humidity": 32,
+    "outside_temp": 47,
     "temp": 68
   },
   "03-15-2023": {
@@ -1145,10 +1282,12 @@
   },
   "03-15-2025": {
     "humidity": 34,
+    "outside_temp": 62,
     "temp": 69
   },
   "03-15-2026": {
     "humidity": 31,
+    "outside_temp": 40,
     "temp": 67
   },
   "03-16-2023": {
@@ -1161,10 +1300,12 @@
   },
   "03-16-2025": {
     "humidity": 48,
+    "outside_temp": 70,
     "temp": 70
   },
   "03-16-2026": {
     "humidity": 57,
+    "outside_temp": 62,
     "temp": 68
   },
   "03-17-2023": {
@@ -1177,10 +1318,12 @@
   },
   "03-17-2025": {
     "humidity": 48,
+    "outside_temp": 61,
     "temp": 71
   },
   "03-17-2026": {
     "humidity": 54,
+    "outside_temp": 61,
     "temp": 70
   },
   "03-18-2023": {
@@ -1193,10 +1336,12 @@
   },
   "03-18-2025": {
     "humidity": 38,
+    "outside_temp": 52,
     "temp": 70
   },
   "03-18-2026": {
     "humidity": 29,
+    "outside_temp": 36,
     "temp": 66
   },
   "03-19-2023": {
@@ -1209,10 +1354,12 @@
   },
   "03-19-2025": {
     "humidity": 35,
+    "outside_temp": 53,
     "temp": 70
   },
   "03-19-2026": {
     "humidity": 30,
+    "outside_temp": 40,
     "temp": 66
   },
   "03-20-2023": {
@@ -1225,10 +1372,12 @@
   },
   "03-20-2025": {
     "humidity": 39,
+    "outside_temp": 57,
     "temp": 68
   },
   "03-20-2026": {
     "humidity": 34,
+    "outside_temp": 56,
     "temp": 68
   },
   "03-21-2023": {
@@ -1241,10 +1390,12 @@
   },
   "03-21-2025": {
     "humidity": 39,
+    "outside_temp": 48,
     "temp": 68
   },
   "03-21-2026": {
     "humidity": 35,
+    "outside_temp": 51,
     "temp": 68
   },
   "03-22-2023": {
@@ -1257,10 +1408,12 @@
   },
   "03-22-2025": {
     "humidity": 32,
+    "outside_temp": 62,
     "temp": 69
   },
   "03-22-2026": {
     "humidity": 35,
+    "outside_temp": 46,
     "temp": 66
   },
   "03-23-2023": {
@@ -1273,10 +1426,12 @@
   },
   "03-23-2025": {
     "humidity": 31,
+    "outside_temp": 44,
     "temp": 68
   },
   "03-23-2026": {
     "humidity": 35,
+    "outside_temp": 39,
     "temp": 66
   },
   "03-24-2023": {
@@ -1289,6 +1444,7 @@
   },
   "03-24-2026": {
     "humidity": 35,
+    "outside_temp": 47,
     "temp": 69
   },
   "03-25-2023": {
@@ -1301,10 +1457,12 @@
   },
   "03-25-2025": {
     "humidity": 33,
+    "outside_temp": 52,
     "temp": 70
   },
   "03-25-2026": {
     "humidity": 32,
+    "outside_temp": 54,
     "temp": 76
   },
   "03-26-2023": {
@@ -1317,10 +1475,12 @@
   },
   "03-26-2025": {
     "humidity": 33,
+    "outside_temp": 51,
     "temp": 68
   },
   "03-26-2026": {
     "humidity": 44,
+    "outside_temp": 64,
     "temp": 71
   },
   "03-27-2023": {
@@ -1333,10 +1493,12 @@
   },
   "03-27-2025": {
     "humidity": 32,
+    "outside_temp": 48,
     "temp": 68
   },
   "03-27-2026": {
     "humidity": 47,
+    "outside_temp": 52,
     "temp": 69
   },
   "03-28-2023": {
@@ -1349,10 +1511,12 @@
   },
   "03-28-2025": {
     "humidity": 28,
+    "outside_temp": 59,
     "temp": 69
   },
   "03-28-2026": {
     "humidity": 33,
+    "outside_temp": 38,
     "temp": 67
   },
   "03-29-2023": {
@@ -1365,10 +1529,12 @@
   },
   "03-29-2025": {
     "humidity": 31,
+    "outside_temp": 50,
     "temp": 67
   },
   "03-29-2026": {
     "humidity": 29,
+    "outside_temp": 51,
     "temp": 68
   },
   "03-30-2023": {
@@ -1381,10 +1547,12 @@
   },
   "03-30-2025": {
     "humidity": 33,
+    "outside_temp": 42,
     "temp": 65
   },
   "03-30-2026": {
     "humidity": 37,
+    "outside_temp": 68,
     "temp": 70
   },
   "03-31-2023": {
@@ -1397,10 +1565,12 @@
   },
   "03-31-2025": {
     "humidity": 46,
+    "outside_temp": 63,
     "temp": 68
   },
   "03-31-2026": {
     "humidity": 39,
+    "outside_temp": 69,
     "temp": 71
   },
   "04-01-2023": {
@@ -1409,10 +1579,12 @@
   },
   "04-01-2025": {
     "humidity": 43,
+    "outside_temp": 58,
     "temp": 71
   },
   "04-01-2026": {
     "humidity": 51,
+    "outside_temp": 71,
     "temp": 71
   },
   "04-02-2023": {
@@ -1421,10 +1593,12 @@
   },
   "04-02-2025": {
     "humidity": 30,
+    "outside_temp": 42,
     "temp": 68
   },
   "04-02-2026": {
     "humidity": 41,
+    "outside_temp": 43,
     "temp": 67
   },
   "04-03-2023": {
@@ -1433,10 +1607,12 @@
   },
   "04-03-2025": {
     "humidity": 44,
+    "outside_temp": 64,
     "temp": 67
   },
   "04-03-2026": {
     "humidity": 49,
+    "outside_temp": 68,
     "temp": 70
   },
   "04-04-2023": {
@@ -1445,10 +1621,12 @@
   },
   "04-04-2025": {
     "humidity": 40,
+    "outside_temp": 69,
     "temp": 72
   },
   "04-04-2026": {
     "humidity": 45,
+    "outside_temp": 60,
     "temp": 70
   },
   "04-05-2023": {
@@ -1457,10 +1635,12 @@
   },
   "04-05-2025": {
     "humidity": 36,
+    "outside_temp": 51,
     "temp": 71
   },
   "04-05-2026": {
     "humidity": 44,
+    "outside_temp": 55,
     "temp": 67
   },
   "04-06-2023": {
@@ -1469,10 +1649,12 @@
   },
   "04-06-2025": {
     "humidity": 39,
+    "outside_temp": 52,
     "temp": 67
   },
   "04-06-2026": {
     "humidity": 41,
+    "outside_temp": 49,
     "temp": 69
   },
   "04-07-2023": {
@@ -1481,10 +1663,12 @@
   },
   "04-07-2025": {
     "humidity": 38,
+    "outside_temp": 48,
     "temp": 66
   },
   "04-07-2026": {
     "humidity": 36,
+    "outside_temp": 46,
     "temp": 68
   },
   "04-08-2023": {
@@ -1493,10 +1677,12 @@
   },
   "04-08-2025": {
     "humidity": 37,
+    "outside_temp": 41,
     "temp": 66
   },
   "04-08-2026": {
     "humidity": 33,
+    "outside_temp": 44,
     "temp": 68
   },
   "04-09-2023": {
@@ -1505,10 +1691,12 @@
   },
   "04-09-2025": {
     "humidity": 30,
+    "outside_temp": 48,
     "temp": 68
   },
   "04-09-2026": {
     "humidity": 33,
+    "outside_temp": 58,
     "temp": 68
   },
   "04-10-2023": {
@@ -1517,26 +1705,32 @@
   },
   "04-10-2025": {
     "humidity": 31,
+    "outside_temp": 48,
     "temp": 68
   },
   "04-10-2026": {
     "humidity": 34,
+    "outside_temp": 71,
     "temp": 71
   },
   "04-11-2025": {
     "humidity": 34,
+    "outside_temp": 45,
     "temp": 66
   },
   "04-11-2026": {
     "humidity": 34,
+    "outside_temp": 60,
     "temp": 72
   },
   "04-12-2025": {
     "humidity": 34,
+    "outside_temp": 39,
     "temp": 65
   },
   "04-12-2026": {
     "humidity": 31,
+    "outside_temp": 54,
     "temp": 69
   },
   "04-13-2023": {
@@ -1545,10 +1739,12 @@
   },
   "04-13-2025": {
     "humidity": 36,
+    "outside_temp": 46,
     "temp": 65
   },
   "04-13-2026": {
     "humidity": 54,
+    "outside_temp": 71,
     "temp": 72
   },
   "04-14-2023": {
@@ -1557,10 +1753,12 @@
   },
   "04-14-2025": {
     "humidity": 36,
+    "outside_temp": 67,
     "temp": 70
   },
   "04-14-2026": {
     "humidity": 52,
+    "outside_temp": 81,
     "temp": 78
   },
   "04-15-2023": {
@@ -1569,10 +1767,12 @@
   },
   "04-15-2025": {
     "humidity": 41,
+    "outside_temp": 67,
     "temp": 71
   },
   "04-15-2026": {
     "humidity": 54,
+    "outside_temp": 74,
     "temp": 77
   },
   "04-16-2023": {
@@ -1581,10 +1781,12 @@
   },
   "04-16-2025": {
     "humidity": 38,
+    "outside_temp": 51,
     "temp": 70
   },
   "04-16-2026": {
     "humidity": 48,
+    "outside_temp": 66,
     "temp": 73
   },
   "04-17-2023": {
@@ -1593,10 +1795,12 @@
   },
   "04-17-2025": {
     "humidity": 32,
+    "outside_temp": 60,
     "temp": 71
   },
   "04-17-2026": {
     "humidity": 57,
+    "outside_temp": 62,
     "temp": 71
   },
   "04-18-2023": {
@@ -1605,10 +1809,12 @@
   },
   "04-18-2025": {
     "humidity": 33,
+    "outside_temp": 68,
     "temp": 72
   },
   "04-18-2026": {
     "humidity": 50,
+    "outside_temp": 54,
     "temp": 69
   },
   "04-19-2023": {
@@ -1617,10 +1823,12 @@
   },
   "04-19-2025": {
     "humidity": 51,
+    "outside_temp": 84,
     "temp": 78
   },
   "04-19-2026": {
     "humidity": 47,
+    "outside_temp": 51,
     "temp": 66
   },
   "04-20-2023": {
@@ -1629,10 +1837,12 @@
   },
   "04-20-2025": {
     "humidity": 51,
+    "outside_temp": 70,
     "temp": 76
   },
   "04-20-2026": {
     "humidity": 43,
+    "outside_temp": 50,
     "temp": 65
   },
   "04-21-2023": {
@@ -1641,10 +1851,12 @@
   },
   "04-21-2025": {
     "humidity": 30,
+    "outside_temp": 57,
     "temp": 70
   },
   "04-21-2026": {
     "humidity": 34,
+    "outside_temp": 49,
     "temp": 68
   },
   "04-22-2023": {
@@ -1653,10 +1865,12 @@
   },
   "04-22-2025": {
     "humidity": 42,
+    "outside_temp": 72,
     "temp": 73
   },
   "04-22-2026": {
     "humidity": 41,
+    "outside_temp": 47,
     "temp": 65
   },
   "04-23-2023": {
@@ -1665,10 +1879,12 @@
   },
   "04-23-2025": {
     "humidity": 40,
+    "outside_temp": 73,
     "temp": 76
   },
   "04-23-2026": {
     "humidity": 39,
+    "outside_temp": 65,
     "temp": 70
   },
   "04-24-2023": {
@@ -1677,10 +1893,12 @@
   },
   "04-24-2025": {
     "humidity": 34,
+    "outside_temp": 69,
     "temp": 75
   },
   "04-24-2026": {
     "humidity": 36,
+    "outside_temp": 54,
     "temp": 70
   },
   "04-25-2023": {
@@ -1689,10 +1907,12 @@
   },
   "04-25-2025": {
     "humidity": 39,
+    "outside_temp": 73,
     "temp": 77
   },
   "04-25-2026": {
     "humidity": 35,
+    "outside_temp": 51,
     "temp": 69
   },
   "04-26-2023": {
@@ -1701,10 +1921,12 @@
   },
   "04-26-2025": {
     "humidity": 50,
+    "outside_temp": 62,
     "temp": 75
   },
   "04-26-2026": {
     "humidity": 36,
+    "outside_temp": 60,
     "temp": 70
   },
   "04-27-2023": {
@@ -1713,10 +1935,12 @@
   },
   "04-27-2025": {
     "humidity": 46,
+    "outside_temp": 55,
     "temp": 74
   },
   "04-27-2026": {
     "humidity": 36,
+    "outside_temp": 64,
     "temp": 73
   },
   "04-28-2023": {
@@ -1725,10 +1949,12 @@
   },
   "04-28-2025": {
     "humidity": 35,
+    "outside_temp": 74,
     "temp": 74
   },
   "04-28-2026": {
     "humidity": 38,
+    "outside_temp": 59,
     "temp": 72
   },
   "04-29-2023": {
@@ -1737,10 +1963,12 @@
   },
   "04-29-2025": {
     "humidity": 35,
+    "outside_temp": 80,
     "temp": 79
   },
   "04-29-2026": {
     "humidity": 39,
+    "outside_temp": 55,
     "temp": 72
   },
   "04-30-2023": {
@@ -1749,10 +1977,12 @@
   },
   "04-30-2025": {
     "humidity": 39,
+    "outside_temp": 71,
     "temp": 81
   },
   "04-30-2026": {
     "humidity": 42,
+    "outside_temp": 55,
     "temp": 70
   },
   "05-01-2023": {
@@ -1761,10 +1991,12 @@
   },
   "05-01-2025": {
     "humidity": 35,
+    "outside_temp": 63,
     "temp": 73
   },
   "05-01-2026": {
     "humidity": 42,
+    "outside_temp": 64,
     "temp": 74
   },
   "05-02-2023": {
@@ -1773,10 +2005,12 @@
   },
   "05-02-2025": {
     "humidity": 57,
+    "outside_temp": 78,
     "temp": 73
   },
   "05-02-2026": {
     "humidity": 38,
+    "outside_temp": 55,
     "temp": 72
   },
   "05-03-2023": {
@@ -1785,10 +2019,12 @@
   },
   "05-03-2025": {
     "humidity": 57,
+    "outside_temp": 85,
     "temp": 82
   },
   "05-03-2026": {
     "humidity": 38,
+    "outside_temp": 54,
     "temp": 70
   },
   "05-04-2023": {
@@ -1797,10 +2033,12 @@
   },
   "05-04-2025": {
     "humidity": 59,
+    "outside_temp": 76,
     "temp": 79
   },
   "05-04-2026": {
     "humidity": 36,
+    "outside_temp": 73,
     "temp": 72
   },
   "05-05-2023": {
@@ -1809,10 +2047,12 @@
   },
   "05-05-2025": {
     "humidity": 62,
+    "outside_temp": 55,
     "temp": 71
   },
   "05-05-2026": {
     "humidity": 47,
+    "outside_temp": 81,
     "temp": 78
   },
   "05-06-2023": {
@@ -1821,10 +2061,12 @@
   },
   "05-06-2025": {
     "humidity": 67,
+    "outside_temp": 59,
     "temp": 66
   },
   "05-06-2026": {
     "humidity": 52,
+    "outside_temp": 71,
     "temp": 74
   },
   "05-07-2023": {
@@ -1833,10 +2075,12 @@
   },
   "05-07-2025": {
     "humidity": 62,
+    "outside_temp": 73,
     "temp": 73
   },
   "05-07-2026": {
     "humidity": 49,
+    "outside_temp": 65,
     "temp": 76
   },
   "05-08-2023": {
@@ -1845,10 +2089,12 @@
   },
   "05-08-2025": {
     "humidity": 53,
+    "outside_temp": 72,
     "temp": 77
   },
   "05-08-2026": {
     "humidity": 36,
+    "outside_temp": 61,
     "temp": 74
   },
   "05-09-2023": {
@@ -1857,10 +2103,12 @@
   },
   "05-09-2025": {
     "humidity": 52,
+    "outside_temp": 56,
     "temp": 74
   },
   "05-09-2026": {
     "humidity": 40,
+    "outside_temp": 54,
     "temp": 72
   },
   "05-10-2023": {
@@ -1869,10 +2117,12 @@
   },
   "05-10-2025": {
     "humidity": 59,
+    "outside_temp": 63,
     "temp": 67
   },
   "05-10-2026": {
     "humidity": 50,
+    "outside_temp": 72,
     "temp": 74
   },
   "05-11-2023": {
@@ -1881,10 +2131,12 @@
   },
   "05-11-2025": {
     "humidity": 52,
+    "outside_temp": 69,
     "temp": 71
   },
   "05-11-2026": {
     "humidity": 45,
+    "outside_temp": 62,
     "temp": 71
   },
   "05-12-2023": {
@@ -1893,10 +2145,12 @@
   },
   "05-12-2025": {
     "humidity": 39,
+    "outside_temp": 76,
     "temp": 73
   },
   "05-12-2026": {
     "humidity": 37,
+    "outside_temp": 64,
     "temp": 70
   },
   "05-13-2023": {
@@ -1905,10 +2159,12 @@
   },
   "05-13-2025": {
     "humidity": 43,
+    "outside_temp": 67,
     "temp": 73
   },
   "05-13-2026": {
     "humidity": 47,
+    "outside_temp": 65,
     "temp": 68
   },
   "05-14-2023": {
@@ -1917,10 +2173,12 @@
   },
   "05-14-2025": {
     "humidity": 47,
+    "outside_temp": 71,
     "temp": 76
   },
   "05-14-2026": {
     "humidity": 49,
+    "outside_temp": 62,
     "temp": 70
   },
   "05-15-2023": {
@@ -1929,10 +2187,12 @@
   },
   "05-15-2025": {
     "humidity": 64,
+    "outside_temp": 69,
     "temp": 74
   },
   "05-15-2026": {
     "humidity": 50,
+    "outside_temp": 55,
     "temp": 69
   },
   "05-16-2023": {
@@ -1941,10 +2201,12 @@
   },
   "05-16-2025": {
     "humidity": 68,
+    "outside_temp": 79,
     "temp": 79
   },
   "05-16-2026": {
     "humidity": 49,
+    "outside_temp": 79,
     "temp": 76
   },
   "05-17-2023": {
@@ -1953,10 +2215,12 @@
   },
   "05-17-2025": {
     "humidity": 66,
+    "outside_temp": 77,
     "temp": 77
   },
   "05-17-2026": {
     "humidity": 47,
+    "outside_temp": 88,
     "temp": 84
   },
   "05-18-2023": {
@@ -1965,10 +2229,12 @@
   },
   "05-18-2025": {
     "humidity": 61,
+    "outside_temp": 68,
     "temp": 75
   },
   "05-18-2026": {
     "humidity": 53,
+    "outside_temp": 77,
     "temp": 82
   },
   "05-19-2023": {
@@ -1977,10 +2243,12 @@
   },
   "05-19-2025": {
     "humidity": 52,
+    "outside_temp": 63,
     "temp": 71
   },
   "05-19-2026": {
     "humidity": 59,
+    "outside_temp": 96,
     "temp": 91
   },
   "05-20-2023": {
@@ -1993,10 +2261,12 @@
   },
   "05-20-2025": {
     "humidity": 47,
+    "outside_temp": 58,
     "temp": 66
   },
   "05-20-2026": {
     "humidity": 58,
+    "outside_temp": 89,
     "temp": 89
   },
   "05-21-2023": {
@@ -2009,10 +2279,12 @@
   },
   "05-21-2025": {
     "humidity": 47,
+    "outside_temp": 50,
     "temp": 66
   },
   "05-21-2026": {
     "humidity": 40,
+    "outside_temp": 72,
     "temp": 84
   },
   "05-22-2023": {
@@ -2025,10 +2297,12 @@
   },
   "05-22-2025": {
     "humidity": 50,
+    "outside_temp": 48,
     "temp": 65
   },
   "05-22-2026": {
     "humidity": 34,
+    "outside_temp": 63,
     "temp": 72
   },
   "05-23-2023": {
@@ -2041,10 +2315,12 @@
   },
   "05-23-2025": {
     "humidity": 50,
+    "outside_temp": 56,
     "temp": 68
   },
   "05-23-2026": {
     "humidity": 42,
+    "outside_temp": 64,
     "temp": 69
   },
   "05-24-2023": {
@@ -2057,10 +2333,12 @@
   },
   "05-24-2025": {
     "humidity": 50,
+    "outside_temp": 60,
     "temp": 71
   },
   "05-24-2026": {
     "humidity": 60,
+    "outside_temp": 54,
     "temp": 69
   },
   "05-25-2023": {
@@ -2073,10 +2351,12 @@
   },
   "05-25-2025": {
     "humidity": 47,
+    "outside_temp": 60,
     "temp": 75
   },
   "05-25-2026": {
     "humidity": 67,
+    "outside_temp": 76,
     "temp": 71
   },
   "05-26-2023": {
@@ -2089,10 +2369,12 @@
   },
   "05-26-2025": {
     "humidity": 46,
+    "outside_temp": 68,
     "temp": 74
   },
   "05-26-2026": {
     "humidity": 64,
+    "outside_temp": 84,
     "temp": 79
   },
   "05-27-2023": {
@@ -2105,10 +2387,12 @@
   },
   "05-27-2025": {
     "humidity": 52,
+    "outside_temp": 80,
     "temp": 77
   },
   "05-27-2026": {
     "humidity": 51,
+    "outside_temp": 85,
     "temp": 83
   },
   "05-28-2023": {
@@ -2121,10 +2405,12 @@
   },
   "05-28-2025": {
     "humidity": 48,
+    "outside_temp": 79,
     "temp": 79
   },
   "05-28-2026": {
     "humidity": 49,
+    "outside_temp": 70,
     "temp": 80
   },
   "05-29-2023": {
@@ -2137,10 +2423,12 @@
   },
   "05-29-2025": {
     "humidity": 59,
+    "outside_temp": 66,
     "temp": 74
   },
   "05-29-2026": {
     "humidity": 44,
+    "outside_temp": 70,
     "temp": 76
   },
   "05-30-2023": {
@@ -2153,10 +2441,12 @@
   },
   "05-30-2025": {
     "humidity": 58,
+    "outside_temp": 75,
     "temp": 77
   },
   "05-30-2026": {
     "humidity": 45,
+    "outside_temp": 58,
     "temp": 75
   },
   "05-31-2023": {
@@ -2169,10 +2459,12 @@
   },
   "05-31-2025": {
     "humidity": 63,
+    "outside_temp": 66,
     "temp": 74
   },
   "05-31-2026": {
     "humidity": 46,
+    "outside_temp": 69,
     "temp": 69
   },
   "06-01-2023": {
@@ -2185,10 +2477,12 @@
   },
   "06-01-2025": {
     "humidity": 53,
+    "outside_temp": 64,
     "temp": 70
   },
   "06-01-2026": {
     "humidity": 47,
+    "outside_temp": 62,
     "temp": 71
   },
   "06-02-2023": {
@@ -2201,10 +2495,12 @@
   },
   "06-02-2025": {
     "humidity": 48,
+    "outside_temp": 71,
     "temp": 72
   },
   "06-02-2026": {
     "humidity": 45,
+    "outside_temp": 76,
     "temp": 75
   },
   "06-03-2023": {
@@ -2217,10 +2513,12 @@
   },
   "06-03-2025": {
     "humidity": 46,
+    "outside_temp": 78,
     "temp": 76
   },
   "06-03-2026": {
     "humidity": 42,
+    "outside_temp": 83,
     "temp": 80
   },
   "06-04-2023": {
@@ -2233,10 +2531,12 @@
   },
   "06-04-2025": {
     "humidity": 48,
+    "outside_temp": 85,
     "temp": 81
   },
   "06-04-2026": {
     "humidity": 43,
+    "outside_temp": 89,
     "temp": 84
   },
   "06-05-2023": {
@@ -2249,10 +2549,12 @@
   },
   "06-05-2025": {
     "humidity": 56,
+    "outside_temp": 93,
     "temp": 87
   },
   "06-05-2026": {
     "humidity": 45,
+    "outside_temp": 89,
     "temp": 84
   },
   "06-06-2023": {
@@ -2265,10 +2567,12 @@
   },
   "06-06-2025": {
     "humidity": 56,
+    "outside_temp": 79,
     "temp": 85
   },
   "06-06-2026": {
     "humidity": 53,
+    "outside_temp": 86,
     "temp": 84
   },
   "06-07-2023": {
@@ -2281,10 +2585,12 @@
   },
   "06-07-2025": {
     "humidity": 70,
+    "outside_temp": 70,
     "temp": 77
   },
   "06-07-2026": {
     "humidity": 57,
+    "outside_temp": 80,
     "temp": 82
   },
   "06-08-2023": {
@@ -2297,10 +2603,12 @@
   },
   "06-08-2025": {
     "humidity": 65,
+    "outside_temp": 69,
     "temp": 75
   },
   "06-08-2026": {
     "humidity": 51,
+    "outside_temp": 78,
     "temp": 78
   },
   "06-09-2023": {
@@ -2313,10 +2621,12 @@
   },
   "06-09-2025": {
     "humidity": 64,
+    "outside_temp": 61,
     "temp": 71
   },
   "06-09-2026": {
     "humidity": 50,
+    "outside_temp": 85,
     "temp": 83
   },
   "06-10-2023": {
@@ -2329,10 +2639,12 @@
   },
   "06-10-2025": {
     "humidity": 70,
+    "outside_temp": 61,
     "temp": 69
   },
   "06-10-2026": {
     "humidity": 55,
+    "outside_temp": 89,
     "temp": 87
   },
   "06-11-2023": {
@@ -2345,10 +2657,12 @@
   },
   "06-11-2025": {
     "humidity": 71,
+    "outside_temp": 81,
     "temp": 78
   },
   "06-11-2026": {
     "humidity": 65,
+    "outside_temp": 92,
     "temp": 87
   },
   "06-12-2023": {
@@ -2361,10 +2675,12 @@
   },
   "06-12-2025": {
     "humidity": 58,
+    "outside_temp": 87,
     "temp": 84
   },
   "06-12-2026": {
     "humidity": 62,
+    "outside_temp": 91,
     "temp": 88
   },
   "06-13-2023": {
@@ -2377,10 +2693,12 @@
   },
   "06-13-2025": {
     "humidity": 50,
+    "outside_temp": 75,
     "temp": 78
   },
   "06-13-2026": {
     "humidity": 57,
+    "outside_temp": 89,
     "temp": 87
   },
   "06-14-2023": {
@@ -2393,10 +2711,12 @@
   },
   "06-14-2025": {
     "humidity": 61,
+    "outside_temp": 60,
     "temp": 71
   },
   "06-14-2026": {
     "humidity": 47,
+    "outside_temp": 90,
     "temp": 86
   },
   "06-15-2023": {
@@ -2409,10 +2729,12 @@
   },
   "06-15-2025": {
     "humidity": 61,
+    "outside_temp": 67,
     "temp": 71
   },
   "06-15-2026": {
     "humidity": 59,
+    "outside_temp": 81,
     "temp": 84
   },
   "06-16-2023": {
@@ -2425,10 +2747,12 @@
   },
   "06-16-2025": {
     "humidity": 61,
+    "outside_temp": 72,
     "temp": 75
   },
   "06-16-2026": {
     "humidity": 45,
+    "outside_temp": 78,
     "temp": 80
   },
   "06-17-2023": {
@@ -2441,10 +2765,12 @@
   },
   "06-17-2025": {
     "humidity": 72,
+    "outside_temp": 72,
     "temp": 75
   },
   "06-17-2026": {
     "humidity": 47,
+    "outside_temp": 79,
     "temp": 80
   },
   "06-18-2023": {
@@ -2457,10 +2783,12 @@
   },
   "06-18-2025": {
     "humidity": 75,
+    "outside_temp": 77,
     "temp": 77
   },
   "06-18-2026": {
     "humidity": 62,
+    "outside_temp": 79,
     "temp": 80
   },
   "06-19-2023": {
@@ -2473,10 +2801,12 @@
   },
   "06-19-2025": {
     "humidity": 75,
+    "outside_temp": 92,
     "temp": 86
   },
   "06-19-2026": {
     "humidity": 52,
+    "outside_temp": 79,
     "temp": 81
   },
   "06-20-2023": {
@@ -2489,10 +2819,12 @@
   },
   "06-20-2025": {
     "humidity": 64,
+    "outside_temp": 83,
     "temp": 82
   },
   "06-20-2026": {
     "humidity": 46,
+    "outside_temp": 78,
     "temp": 80
   },
   "06-21-2023": {
@@ -2505,10 +2837,12 @@
   },
   "06-21-2025": {
     "humidity": 55,
+    "outside_temp": 86,
     "temp": 83
   },
   "06-21-2026": {
     "humidity": 49,
+    "outside_temp": 81,
     "temp": 80
   },
   "06-22-2023": {
@@ -2521,10 +2855,12 @@
   },
   "06-22-2025": {
     "humidity": 64,
+    "outside_temp": 93,
     "temp": 86
   },
   "06-22-2026": {
     "humidity": 61,
+    "outside_temp": 77,
     "temp": 78
   },
   "06-23-2023": {
@@ -2537,10 +2873,12 @@
   },
   "06-23-2025": {
     "humidity": 66,
+    "outside_temp": 93,
     "temp": 90
   },
   "06-23-2026": {
     "humidity": 71,
+    "outside_temp": 68,
     "temp": 74
   },
   "06-24-2023": {
@@ -2553,10 +2891,12 @@
   },
   "06-24-2025": {
     "humidity": 68,
+    "outside_temp": 101,
     "temp": 92
   },
   "06-24-2026": {
     "humidity": 70,
+    "outside_temp": 82,
     "temp": 79
   },
   "06-25-2023": {
@@ -2569,10 +2909,12 @@
   },
   "06-25-2025": {
     "humidity": 58,
+    "outside_temp": 93,
     "temp": 94
   },
   "06-25-2026": {
     "humidity": 54,
+    "outside_temp": 83,
     "temp": 80
   },
   "06-26-2023": {
@@ -2585,10 +2927,12 @@
   },
   "06-26-2025": {
     "humidity": 52,
+    "outside_temp": 78,
     "temp": 87
   },
   "06-26-2026": {
     "humidity": 63,
+    "outside_temp": 79,
     "temp": 80
   },
   "06-27-2023": {
@@ -2601,10 +2945,12 @@
   },
   "06-27-2025": {
     "humidity": 53,
+    "outside_temp": 74,
     "temp": 77
   },
   "06-27-2026": {
     "humidity": 61,
+    "outside_temp": 78,
     "temp": 79
   },
   "06-28-2023": {
@@ -2617,10 +2963,12 @@
   },
   "06-28-2025": {
     "humidity": 67,
+    "outside_temp": 68,
     "temp": 75
   },
   "06-28-2026": {
     "humidity": 68,
+    "outside_temp": 80,
     "temp": 80
   },
   "06-29-2023": {
@@ -2633,10 +2981,12 @@
   },
   "06-29-2025": {
     "humidity": 69,
+    "outside_temp": 87,
     "temp": 80
   },
   "06-29-2026": {
     "humidity": 64,
+    "outside_temp": 83,
     "temp": 81
   },
   "06-30-2023": {
@@ -2649,10 +2999,12 @@
   },
   "06-30-2025": {
     "humidity": 61,
+    "outside_temp": 86,
     "temp": 83
   },
   "06-30-2026": {
     "humidity": 62,
+    "outside_temp": 89,
     "temp": 85
   },
   "07-01-2023": {
@@ -2665,10 +3017,12 @@
   },
   "07-01-2025": {
     "humidity": 68,
+    "outside_temp": 91,
     "temp": 89
   },
   "07-01-2026": {
     "humidity": 62,
+    "outside_temp": 96,
     "temp": 89
   },
   "07-02-2023": {
@@ -2681,11 +3035,13 @@
   },
   "07-02-2025": {
     "humidity": 66,
+    "outside_temp": 85,
     "temp": 86
   },
   "07-02-2026": {
     "humidity": 63,
-    "temp": 87
+    "outside_temp": 99,
+    "temp": 93
   },
   "07-03-2023": {
     "humidity": 77,
@@ -2697,7 +3053,12 @@
   },
   "07-03-2025": {
     "humidity": 62,
+    "outside_temp": 88,
     "temp": 87
+  },
+  "07-03-2026": {
+    "humidity": 55,
+    "temp": 91
   },
   "07-04-2023": {
     "humidity": 75,
@@ -2709,6 +3070,7 @@
   },
   "07-04-2025": {
     "humidity": 51,
+    "outside_temp": 80,
     "temp": 82
   },
   "07-05-2023": {
@@ -2721,6 +3083,7 @@
   },
   "07-05-2025": {
     "humidity": 51,
+    "outside_temp": 83,
     "temp": 82
   },
   "07-06-2023": {
@@ -2733,6 +3096,7 @@
   },
   "07-06-2025": {
     "humidity": 57,
+    "outside_temp": 93,
     "temp": 87
   },
   "07-07-2023": {
@@ -2745,6 +3109,7 @@
   },
   "07-07-2025": {
     "humidity": 63,
+    "outside_temp": 89,
     "temp": 88
   },
   "07-08-2023": {
@@ -2757,6 +3122,7 @@
   },
   "07-08-2025": {
     "humidity": 67,
+    "outside_temp": 92,
     "temp": 90
   },
   "07-09-2023": {
@@ -2769,6 +3135,7 @@
   },
   "07-09-2025": {
     "humidity": 69,
+    "outside_temp": 73,
     "temp": 85
   },
   "07-10-2023": {
@@ -2781,6 +3148,7 @@
   },
   "07-10-2025": {
     "humidity": 68,
+    "outside_temp": 67,
     "temp": 77
   },
   "07-11-2023": {
@@ -2793,6 +3161,7 @@
   },
   "07-11-2025": {
     "humidity": 71,
+    "outside_temp": 80,
     "temp": 78
   },
   "07-12-2023": {
@@ -2805,6 +3174,7 @@
   },
   "07-12-2025": {
     "humidity": 70,
+    "outside_temp": 82,
     "temp": 81
   },
   "07-13-2023": {
@@ -2817,6 +3187,7 @@
   },
   "07-13-2025": {
     "humidity": 67,
+    "outside_temp": 81,
     "temp": 82
   },
   "07-14-2023": {
@@ -2829,6 +3200,7 @@
   },
   "07-14-2025": {
     "humidity": 68,
+    "outside_temp": 83,
     "temp": 84
   },
   "07-15-2023": {
@@ -2841,6 +3213,7 @@
   },
   "07-15-2025": {
     "humidity": 71,
+    "outside_temp": 92,
     "temp": 88
   },
   "07-16-2023": {
@@ -2853,6 +3226,7 @@
   },
   "07-16-2025": {
     "humidity": 68,
+    "outside_temp": 93,
     "temp": 91
   },
   "07-17-2023": {
@@ -2865,6 +3239,7 @@
   },
   "07-17-2025": {
     "humidity": 68,
+    "outside_temp": 90,
     "temp": 90
   },
   "07-18-2023": {
@@ -2877,6 +3252,7 @@
   },
   "07-18-2025": {
     "humidity": 55,
+    "outside_temp": 82,
     "temp": 88
   },
   "07-19-2023": {
@@ -2889,6 +3265,7 @@
   },
   "07-19-2025": {
     "humidity": 53,
+    "outside_temp": 85,
     "temp": 84
   },
   "07-20-2023": {
@@ -2901,6 +3278,7 @@
   },
   "07-20-2025": {
     "humidity": 63,
+    "outside_temp": 88,
     "temp": 87
   },
   "07-21-2023": {
@@ -2913,6 +3291,7 @@
   },
   "07-21-2025": {
     "humidity": 60,
+    "outside_temp": 78,
     "temp": 83
   },
   "07-22-2023": {
@@ -2925,6 +3304,7 @@
   },
   "07-22-2025": {
     "humidity": 47,
+    "outside_temp": 78,
     "temp": 79
   },
   "07-23-2023": {
@@ -2937,6 +3317,7 @@
   },
   "07-23-2025": {
     "humidity": 54,
+    "outside_temp": 82,
     "temp": 82
   },
   "07-24-2023": {
@@ -2949,6 +3330,7 @@
   },
   "07-24-2025": {
     "humidity": 56,
+    "outside_temp": 89,
     "temp": 88
   },
   "07-25-2023": {
@@ -2961,6 +3343,7 @@
   },
   "07-25-2025": {
     "humidity": 63,
+    "outside_temp": 94,
     "temp": 90
   },
   "07-26-2023": {
@@ -2973,6 +3356,7 @@
   },
   "07-26-2025": {
     "humidity": 54,
+    "outside_temp": 81,
     "temp": 86
   },
   "07-27-2023": {
@@ -2985,6 +3369,7 @@
   },
   "07-27-2025": {
     "humidity": 68,
+    "outside_temp": 75,
     "temp": 80
   },
   "07-28-2023": {
@@ -2997,6 +3382,7 @@
   },
   "07-28-2025": {
     "humidity": 69,
+    "outside_temp": 89,
     "temp": 84
   },
   "07-29-2023": {
@@ -3009,6 +3395,7 @@
   },
   "07-29-2025": {
     "humidity": 66,
+    "outside_temp": 98,
     "temp": 91
   },
   "07-30-2023": {
@@ -3021,6 +3408,7 @@
   },
   "07-30-2025": {
     "humidity": 53,
+    "outside_temp": 94,
     "temp": 90
   },
   "07-31-2023": {
@@ -3033,6 +3421,7 @@
   },
   "07-31-2025": {
     "humidity": 66,
+    "outside_temp": 78,
     "temp": 88
   },
   "08-01-2023": {
@@ -3045,6 +3434,7 @@
   },
   "08-01-2025": {
     "humidity": 63,
+    "outside_temp": 74,
     "temp": 76
   },
   "08-02-2023": {
@@ -3057,6 +3447,7 @@
   },
   "08-02-2025": {
     "humidity": 54,
+    "outside_temp": 77,
     "temp": 77
   },
   "08-03-2023": {
@@ -3069,6 +3460,7 @@
   },
   "08-03-2025": {
     "humidity": 53,
+    "outside_temp": 84,
     "temp": 80
   },
   "08-04-2023": {
@@ -3081,6 +3473,7 @@
   },
   "08-04-2025": {
     "humidity": 59,
+    "outside_temp": 86,
     "temp": 81
   },
   "08-05-2023": {
@@ -3093,6 +3486,7 @@
   },
   "08-05-2025": {
     "humidity": 61,
+    "outside_temp": 75,
     "temp": 80
   },
   "08-06-2023": {
@@ -3105,6 +3499,7 @@
   },
   "08-06-2025": {
     "humidity": 61,
+    "outside_temp": 78,
     "temp": 78
   },
   "08-07-2023": {
@@ -3117,6 +3512,7 @@
   },
   "08-07-2025": {
     "humidity": 62,
+    "outside_temp": 81,
     "temp": 79
   },
   "08-08-2023": {
@@ -3129,6 +3525,7 @@
   },
   "08-08-2025": {
     "humidity": 52,
+    "outside_temp": 83,
     "temp": 81
   },
   "08-09-2023": {
@@ -3141,6 +3538,7 @@
   },
   "08-09-2025": {
     "humidity": 54,
+    "outside_temp": 82,
     "temp": 80
   },
   "08-10-2023": {
@@ -3153,6 +3551,7 @@
   },
   "08-10-2025": {
     "humidity": 58,
+    "outside_temp": 89,
     "temp": 84
   },
   "08-11-2023": {
@@ -3165,6 +3564,7 @@
   },
   "08-11-2025": {
     "humidity": 59,
+    "outside_temp": 93,
     "temp": 88
   },
   "08-12-2023": {
@@ -3177,6 +3577,7 @@
   },
   "08-12-2025": {
     "humidity": 53,
+    "outside_temp": 93,
     "temp": 89
   },
   "08-13-2023": {
@@ -3189,6 +3590,7 @@
   },
   "08-13-2025": {
     "humidity": 60,
+    "outside_temp": 91,
     "temp": 90
   },
   "08-14-2023": {
@@ -3201,6 +3603,7 @@
   },
   "08-14-2025": {
     "humidity": 62,
+    "outside_temp": 89,
     "temp": 88
   },
   "08-15-2023": {
@@ -3213,6 +3616,7 @@
   },
   "08-15-2025": {
     "humidity": 59,
+    "outside_temp": 79,
     "temp": 84
   },
   "08-16-2023": {
@@ -3225,6 +3629,7 @@
   },
   "08-16-2025": {
     "humidity": 53,
+    "outside_temp": 84,
     "temp": 80
   },
   "08-17-2023": {
@@ -3237,6 +3642,7 @@
   },
   "08-17-2025": {
     "humidity": 60,
+    "outside_temp": 91,
     "temp": 87
   },
   "08-18-2023": {
@@ -3249,6 +3655,7 @@
   },
   "08-18-2025": {
     "humidity": 55,
+    "outside_temp": 70,
     "temp": 82
   },
   "08-19-2023": {
@@ -3261,6 +3668,7 @@
   },
   "08-19-2025": {
     "humidity": 52,
+    "outside_temp": 74,
     "temp": 75
   },
   "08-20-2023": {
@@ -3273,6 +3681,7 @@
   },
   "08-20-2025": {
     "humidity": 58,
+    "outside_temp": 63,
     "temp": 73
   },
   "08-21-2023": {
@@ -3285,6 +3694,7 @@
   },
   "08-21-2025": {
     "humidity": 66,
+    "outside_temp": 68,
     "temp": 71
   },
   "08-22-2023": {
@@ -3297,6 +3707,7 @@
   },
   "08-22-2025": {
     "humidity": 61,
+    "outside_temp": 82,
     "temp": 76
   },
   "08-23-2023": {
@@ -3309,6 +3720,7 @@
   },
   "08-23-2025": {
     "humidity": 59,
+    "outside_temp": 86,
     "temp": 82
   },
   "08-24-2023": {
@@ -3321,6 +3733,7 @@
   },
   "08-24-2025": {
     "humidity": 63,
+    "outside_temp": 81,
     "temp": 81
   },
   "08-25-2023": {
@@ -3333,6 +3746,7 @@
   },
   "08-25-2025": {
     "humidity": 66,
+    "outside_temp": 82,
     "temp": 81
   },
   "08-26-2023": {
@@ -3345,6 +3759,7 @@
   },
   "08-26-2025": {
     "humidity": 57,
+    "outside_temp": 78,
     "temp": 80
   },
   "08-27-2023": {
@@ -3357,6 +3772,7 @@
   },
   "08-27-2025": {
     "humidity": 48,
+    "outside_temp": 74,
     "temp": 77
   },
   "08-28-2023": {
@@ -3369,6 +3785,7 @@
   },
   "08-28-2025": {
     "humidity": 46,
+    "outside_temp": 77,
     "temp": 80
   },
   "08-29-2023": {
@@ -3381,6 +3798,7 @@
   },
   "08-29-2025": {
     "humidity": 58,
+    "outside_temp": 74,
     "temp": 78
   },
   "08-30-2023": {
@@ -3393,6 +3811,7 @@
   },
   "08-30-2025": {
     "humidity": 56,
+    "outside_temp": 75,
     "temp": 76
   },
   "08-31-2023": {
@@ -3521,6 +3940,7 @@
   },
   "10-03-2025": {
     "humidity": 51,
+    "outside_temp": 74,
     "temp": 73
   },
   "10-04-2023": {
@@ -3529,6 +3949,7 @@
   },
   "10-04-2025": {
     "humidity": 56,
+    "outside_temp": 82,
     "temp": 76
   },
   "10-05-2023": {
@@ -3537,6 +3958,7 @@
   },
   "10-05-2025": {
     "humidity": 59,
+    "outside_temp": 83,
     "temp": 76
   },
   "10-06-2023": {
@@ -3545,6 +3967,7 @@
   },
   "10-06-2025": {
     "humidity": 63,
+    "outside_temp": 84,
     "temp": 79
   },
   "10-07-2023": {
@@ -3553,6 +3976,7 @@
   },
   "10-07-2025": {
     "humidity": 65,
+    "outside_temp": 80,
     "temp": 80
   },
   "10-08-2023": {
@@ -3561,6 +3985,7 @@
   },
   "10-08-2025": {
     "humidity": 68,
+    "outside_temp": 70,
     "temp": 77
   },
   "10-09-2023": {
@@ -3569,6 +3994,7 @@
   },
   "10-09-2025": {
     "humidity": 45,
+    "outside_temp": 56,
     "temp": 69
   },
   "10-10-2023": {
@@ -3577,6 +4003,7 @@
   },
   "10-10-2025": {
     "humidity": 45,
+    "outside_temp": 61,
     "temp": 71
   },
   "10-11-2023": {
@@ -3585,6 +4012,7 @@
   },
   "10-11-2025": {
     "humidity": 48,
+    "outside_temp": 65,
     "temp": 71
   },
   "10-12-2023": {
@@ -3593,6 +4021,7 @@
   },
   "10-12-2025": {
     "humidity": 52,
+    "outside_temp": 57,
     "temp": 70
   },
   "10-13-2023": {
@@ -3601,6 +4030,7 @@
   },
   "10-13-2025": {
     "humidity": 55,
+    "outside_temp": 54,
     "temp": 70
   },
   "10-14-2023": {
@@ -3609,6 +4039,7 @@
   },
   "10-14-2025": {
     "humidity": 56,
+    "outside_temp": 55,
     "temp": 69
   },
   "10-15-2023": {
@@ -3617,6 +4048,7 @@
   },
   "10-15-2025": {
     "humidity": 55,
+    "outside_temp": 63,
     "temp": 72
   },
   "10-16-2023": {
@@ -3625,6 +4057,7 @@
   },
   "10-16-2025": {
     "humidity": 48,
+    "outside_temp": 54,
     "temp": 69
   },
   "10-17-2023": {
@@ -3633,6 +4066,7 @@
   },
   "10-17-2025": {
     "humidity": 45,
+    "outside_temp": 62,
     "temp": 70
   },
   "10-18-2023": {
@@ -3641,6 +4075,7 @@
   },
   "10-18-2025": {
     "humidity": 47,
+    "outside_temp": 63,
     "temp": 71
   },
   "10-19-2023": {
@@ -3649,6 +4084,7 @@
   },
   "10-19-2025": {
     "humidity": 51,
+    "outside_temp": 69,
     "temp": 72
   },
   "10-20-2023": {
@@ -3657,6 +4093,7 @@
   },
   "10-20-2025": {
     "humidity": 59,
+    "outside_temp": 66,
     "temp": 73
   },
   "10-21-2023": {
@@ -3665,6 +4102,7 @@
   },
   "10-21-2025": {
     "humidity": 53,
+    "outside_temp": 66,
     "temp": 73
   },
   "10-22-2023": {
@@ -3673,6 +4111,7 @@
   },
   "10-22-2025": {
     "humidity": 62,
+    "outside_temp": 66,
     "temp": 71
   },
   "10-23-2023": {
@@ -3681,6 +4120,7 @@
   },
   "10-23-2025": {
     "humidity": 48,
+    "outside_temp": 61,
     "temp": 69
   },
   "10-24-2023": {
@@ -3693,6 +4133,7 @@
   },
   "10-24-2025": {
     "humidity": 47,
+    "outside_temp": 59,
     "temp": 71
   },
   "10-25-2023": {
@@ -3701,6 +4142,7 @@
   },
   "10-25-2025": {
     "humidity": 46,
+    "outside_temp": 56,
     "temp": 69
   },
   "10-26-2023": {
@@ -3709,6 +4151,7 @@
   },
   "10-26-2025": {
     "humidity": 44,
+    "outside_temp": 56,
     "temp": 70
   },
   "10-27-2023": {
@@ -3717,6 +4160,7 @@
   },
   "10-27-2025": {
     "humidity": 44,
+    "outside_temp": 53,
     "temp": 68
   },
   "10-28-2023": {
@@ -3725,6 +4169,7 @@
   },
   "10-28-2025": {
     "humidity": 46,
+    "outside_temp": 53,
     "temp": 67
   },
   "10-29-2023": {
@@ -3733,6 +4178,7 @@
   },
   "10-29-2025": {
     "humidity": 49,
+    "outside_temp": 50,
     "temp": 63
   },
   "10-30-2023": {
@@ -3741,6 +4187,7 @@
   },
   "10-30-2025": {
     "humidity": 59,
+    "outside_temp": 57,
     "temp": 65
   },
   "10-31-2023": {
@@ -3749,6 +4196,7 @@
   },
   "10-31-2025": {
     "humidity": 62,
+    "outside_temp": 58,
     "temp": 67
   },
   "11-01-2023": {
@@ -3757,6 +4205,7 @@
   },
   "11-01-2025": {
     "humidity": 46,
+    "outside_temp": 57,
     "temp": 65
   },
   "11-02-2023": {
@@ -3765,6 +4214,7 @@
   },
   "11-02-2025": {
     "humidity": 43,
+    "outside_temp": 54,
     "temp": 62
   },
   "11-03-2023": {
@@ -3773,6 +4223,7 @@
   },
   "11-03-2025": {
     "humidity": 52,
+    "outside_temp": 57,
     "temp": 61
   },
   "11-04-2023": {
@@ -3785,6 +4236,7 @@
   },
   "11-04-2025": {
     "humidity": 48,
+    "outside_temp": 55,
     "temp": 66
   },
   "11-05-2022": {
@@ -3801,6 +4253,7 @@
   },
   "11-05-2025": {
     "humidity": 48,
+    "outside_temp": 56,
     "temp": 66
   },
   "11-06-2022": {
@@ -3817,6 +4270,7 @@
   },
   "11-06-2025": {
     "humidity": 47,
+    "outside_temp": 54,
     "temp": 66
   },
   "11-07-2022": {
@@ -3833,6 +4287,7 @@
   },
   "11-07-2025": {
     "humidity": 46,
+    "outside_temp": 54,
     "temp": 66
   },
   "11-08-2022": {
@@ -3849,6 +4304,7 @@
   },
   "11-08-2025": {
     "humidity": 51,
+    "outside_temp": 62,
     "temp": 66
   },
   "11-09-2022": {
@@ -3865,6 +4321,7 @@
   },
   "11-09-2025": {
     "humidity": 48,
+    "outside_temp": 58,
     "temp": 67
   },
   "11-10-2022": {
@@ -3881,6 +4338,7 @@
   },
   "11-10-2025": {
     "humidity": 51,
+    "outside_temp": 54,
     "temp": 66
   },
   "11-11-2022": {
@@ -3897,6 +4355,7 @@
   },
   "11-11-2025": {
     "humidity": 50,
+    "outside_temp": 40,
     "temp": 66
   },
   "11-12-2022": {
@@ -3913,6 +4372,7 @@
   },
   "11-12-2025": {
     "humidity": 40,
+    "outside_temp": 45,
     "temp": 65
   },
   "11-13-2022": {
@@ -4157,6 +4617,7 @@
   },
   "12-02-2025": {
     "humidity": 35,
+    "outside_temp": 35,
     "temp": 65
   },
   "12-03-2022": {
@@ -4173,6 +4634,7 @@
   },
   "12-03-2025": {
     "humidity": 36,
+    "outside_temp": 37,
     "temp": 65
   },
   "12-04-2022": {
@@ -4189,6 +4651,7 @@
   },
   "12-04-2025": {
     "humidity": 35,
+    "outside_temp": 39,
     "temp": 64
   },
   "12-05-2022": {
@@ -4205,6 +4668,7 @@
   },
   "12-05-2025": {
     "humidity": 29,
+    "outside_temp": 27,
     "temp": 65
   },
   "12-06-2022": {
@@ -4221,6 +4685,7 @@
   },
   "12-06-2025": {
     "humidity": 32,
+    "outside_temp": 40,
     "temp": 64
   },
   "12-07-2022": {
@@ -4237,6 +4702,7 @@
   },
   "12-07-2025": {
     "humidity": 34,
+    "outside_temp": 40,
     "temp": 64
   },
   "12-08-2022": {
@@ -4253,6 +4719,7 @@
   },
   "12-08-2025": {
     "humidity": 33,
+    "outside_temp": 34,
     "temp": 64
   },
   "12-09-2022": {
@@ -4269,6 +4736,7 @@
   },
   "12-09-2025": {
     "humidity": 28,
+    "outside_temp": 29,
     "temp": 65
   },
   "12-10-2022": {
@@ -4285,6 +4753,7 @@
   },
   "12-10-2025": {
     "humidity": 34,
+    "outside_temp": 48,
     "temp": 66
   },
   "12-11-2022": {
@@ -4301,6 +4770,7 @@
   },
   "12-11-2025": {
     "humidity": 34,
+    "outside_temp": 40,
     "temp": 65
   },
   "12-12-2022": {
@@ -4317,6 +4787,7 @@
   },
   "12-12-2025": {
     "humidity": 27,
+    "outside_temp": 35,
     "temp": 65
   },
   "12-13-2022": {
@@ -4333,6 +4804,7 @@
   },
   "12-13-2025": {
     "humidity": 29,
+    "outside_temp": 36,
     "temp": 65
   },
   "12-14-2023": {
@@ -4345,6 +4817,7 @@
   },
   "12-14-2025": {
     "humidity": 30,
+    "outside_temp": 33,
     "temp": 65
   },
   "12-15-2023": {
@@ -4357,6 +4830,7 @@
   },
   "12-15-2025": {
     "humidity": 27,
+    "outside_temp": 25,
     "temp": 65
   },
   "12-16-2023": {
@@ -4369,6 +4843,7 @@
   },
   "12-16-2025": {
     "humidity": 28,
+    "outside_temp": 36,
     "temp": 65
   },
   "12-17-2023": {
@@ -4381,6 +4856,7 @@
   },
   "12-17-2025": {
     "humidity": 30,
+    "outside_temp": 46,
     "temp": 66
   },
   "12-18-2023": {
@@ -4393,6 +4869,7 @@
   },
   "12-18-2025": {
     "humidity": 32,
+    "outside_temp": 48,
     "temp": 66
   },
   "12-19-2023": {
@@ -4405,6 +4882,7 @@
   },
   "12-19-2025": {
     "humidity": 46,
+    "outside_temp": 59,
     "temp": 66
   },
   "12-20-2023": {
@@ -4417,6 +4895,7 @@
   },
   "12-20-2025": {
     "humidity": 37,
+    "outside_temp": 38,
     "temp": 66
   },
   "12-21-2023": {
@@ -4429,6 +4908,7 @@
   },
   "12-21-2025": {
     "humidity": 32,
+    "outside_temp": 46,
     "temp": 65
   },
   "12-22-2023": {
@@ -4441,6 +4921,7 @@
   },
   "12-22-2025": {
     "humidity": 28,
+    "outside_temp": 32,
     "temp": 65
   },
   "12-23-2023": {
@@ -4453,6 +4934,7 @@
   },
   "12-23-2025": {
     "humidity": 31,
+    "outside_temp": 37,
     "temp": 66
   },
   "12-24-2023": {
@@ -4465,6 +4947,7 @@
   },
   "12-24-2025": {
     "humidity": 32,
+    "outside_temp": 36,
     "temp": 65
   },
   "12-25-2023": {
@@ -4477,6 +4960,7 @@
   },
   "12-25-2025": {
     "humidity": 30,
+    "outside_temp": 39,
     "temp": 65
   },
   "12-26-2023": {
@@ -4489,6 +4973,7 @@
   },
   "12-26-2025": {
     "humidity": 27,
+    "outside_temp": 21,
     "temp": 65
   },
   "12-27-2023": {
@@ -4501,6 +4986,7 @@
   },
   "12-27-2025": {
     "humidity": 26,
+    "outside_temp": 25,
     "temp": 65
   },
   "12-28-2023": {
@@ -4513,6 +4999,7 @@
   },
   "12-28-2025": {
     "humidity": 28,
+    "outside_temp": 38,
     "temp": 66
   },
   "12-29-2023": {
@@ -4525,6 +5012,7 @@
   },
   "12-29-2025": {
     "humidity": 35,
+    "outside_temp": 46,
     "temp": 66
   },
   "12-30-2022": {
@@ -4537,10 +5025,12 @@
   },
   "12-30-2024": {
     "humidity": 49,
+    "outside_temp": 57,
     "temp": 66
   },
   "12-30-2025": {
     "humidity": 32,
+    "outside_temp": 32,
     "temp": 64
   },
   "12-31-2022": {
@@ -4553,10 +5043,12 @@
   },
   "12-31-2024": {
     "humidity": 40,
+    "outside_temp": 51,
     "temp": 67
   },
   "12-31-2025": {
     "humidity": 27,
+    "outside_temp": 33,
     "temp": 64
   }
 }
