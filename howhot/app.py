@@ -66,22 +66,25 @@ def _get_years_and_dates(
 
 def format_data_for_chart(
     temp_history: dict[str, dict[str, int]],
-) -> tuple[list[str], dict[str, list[int | None]]]:
+) -> tuple[list[str], dict[str, list[int | None]], dict[str, list[int | None]]]:
     """
-    Format the data for chart.js
+    Format the data for chart.js. Returns the shared date axis, the shop-high
+    series per year, and the outside-high series per year (None where a day
+    has no outside reading yet).
     """
     years, dates = _get_years_and_dates(temp_history)
     datasets = {}
+    outside_datasets = {}
     for year in years:
         dataset: list[int | None] = []
+        outside: list[int | None] = []
         for month_day in dates:
             point = temp_history.get(f"{month_day}-{year}")
-            if point:
-                dataset.append(point["temp"])
-            else:
-                dataset.append(None)
+            dataset.append(point["temp"] if point else None)
+            outside.append(point.get("outside_temp") if point else None)
         datasets[year] = dataset
-    return dates, datasets
+        outside_datasets[year] = outside
+    return dates, datasets, outside_datasets
 
 
 WARM_DAY_F = 80
@@ -173,7 +176,10 @@ def compute_year_stats(
 @app.route("/history")
 def render_history() -> str:
     temp_history = get_shop_temperature_history()
-    dates, datasets = format_data_for_chart(temp_history)
+    dates, datasets, outside_datasets = format_data_for_chart(temp_history)
+    has_outside = any(
+        value is not None for series in outside_datasets.values() for value in series
+    )
     colors = {
         year: CHART_PALETTE[index % len(CHART_PALETTE)]
         for index, year in enumerate(sorted(datasets, reverse=True))
@@ -196,6 +202,8 @@ def render_history() -> str:
         "history.html",
         labels=dates,
         datasets=datasets,
+        outside_datasets=outside_datasets,
+        has_outside=has_outside,
         colors=colors,
         default_years=default_years,
         highlight_year=highlight_year,

@@ -1,12 +1,13 @@
 import json
 import os
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from math import sqrt
 from pathlib import Path
 from typing import cast
 
 from howhot import EASTERN_TIMEZONE, memory_cache
+from howhot.weather import get_daily_outside_max
 
 SHOP_HIGH_HISTORY_KEY = "SHOP_HIGH_HISTORY"
 SHOP_TEMP_KEY = "SHOP_TEMP"
@@ -141,3 +142,42 @@ def persist_history(history: dict[str, dict[str, int]]):
         encoding="utf-8",
     ) as infile:
         infile.write(json.dumps(history))
+
+
+def fill_missing_outside_temps(
+    history: dict[str, dict[str, int]],
+    lat: str,
+    long: str,
+    weather_api_key: str,
+    today: date,
+    limit: int | None = None,
+) -> int:
+    """
+    Attach the finalized outside high to any past day that has a shop reading
+    but no outside_temp yet, newest-first so the years worth comparing right
+    now fill in before the deep history. Only days strictly before `today` are
+    touched, since today's high isn't final. Idempotent: a day is skipped once
+    it has an outside_temp, so this both backfills history and, run each cycle,
+    keeps recent days topped up. Returns the number of days filled.
+    """
+    pending = sorted(
+        (
+            (datetime.strptime(key, "%m-%d-%Y").date(), key)
+            for key, point in history.items()
+            if "temp" in point and "outside_temp" not in point
+        ),
+        reverse=True,
+    )
+    filled = 0
+    for day, key in pending:
+        if day >= today:
+            continue
+        if limit is not None and filled >= limit:
+            break
+        history[key]["outside_temp"] = get_daily_outside_max(
+            lat, long, weather_api_key, day.strftime("%Y-%m-%d")
+        )
+        filled += 1
+    if filled:
+        persist_history(history)
+    return filled

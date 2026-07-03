@@ -166,6 +166,27 @@
                     pointHoverBorderWidth: 2,
                     pointHitRadius: 16
                     },
+                    {% if has_outside %}
+                        {
+                    label: "{{ key }}",
+                    _outsideOf: "{{ key }}",
+                    data: {{ outside_datasets[key] | tojson }},
+                    fill: false,
+                    hidden: {{ "false" if key in default_years else "true" }},
+                    borderColor: "{{ colors[key] }}",
+                    backgroundColor: "{{ colors[key] }}",
+                    borderDash: [4, 4],
+                    tension: .4,
+                    borderWidth: 1.5,
+                    spanGaps: true,
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                    pointHoverBackgroundColor: "{{ colors[key] }}",
+                    pointHoverBorderColor: '#0e1417',
+                    pointHoverBorderWidth: 2,
+                    pointHitRadius: 16
+                    },
+                    {% endif %}
                     {% endfor %}
                 ]
             },
@@ -186,6 +207,7 @@
                             label: c => {
                                 if (c.dataset.label === '__range') return ` Range: ${band.lo[c.dataIndex]}–${band.hi[c.dataIndex]}°`;
                                 if (c.dataset.label === '__mid') return ` Typical: ${c.parsed.y}°`;
+                                if (c.dataset._outsideOf) return ` ${c.dataset._outsideOf} outside: ${c.parsed.y}°`;
                                 return ` ${c.dataset.label}: ${c.parsed.y}°`;
                             }
                         }
@@ -234,21 +256,28 @@
             },
         ];
 
-        // ---- peak stats across all data ----
-        const flat = compareDatasets.flatMap(d => d.data).filter(v => v != null);
+        // Each year owns a shop line and (when we have outside data) a dashed
+        // outside line sharing its label; _outsideOf marks the companion so
+        // stats, chips and toggles treat the pair as one year.
+        const yearDatasets = compareDatasets.filter(d => !d._outsideOf);
+
+        // ---- peak stats across the shop lines only ----
+        const flat = yearDatasets.flatMap(d => d.data).filter(v => v != null);
         if (flat.length) {
             document.getElementById('pk-hot').textContent = Math.max(...flat) + '°';
             document.getElementById('pk-avg').textContent = Math.round(flat.reduce((a, b) => a + b, 0) / flat.length) + '°';
         }
-        document.getElementById('pk-yrs').textContent = compareDatasets.length;
+        document.getElementById('pk-yrs').textContent = yearDatasets.length;
 
         // ---- year toggle chips (newest first) ----
         const chipWrap = document.getElementById('chips');
         const emptyEl = document.getElementById('empty');
         const chipEls = {};
         const colorFor = {};
-        compareDatasets.forEach(d => colorFor[d.label] = d.borderColor);
-        const byRecency = compareDatasets.map(d => d.label).sort().reverse();
+        yearDatasets.forEach(d => colorFor[d.label] = d.borderColor);
+        // Mute the outside overlays to a translucent shade of their year color.
+        compareDatasets.forEach(d => { if (d._outsideOf) d.borderColor = rgba(colorFor[d._outsideOf], .5); });
+        const byRecency = yearDatasets.map(d => d.label).sort().reverse();
 
         function rgba(hex, a) {
             const n = parseInt(hex.slice(1), 16);
@@ -268,20 +297,20 @@
             emptyEl.style.display = anyOn ? 'none' : 'flex';
         }
         byRecency.forEach(y => {
-            const idx = compareDatasets.findIndex(d => d.label === y);
+            const shop = yearDatasets.find(d => d.label === y);
             const chip = document.createElement('button');
             chip.className = 'chip';
             chip.innerHTML = `<span class="cdot"></span>${y}`;
             chip.addEventListener('click', () => {
-                const ds = compareDatasets[idx];
-                ds.hidden = !ds.hidden;
-                paintChip(y, !ds.hidden);
+                const show = shop.hidden;
+                compareDatasets.forEach(d => { if (d.label === y) d.hidden = !show; });
+                paintChip(y, show);
                 chart.update();
                 refreshEmpty();
             });
             chipWrap.appendChild(chip);
             chipEls[y] = chip;
-            paintChip(y, !compareDatasets[idx].hidden);
+            paintChip(y, !shop.hidden);
         });
         function applyState(test) {
             compareDatasets.forEach(d => { d.hidden = !test(d.label); });
@@ -315,5 +344,5 @@
     </script>
 {% endblock %}
 {% block footer %}
-    Tap a year to compare · pinch or scroll to zoom · rotate for detail
+    Tap a year to compare{% if has_outside %} · dashed line is the outside high{% endif %} · pinch or scroll to zoom · rotate for detail
 {% endblock %}

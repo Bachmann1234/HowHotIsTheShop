@@ -1,4 +1,4 @@
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 
 import pytest
 import responses
@@ -10,9 +10,68 @@ from howhot.shop_temp import (
     SHOP_TEMP_KEY,
     ShopTemp,
     celsius_to_fahrenheit,
+    fill_missing_outside_temps,
     get_shop_temp,
     heat_index,
 )
+
+
+def _stub_day_summary(day: str, max_temp: float) -> None:
+    responses.add(
+        responses.GET,
+        "https://api.openweathermap.org/data/3.0/onecall/day_summary"
+        f"?lat=1&lon=2&date={day}&appid=key&units=imperial",
+        json={"temperature": {"max": max_temp}},
+        status=200,
+    )
+
+
+@responses.activate
+def test_fill_missing_outside_temps() -> None:
+    _stub_day_summary("2021-07-23", 70.4)
+    _stub_day_summary("2021-07-24", 72.9)
+    history = {
+        "07-24-2021": {"temp": 80, "humidity": 44},
+        "07-23-2021": {"temp": 79, "humidity": 48},
+        # already has an outside high; must be left alone
+        "07-25-2021": {"temp": 78, "humidity": 50, "outside_temp": 60},
+        # today's high isn't final yet; must be skipped
+        "07-26-2021": {"temp": 85, "humidity": 40},
+    }
+
+    filled = fill_missing_outside_temps(
+        history, "1", "2", "key", today=date(2021, 7, 26)
+    )
+
+    assert filled == 2
+    assert history["07-23-2021"]["outside_temp"] == 70
+    assert history["07-24-2021"]["outside_temp"] == 73
+    assert history["07-25-2021"]["outside_temp"] == 60
+    assert "outside_temp" not in history["07-26-2021"]
+
+    # Idempotent: nothing left to fill, so no further calls
+    assert (
+        fill_missing_outside_temps(history, "1", "2", "key", today=date(2021, 7, 26))
+        == 0
+    )
+
+
+@responses.activate
+def test_fill_missing_outside_temps_respects_limit_newest_first() -> None:
+    _stub_day_summary("2021-07-24", 72.9)
+    history = {
+        "07-24-2021": {"temp": 80, "humidity": 44},
+        "07-23-2021": {"temp": 79, "humidity": 48},
+    }
+
+    filled = fill_missing_outside_temps(
+        history, "1", "2", "key", today=date(2021, 7, 26), limit=1
+    )
+
+    assert filled == 1
+    # Newest pending day is filled first
+    assert history["07-24-2021"]["outside_temp"] == 73
+    assert "outside_temp" not in history["07-23-2021"]
 
 
 def test_get_shop_temp() -> None:

@@ -49,3 +49,21 @@ def update_weather_cache(lat: str, long: str, weather_api_key: str) -> Weather:
     weather.raise_for_status()
     memory_cache.set_cache_value(WEATHER_CACHE_KEY, weather.text)
     return get_weather()
+
+
+def get_daily_outside_max(
+    lat: str, long: str, weather_api_key: str, date_str: str
+) -> int:
+    """
+    The finalized outside high for one past day, from OpenWeatherMap's Day
+    Summary endpoint. date_str is YYYY-MM-DD. Used to backfill and to fill in
+    each finalized day's outside high on the history page.
+    """
+    response = requests.get(
+        f"https://api.openweathermap.org/data/3.0/onecall/day_summary"
+        f"?lat={lat}&lon={long}&date={date_str}"
+        f"&appid={weather_api_key}&units=imperial",
+        timeout=10,
+    )
+    response.raise_for_status()
+    return round(float(response.json()["temperature"]["max"]))

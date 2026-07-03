@@ -116,4 +116,21 @@ def test_format_data() -> None:
     ) == (
         ["07-23", "07-24", "07-25", "07-26"],
         {"2021": [79, 80, 78, 85], "2022": [79, None, None, None]},
+        {"2021": [None, None, None, None], "2022": [None, None, None, None]},
+    )
+
+
+def test_format_data_with_outside() -> None:
+    # Days that carry an outside_temp fill the outside series; days without
+    # one (or with no reading at all) leave a gap the chart spans over.
+    assert format_data_for_chart(
+        {
+            "07-23-2021": {"temp": 79, "humidity": 80, "outside_temp": 70},
+            "07-24-2021": {"temp": 80, "humidity": 30},
+            "07-23-2022": {"temp": 88, "humidity": 48, "outside_temp": 75},
+        }
+    ) == (
+        ["07-23", "07-24"],
+        {"2021": [79, 80], "2022": [88, None]},
+        {"2021": [70, None], "2022": [75, None]},
     )
