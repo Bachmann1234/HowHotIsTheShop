@@ -185,7 +185,7 @@ def render_history() -> str:
         for index, year in enumerate(sorted(datasets, reverse=True))
     }
     current_year = datetime.now().astimezone(EASTERN_TIMEZONE).year
-    default_years = {str(current_year), str(current_year - 1)} & datasets.keys()
+    default_years = {str(current_year)} & datasets.keys()
     if not default_years and datasets:
         default_years = {max(datasets)}
     highlight_year = (
