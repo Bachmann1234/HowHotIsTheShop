@@ -79,10 +79,11 @@
     </div>
 
     <div class="sel">
-        {% if has_band %}
+        {% if has_band or has_outside %}
             <div class="seg" id="seg">
-                <button id="v-normal" aria-pressed="true">Vs normal</button>
-                <button id="v-compare" aria-pressed="false">Compare years</button>
+                {% if has_band %}<button id="v-normal" aria-pressed="true">Vs normal</button>{% endif %}
+                <button id="v-compare" aria-pressed="false">Compare</button>
+                {% if has_outside %}<button id="v-delta" aria-pressed="false">Difference</button>{% endif %}
             </div>
         {% else %}
             <span class="lab">Compare years</span>
@@ -90,6 +91,7 @@
         <div class="acts" id="acts">
             <button class="act" id="all">All</button>
             <button class="act" id="recent">Recent</button>
+            <button class="act" id="reset">Reset zoom</button>
         </div>
     </div>
     <div class="chips" id="chips"></div>
@@ -141,6 +143,7 @@
         const band = {{ band | tojson }};
         const highlightYear = {{ highlight_year | tojson }};
         const hasBand = {{ has_band | tojson }};
+        const hasOutside = {{ has_outside | tojson }};
         let mode = 'compare';
         const ctx = document.getElementById('shopChart').getContext('2d');
         const chart = new Chart(ctx, {
@@ -207,6 +210,7 @@
                             label: c => {
                                 if (c.dataset.label === '__range') return ` Range: ${band.lo[c.dataIndex]}–${band.hi[c.dataIndex]}°`;
                                 if (c.dataset.label === '__mid') return ` Typical: ${c.parsed.y}°`;
+                                if (c.dataset._delta) return ` ${c.dataset.label}: ${c.parsed.y >= 0 ? '+' : ''}${c.parsed.y}° vs outside`;
                                 if (c.dataset._outsideOf) return ` ${c.dataset._outsideOf} outside: ${c.parsed.y}°`;
                                 return ` ${c.dataset.label}: ${c.parsed.y}°`;
                             }
@@ -224,6 +228,15 @@
                             },
                             pinch: {
                                 enabled: true
+                            },
+                            // Shift-drag draws a box to zoom a specific span;
+                            // plain drag still pans (below).
+                            drag: {
+                                enabled: true,
+                                modifierKey: 'shift',
+                                backgroundColor: 'rgba(63,194,180,.15)',
+                                borderColor: 'rgba(63,194,180,.55)',
+                                borderWidth: 1
                             },
                             mode: 'x',
                         },
@@ -279,6 +292,26 @@
         compareDatasets.forEach(d => { if (d._outsideOf) d.borderColor = rgba(colorFor[d._outsideOf], .5); });
         const byRecency = yearDatasets.map(d => d.label).sort().reverse();
 
+        // Difference view: one line per year of (shop high − outside high),
+        // built from the pair already on the chart. Null wherever either side
+        // is missing so the gap spans instead of dropping to zero.
+        const deltaDatasets = !hasOutside ? [] : yearDatasets.map(shop => {
+            const out = compareDatasets.find(d => d._outsideOf === shop.label);
+            const data = shop.data.map((v, i) =>
+                (v != null && out && out.data[i] != null) ? v - out.data[i] : null);
+            return {
+                label: shop.label, _delta: true, data,
+                borderColor: colorFor[shop.label], backgroundColor: colorFor[shop.label],
+                fill: false, hidden: shop.hidden, tension: .4, borderWidth: 2.5, spanGaps: true,
+                pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: colorFor[shop.label],
+                pointHoverBorderColor: '#0e1417', pointHoverBorderWidth: 2, pointHitRadius: 16
+            };
+        });
+        // A chip toggles a year across every view at once, so switching views
+        // keeps the same years showing. yearOf maps any line back to its year.
+        const yearOf = d => d._outsideOf || d.label;
+        const toggleLines = [...compareDatasets, ...deltaDatasets];
+
         function rgba(hex, a) {
             const n = parseInt(hex.slice(1), 16);
             return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`;
@@ -293,7 +326,8 @@
             dot.style.background = on ? c : 'var(--faint)';
         }
         function refreshEmpty() {
-            const anyOn = mode === 'normal' || compareDatasets.some(d => !d.hidden);
+            const active = mode === 'delta' ? deltaDatasets : compareDatasets;
+            const anyOn = mode === 'normal' || active.some(d => !d.hidden);
             emptyEl.style.display = anyOn ? 'none' : 'flex';
         }
         byRecency.forEach(y => {
@@ -303,7 +337,7 @@
             chip.innerHTML = `<span class="cdot"></span>${y}`;
             chip.addEventListener('click', () => {
                 const show = shop.hidden;
-                compareDatasets.forEach(d => { if (d.label === y) d.hidden = !show; });
+                toggleLines.forEach(d => { if (yearOf(d) === y) d.hidden = !show; });
                 paintChip(y, show);
                 chart.update();
                 refreshEmpty();
@@ -313,36 +347,41 @@
             paintChip(y, !shop.hidden);
         });
         function applyState(test) {
-            compareDatasets.forEach(d => { d.hidden = !test(d.label); });
+            toggleLines.forEach(d => { d.hidden = !test(yearOf(d)); });
             byRecency.forEach(y => paintChip(y, test(y)));
             chart.update();
             refreshEmpty();
         }
         document.getElementById('all').addEventListener('click', () => applyState(() => true));
         document.getElementById('recent').addEventListener('click', () => applyState(y => defaultYears.has(y)));
+        document.getElementById('reset').addEventListener('click', () => chart.resetZoom());
 
         // ---- view switching ----
         function setMode(m) {
             mode = m;
-            chart.data.datasets = m === 'normal' ? normalDatasets : compareDatasets;
+            chart.data.datasets = m === 'normal' ? normalDatasets
+                : m === 'delta' ? deltaDatasets : compareDatasets;
             document.getElementById('acts').style.display = m === 'normal' ? 'none' : 'flex';
             chipWrap.style.display = m === 'normal' ? 'none' : 'flex';
             document.getElementById('cap').hidden = m !== 'normal';
-            if (hasBand) {
-                document.getElementById('v-normal').setAttribute('aria-pressed', String(m === 'normal'));
-                document.getElementById('v-compare').setAttribute('aria-pressed', String(m === 'compare'));
-            }
+            [['v-normal', 'normal'], ['v-compare', 'compare'], ['v-delta', 'delta']].forEach(([id, mm]) => {
+                const el = document.getElementById(id);
+                if (el) el.setAttribute('aria-pressed', String(m === mm));
+            });
             chart.update();
             refreshEmpty();
         }
-        if (hasBand) {
-            document.getElementById('v-normal').addEventListener('click', () => setMode('normal'));
-            document.getElementById('v-compare').addEventListener('click', () => setMode('compare'));
-            setMode('normal');
+        function wireMode(id, m) {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('click', () => setMode(m));
         }
+        wireMode('v-normal', 'normal');
+        wireMode('v-compare', 'compare');
+        wireMode('v-delta', 'delta');
+        setMode(hasBand ? 'normal' : 'compare');
         refreshEmpty();
     </script>
 {% endblock %}
 {% block footer %}
-    Tap a year to compare{% if has_outside %} · dashed line is the outside high{% endif %} · pinch or scroll to zoom · rotate for detail
+    Tap a year{% if has_outside %} · dashed = outside · Difference = shop minus outside{% endif %} · pinch/scroll or shift-drag to zoom · Reset zoom to undo
 {% endblock %}
