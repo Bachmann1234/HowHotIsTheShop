@@ -3835,8 +3835,9 @@
     "temp": 86
   },
   "07-26-2026": {
-    "humidity": 48,
-    "temp": 76
+    "humidity": 50,
+    "outside_temp": 76,
+    "temp": 78
   },
   "07-27-2023": {
     "humidity": 67,
@@ -3852,6 +3853,10 @@
     "humidity": 68,
     "outside_temp": 75,
     "temp": 80
+  },
+  "07-27-2026": {
+    "humidity": 49,
+    "temp": 76
   },
   "07-28-2023": {
     "humidity": 68,
