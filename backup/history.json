@@ -4195,8 +4195,9 @@
     "temp": 90
   },
   "08-13-2026": {
-    "humidity": 49,
-    "temp": 83
+    "humidity": 56,
+    "outside_temp": 85,
+    "temp": 86
   },
   "08-14-2023": {
     "humidity": 58,
@@ -4212,6 +4213,10 @@
     "humidity": 62,
     "outside_temp": 89,
     "temp": 88
+  },
+  "08-14-2026": {
+    "humidity": 48,
+    "temp": 83
   },
   "08-15-2023": {
     "humidity": 71,
